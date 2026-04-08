@@ -1,0 +1,145 @@
+/* Force full screen white overlay - DEFAULT UNCLICKABLE */
+body > .sticky_form.rts-search-popup,
+.sticky_form.rts-search-popup,
+div.sticky_form {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: #ffffff !important;
+  z-index: -1 !important; /* BEHIND everything by default */
+  display: none !important;
+  pointer-events: none !important; /* CRITICAL: Cannot capture clicks */
+  visibility: hidden !important;
+  opacity: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+}
+
+/* When search popup is visible */
+body > .sticky_form.rts-search-popup[style*="display: block"],
+body > .sticky_form.rts-search-popup[style*="display:block"],
+.sticky_form.rts-search-popup[style*="display: block"],
+.sticky_form.rts-search-popup.active,
+body > .sticky_form.rts-search-popup.active {
+  z-index: 2147483647 !important; /* Max z-index when visible */
+  display: block !important;
+  pointer-events: auto !important; /* Can capture clicks when visible */
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Centered Form Container */
+.sticky_form_full {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 100% !important;
+  max-width: 1200px !important;
+  padding: 0 30px !important;
+  margin: 0 !important;
+}
+
+/* Input Styles */
+.sticky_form .search-input {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 2px solid #eaeaea !important;
+  color: #000000 !important;
+  padding: 20px 60px 20px 0 !important;
+  font-size: 50px !important;
+  width: 100% !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+.sticky_form .search-input::placeholder {
+  color: #888 !important;
+  opacity: 1 !important;
+}
+
+/* Search Button & Icon */
+.sticky_form .search-wrap {
+  position: relative !important;
+  width: 100%;
+}
+
+.sticky_form .search-wrap button {
+  position: absolute !important;
+  right: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+}
+
+/* Remove CSS-added duplicate icon and style the real one */
+.sticky_form .search-wrap button:after,
+.sticky_form .search-wrap button:before {
+  display: none !important;
+  content: none !important;
+}
+
+.sticky_form .search-wrap button i {
+  font-size: 30px !important;
+  color: #000000 !important;
+  display: block !important;
+}
+
+/* Close Button - Top Right */
+.close-search {
+  position: fixed !important;
+  top: 30px !important;
+  right: 40px !important;
+  font-size: 50px !important;
+  font-weight: bold !important;
+  color: #000000 !important;
+  cursor: pointer !important;
+  z-index: 2147483648 !important;
+  width: auto !important;
+  height: auto !important;
+  line-height: 1 !important;
+  background: transparent !important;
+  display: block !important;
+  opacity: 1 !important;
+}
+
+.close-search:hover {
+  transform: rotate(90deg);
+}
+
+/* Reset any theme/list styles interfering */
+.sticky_form .list-item,
+.sticky_form li,
+.sticky_form ul {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  list-style: none !important;
+  display: block;
+}
+/* Cursor for the trigger */
+.sticky_search {
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Close Search Animation */
+.close-search {
+  transition: all 0.3s ease;
+}
+
+.close-search:hover {
+  color: #ff650e !important;
+  transform: rotate(90deg);
+}
