@@ -3,7 +3,6 @@
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Repeater;
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
@@ -13,19 +12,19 @@ use Elementor\Utils;
 
 defined('ABSPATH') || die();
 
-class FT_Feature_6_Widget extends \Elementor\Widget_Base
+class FT_Feature6_Widget extends \Elementor\Widget_Base
 {
 
     /*
-     *
-     * @since 1.0.0
-     * @access public
-     *
-     * @return string Widget name.
-     */
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string Widget name.
+	 */
     public function get_name()
     {
-        return 'ft-feature-6';
+        return 'ft-feature6';
     }
 
     /**
@@ -83,134 +82,93 @@ class FT_Feature_6_Widget extends \Elementor\Widget_Base
      */
     protected function register_controls()
     {
-        // Content Tab
+        $theme_uri = get_template_directory_uri();
+
         $this->start_controls_section(
-            'content_section',
+            'feature6_content',
             [
-                'label' => esc_html__('Content', 'ftelements'),
+                'label' => esc_html__('Content', 'kidzu'),
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
 
         $this->add_control(
-            'subtitle_icon',
+            'section_class',
             [
-                'label' => esc_html__('Subtitle Icon', 'ftelements'),
-                'type' => Controls_Manager::ICONS,
-                'default' => [
-                    'value' => 'fa-sharp fa-solid fa-heart',
-                    'library' => 'solid',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'subtitle',
-            [
-                'label' => esc_html__('Subtitle', 'ftelements'),
+                'label' => esc_html__('Section Class', 'kidzu'),
                 'type' => Controls_Manager::TEXT,
-                'label_block' => true,
-                'default' => esc_html__('Our Core Features', 'ftelements'),
+                'default' => 'work-process-section-2 pt-0 fix section-padding fix',
             ]
         );
 
         $this->add_control(
-            'title',
+            'icon_bg_image',
             [
-                'label' => esc_html__('Title', 'ftelements'),
-                'type' => Controls_Manager::TEXTAREA,
-                'label_block' => true,
-                'default' => esc_html__("We're a charitable group improving lives", 'ftelements'),
+                'label' => esc_html__('Icon Background Image', 'kidzu'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => $theme_uri . '/assets/img/process/icon-bg.png',
+                ],
             ]
         );
 
         $repeater = new Repeater();
 
         $repeater->add_control(
-            'item_active',
-            [
-                'label' => esc_html__('Active Item?', 'ftelements'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Yes', 'ftelements'),
-                'label_off' => esc_html__('No', 'ftelements'),
-                'return_value' => 'active',
-                'default' => '',
-            ]
-        );
-
-        $repeater->add_control(
-            'item_image',
-            [
-                'label' => esc_html__('Thumbnail', 'ftelements'),
-                'type' => Controls_Manager::MEDIA,
-                'default' => [
-                    'url' => Utils::get_placeholder_image_src(),
-                ],
-            ]
-        );
-
-        $repeater->add_control(
-            'item_icon',
-            [
-                'label' => esc_html__('Icon Image', 'ftelements'),
-                'type' => Controls_Manager::MEDIA,
-                'default' => [
-                    'url' => Utils::get_placeholder_image_src(),
-                ],
-            ]
-        );
-
-        $repeater->add_control(
             'item_title',
             [
-                'label' => esc_html__('Title', 'ftelements'),
+                'label' => esc_html__('Title', 'kidzu'),
                 'type' => Controls_Manager::TEXT,
-                'label_block' => true,
-                'default' => esc_html__('Food Distribution', 'ftelements'),
+                'default' => esc_html__('Choose A Service', 'kidzu'),
             ]
         );
 
         $repeater->add_control(
             'item_description',
             [
-                'label' => esc_html__('Description', 'ftelements'),
+                'label' => esc_html__('Description', 'kidzu'),
                 'type' => Controls_Manager::TEXTAREA,
-                'default' => esc_html__('We provide nutritious meals to families and individuals.', 'ftelements'),
+                'default' => esc_html__('In a free hour, when our power of choice is untrammeled and', 'kidzu'),
             ]
         );
 
         $repeater->add_control(
-            'item_delay',
+            'item_icon',
             [
-                'label' => esc_html__('Animation Delay (e.g. .2s)', 'ftelements'),
-                'type' => Controls_Manager::TEXT,
-                'default' => '.2s',
+                'label' => esc_html__('Icon', 'kidzu'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => $theme_uri . '/assets/img/process/icon1.png',
+                ],
             ]
         );
 
         $this->add_control(
-            'feature_list',
+            'feature_items',
             [
-                'label' => esc_html__('Feature List', 'ftelements'),
+                'label' => esc_html__('Process Items', 'kidzu'),
                 'type' => Controls_Manager::REPEATER,
                 'fields' => $repeater->get_controls(),
                 'default' => [
                     [
-                        'item_title' => esc_html__('Food Distribution', 'ftelements'),
-                        'item_delay' => '.2s',
+                        'item_title' => esc_html__('Choose A Service', 'kidzu'),
+                        'item_description' => esc_html__('In a free hour, when our power of choice is untrammeled and', 'kidzu'),
+                        'item_icon' => ['url' => $theme_uri . '/assets/img/process/icon1.png'],
                     ],
                     [
-                        'item_title' => esc_html__('Medical aid', 'ftelements'),
-                        'item_delay' => '.4s',
-                        'item_active' => 'active',
+                        'item_title' => esc_html__('Expert Teachers', 'kidzu'),
+                        'item_description' => esc_html__('In a free hour, when our power of choice is untrammeled and', 'kidzu'),
+                        'item_icon' => ['url' => $theme_uri . '/assets/img/process/icon2.png'],
                     ],
                     [
-                        'item_title' => esc_html__('Education support', 'ftelements'),
-                        'item_delay' => '.6s',
+                        'item_title' => esc_html__('E-Learning Media', 'kidzu'),
+                        'item_description' => esc_html__('In a free hour, when our power of choice is untrammeled and', 'kidzu'),
+                        'item_icon' => ['url' => $theme_uri . '/assets/img/process/icon3.png'],
                     ],
                     [
-                        'item_title' => esc_html__('Shelter & relief', 'ftelements'),
-                        'item_delay' => '.8s',
+                        'item_title' => esc_html__('Full Day Programs', 'kidzu'),
+                        'item_description' => esc_html__('In a free hour, when our power of choice is untrammeled and', 'kidzu'),
+                        'item_icon' => ['url' => $theme_uri . '/assets/img/process/icon4.png'],
                     ],
                 ],
                 'title_field' => '{{{ item_title }}}',
@@ -219,36 +177,11 @@ class FT_Feature_6_Widget extends \Elementor\Widget_Base
 
         $this->end_controls_section();
 
-        // Style Tab - Section
         $this->start_controls_section(
-            'section_style',
+            'feature6_style_section',
             [
-                'label' => esc_html__('Section Style', 'ftelements'),
+                'label' => esc_html__('Section', 'kidzu'),
                 'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'section_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-core-featue-section-2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'section_margin',
-            [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-core-featue-section-2' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
             ]
         );
 
@@ -256,79 +189,429 @@ class FT_Feature_6_Widget extends \Elementor\Widget_Base
             Group_Control_Background::get_type(),
             [
                 'name' => 'section_background',
-                'label' => esc_html__('Background', 'ftelements'),
                 'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-core-featue-section-2',
+                'selector' => '{{WRAPPER}} .work-process-section-2',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'section_border',
+                'selector' => '{{WRAPPER}} .work-process-section-2',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'section_padding',
+            [
+                'label' => esc_html__('Padding', 'kidzu'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'section_margin',
+            [
+                'label' => esc_html__('Margin', 'kidzu'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'section_border_radius',
+            [
+                'label' => esc_html__('Border Radius', 'kidzu'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'section_overflow',
+            [
+                'label' => esc_html__('Overflow', 'kidzu'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'inherit' => esc_html__('Default', 'kidzu'),
+                    'visible' => esc_html__('Visible', 'kidzu'),
+                    'hidden' => esc_html__('Hidden', 'kidzu'),
+                    'clip' => esc_html__('Clip', 'kidzu'),
+                    'scroll' => esc_html__('Scroll', 'kidzu'),
+                    'auto' => esc_html__('Auto', 'kidzu'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2' => 'overflow: {{VALUE}};',
+                ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Style Tab - Header
         $this->start_controls_section(
-            'header_style',
+            'feature6_style_container',
             [
-                'label' => esc_html__('Header Style', 'ftelements'),
+                'label' => esc_html__('Container & Wrapper', 'kidzu'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
-        $this->add_control(
-            'subtitle_heading',
+        $this->add_responsive_control(
+            'container_max_width',
             [
-                'label' => esc_html__('Subtitle', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_control(
-            'subtitle_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label' => esc_html__('Container Max Width', 'kidzu'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 1920],
+                    '%' => ['min' => 0, 'max' => 100],
+                ],
                 'selectors' => [
-                    '{{WRAPPER}} .grt-sub-title' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .work-process-section-2 > .container' => 'max-width: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_group_control(
-            Group_Control_Typography::get_type(),
+            Group_Control_Background::get_type(),
             [
-                'name' => 'subtitle_typography',
-                'selector' => '{{WRAPPER}} .grt-sub-title',
+                'name' => 'wrapper_background',
+                'types' => ['classic', 'gradient'],
+                'selector' => '{{WRAPPER}} .work-process-section-2 .process-work-wrapper',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'wrapper_border',
+                'selector' => '{{WRAPPER}} .work-process-section-2 .process-work-wrapper',
             ]
         );
 
         $this->add_responsive_control(
-            'subtitle_margin',
+            'wrapper_padding',
             [
-                'label' => esc_html__('Margin Bottom', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em', '%'],
+                'label' => esc_html__('Wrapper Padding', 'kidzu'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
                 'selectors' => [
-                    '{{WRAPPER}} .grt-sub-title' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .work-process-section-2 .process-work-wrapper' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
-        $this->add_control(
-            'title_heading',
+        $this->add_responsive_control(
+            'wrapper_margin',
             [
-                'label' => esc_html__('Title', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
+                'label' => esc_html__('Wrapper Margin', 'kidzu'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .process-work-wrapper' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'wrapper_border_radius',
+            [
+                'label' => esc_html__('Wrapper Border Radius', 'kidzu'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .process-work-wrapper' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'feature6_style_grid',
+            [
+                'label' => esc_html__('Grid / Column', 'kidzu'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'grid_row_gap',
+            [
+                'label' => esc_html__('Row Gap', 'kidzu'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 120],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .row.g-4' => 'row-gap: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'grid_column_gap',
+            [
+                'label' => esc_html__('Column Gap', 'kidzu'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 120],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .row.g-4' => 'column-gap: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'column_margin',
+            [
+                'label' => esc_html__('Column Margin', 'kidzu'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .row.g-4 > [class*="col-"]' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'column_padding',
+            [
+                'label' => esc_html__('Column Padding', 'kidzu'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .row.g-4 > [class*="col-"]' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'feature6_style_card',
+            [
+                'label' => esc_html__('Card', 'kidzu'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name' => 'card_background',
+                'types' => ['classic', 'gradient'],
+                'selector' => '{{WRAPPER}} .work-process-section-2 .work-process-items',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'card_border',
+                'selector' => '{{WRAPPER}} .work-process-section-2 .work-process-items',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'card_padding',
+            [
+                'label' => esc_html__('Padding', 'kidzu'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .work-process-items' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'card_margin',
+            [
+                'label' => esc_html__('Margin', 'kidzu'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .work-process-items' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'card_border_radius',
+            [
+                'label' => esc_html__('Border Radius', 'kidzu'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .work-process-items' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'card_content_gap',
+            [
+                'label' => esc_html__('Icon / Content Gap', 'kidzu'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 120],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .work-process-items' => 'gap: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'feature6_style_icon',
+            [
+                'label' => esc_html__('Icon', 'kidzu'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name' => 'icon_background',
+                'types' => ['classic', 'gradient'],
+                'selector' => '{{WRAPPER}} .work-process-section-2 .work-process-items .icon',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'icon_border',
+                'selector' => '{{WRAPPER}} .work-process-section-2 .work-process-items .icon',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'icon_box_size',
+            [
+                'label' => esc_html__('Icon Box Size', 'kidzu'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => ['min' => 20, 'max' => 240],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .work-process-items .icon' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'icon_border_radius',
+            [
+                'label' => esc_html__('Icon Border Radius', 'kidzu'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .work-process-items .icon' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'icon_padding',
+            [
+                'label' => esc_html__('Icon Box Padding', 'kidzu'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .work-process-items .icon' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'icon_margin',
+            [
+                'label' => esc_html__('Icon Box Margin', 'kidzu'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .work-process-items .icon' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'icon_image_width',
+            [
+                'label' => esc_html__('Icon Width', 'kidzu'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'range' => [
+                    'px' => ['min' => 10, 'max' => 200],
+                    '%' => ['min' => 0, 'max' => 100],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .work-process-items .icon img' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'icon_image_height',
+            [
+                'label' => esc_html__('Icon Height', 'kidzu'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => ['min' => 10, 'max' => 200],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .work-process-items .icon img' => 'height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Css_Filter::get_type(),
+            [
+                'name' => 'icon_css_filters',
+                'selector' => '{{WRAPPER}} .work-process-section-2 .work-process-items .icon img',
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'feature6_style_title',
+            [
+                'label' => esc_html__('Title', 'kidzu'),
+                'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_control(
             'title_color',
             [
-                'label' => esc_html__('Color', 'ftelements'),
+                'label' => esc_html__('Color', 'kidzu'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .split-title' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .work-process-section-2 .work-process-items .content h2' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -337,218 +620,57 @@ class FT_Feature_6_Widget extends \Elementor\Widget_Base
             Group_Control_Typography::get_type(),
             [
                 'name' => 'title_typography',
-                'selector' => '{{WRAPPER}} .split-title',
+                'selector' => '{{WRAPPER}} .work-process-section-2 .work-process-items .content h2',
             ]
         );
 
         $this->add_responsive_control(
-            'header_max_width',
+            'title_margin',
             [
-                'label' => esc_html__('Max Width', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em', '%'],
+                'label' => esc_html__('Margin', 'kidzu'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', 'em'],
                 'selectors' => [
-                    '{{WRAPPER}} .grt-section-title' => 'max-width: {{SIZE}}{{UNIT}}; margin-left: auto; margin-right: auto;',
+                    '{{WRAPPER}} .work-process-section-2 .work-process-items .content h2' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'title_transform',
+            [
+                'label' => esc_html__('Transform', 'kidzu'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'inherit' => esc_html__('Default', 'kidzu'),
+                    'none' => esc_html__('None', 'kidzu'),
+                    'uppercase' => esc_html__('Uppercase', 'kidzu'),
+                    'lowercase' => esc_html__('Lowercase', 'kidzu'),
+                    'capitalize' => esc_html__('Capitalize', 'kidzu'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .work-process-items .content h2' => 'text-transform: {{VALUE}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Style Tab - Feature Item
         $this->start_controls_section(
-            'item_style_section',
+            'feature6_style_description',
             [
-                'label' => esc_html__('Feature Item', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->start_controls_tabs('item_style_tabs');
-
-        $this->start_controls_tab(
-            'item_style_normal',
-            [
-                'label' => esc_html__('Normal', 'ftelements'),
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name' => 'item_bg',
-                'selector' => '{{WRAPPER}} .grt-core-box-2',
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'item_border',
-                'selector' => '{{WRAPPER}} .grt-core-box-2',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'item_radius',
-            [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-core-box-2' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    '{{WRAPPER}} .grt-core-box-2 .thumb img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} 0 0;',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'item_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-core-box-2 .content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->start_controls_tab(
-            'item_style_hover',
-            [
-                'label' => esc_html__('Hover / Active', 'ftelements'),
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name' => 'item_bg_hover',
-                'selector' => '{{WRAPPER}} .grt-core-box-2:hover, {{WRAPPER}} .grt-core-box-2.active',
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'item_border_hover',
-                'selector' => '{{WRAPPER}} .grt-core-box-2:hover, {{WRAPPER}} .grt-core-box-2.active',
-            ]
-        );
-
-        $this->add_control(
-            'item_title_color_hover',
-            [
-                'label' => esc_html__('Title Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .grt-core-box-2:hover .title, {{WRAPPER}} .grt-core-box-2.active .title' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'item_p_color_hover',
-            [
-                'label' => esc_html__('Description Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .grt-core-box-2:hover p, {{WRAPPER}} .grt-core-box-2.active p' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
-
-        $this->end_controls_section();
-
-        // Style Tab - Icon
-        $this->start_controls_section(
-            'icon_style_section',
-            [
-                'label' => esc_html__('Icon Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'icon_size',
-            [
-                'label' => esc_html__('Icon Size', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-core-box-2 .icon img' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'icon_bg',
-            [
-                'label' => esc_html__('Background Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .grt-core-box-2 .icon' => 'background-color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'icon_radius',
-            [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-core-box-2 .icon' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'icon_spacing',
-            [
-                'label' => esc_html__('Spacing', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-core-box-2 .icon' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Style Tab - Typography
-        $this->start_controls_section(
-            'text_style_section',
-            [
-                'label' => esc_html__('Content Style', 'ftelements'),
+                'label' => esc_html__('Description', 'kidzu'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_control(
-            'item_title_style',
+            'description_color',
             [
-                'label' => esc_html__('Title', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-            ]
-        );
-
-        $this->add_control(
-            'item_title_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
+                'label' => esc_html__('Color', 'kidzu'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-core-box-2 .title' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .work-process-section-2 .work-process-items .content p' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -556,36 +678,38 @@ class FT_Feature_6_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name' => 'item_title_typography',
-                'selector' => '{{WRAPPER}} .grt-core-box-2 .title',
+                'name' => 'description_typography',
+                'selector' => '{{WRAPPER}} .work-process-section-2 .work-process-items .content p',
             ]
         );
 
-        $this->add_control(
-            'item_desc_style',
+        $this->add_responsive_control(
+            'description_margin',
             [
-                'label' => esc_html__('Description', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_control(
-            'item_desc_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label' => esc_html__('Margin', 'kidzu'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', 'em'],
                 'selectors' => [
-                    '{{WRAPPER}} .grt-core-box-2 p' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .work-process-section-2 .work-process-items .content p' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
+        $this->add_control(
+            'description_transform',
             [
-                'name' => 'item_desc_typography',
-                'selector' => '{{WRAPPER}} .grt-core-box-2 p',
+                'label' => esc_html__('Transform', 'kidzu'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'inherit' => esc_html__('Default', 'kidzu'),
+                    'none' => esc_html__('None', 'kidzu'),
+                    'uppercase' => esc_html__('Uppercase', 'kidzu'),
+                    'lowercase' => esc_html__('Lowercase', 'kidzu'),
+                    'capitalize' => esc_html__('Capitalize', 'kidzu'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .work-process-section-2 .work-process-items .content p' => 'text-transform: {{VALUE}};',
+                ],
             ]
         );
 
@@ -604,73 +728,55 @@ class FT_Feature_6_Widget extends \Elementor\Widget_Base
     {
 
         $settings = $this->get_settings_for_display();
+        $theme_uri = get_template_directory_uri();
+        $section_class = !empty($settings['section_class']) ? $settings['section_class'] : 'work-process-section-2 pt-0 fix section-padding fix';
+        $icon_bg_image = !empty($settings['icon_bg_image']['url']) ? $settings['icon_bg_image']['url'] : $theme_uri . '/assets/img/process/icon-bg.png';
+        $feature_items = !empty($settings['feature_items']) && is_array($settings['feature_items']) ? $settings['feature_items'] : [];
 
         ?>
 
-        <section class="grt-core-featue-section-2 fix section-bg-2 section-padding">
+
+        <section class="<?php echo esc_attr($section_class); ?>">
             <div class="container">
-                <?php if (!empty($settings['subtitle']) || !empty($settings['title'])): ?>
-                    <div class="grt-section-title text-center">
-                        <?php if (!empty($settings['subtitle'])): ?>
-                            <span class="grt-sub-title tz-sub-tilte tz-sub-anim tx-subTitle">
-                                <?php if (!empty($settings['subtitle_icon']['value'])): ?>
-                                    <?php \Elementor\Icons_Manager::render_icon($settings['subtitle_icon'], ['aria-hidden' => 'true']); ?>
-                                <?php endif; ?>
-                                <?php echo esc_html($settings['subtitle']); ?>
-                            </span>
-                        <?php endif; ?>
-
-                        <?php if (!empty($settings['title'])): ?>
-                            <h2 class="split-title">
-                                <?php echo wp_kses_post($settings['title']); ?>
-                            </h2>
-                        <?php endif; ?>
-                    </div>
-                <?php endif; ?>
-
-                <div class="row">
-                    <?php
-                    if (!empty($settings['feature_list'])):
-                        foreach ($settings['feature_list'] as $index => $item):
-                            $active_class = !empty($item['item_active']) ? ' active' : '';
-                            $delay = !empty($item['item_delay']) ? $item['item_delay'] : '.2s';
+                <div class="process-work-wrapper style-padding">
+                    <div class="row g-4">
+                        <?php foreach ($feature_items as $index => $item) : ?>
+                            <?php
+                            $delay = 0.2 + ($index * 0.2);
+                            $icon = !empty($item['item_icon']['url']) ? $item['item_icon']['url'] : '';
                             ?>
-                            <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="<?php echo esc_attr($delay); ?>">
-                                <div class="grt-core-box-2<?php echo esc_attr($active_class); ?>">
-                                    <?php if (!empty($item['item_image']['url'])): ?>
-                                        <div class="thumb">
-                                            <img src="<?php echo esc_url($item['item_image']['url']); ?>"
-                                                alt="<?php echo esc_attr(get_post_meta($item['item_image']['id'], '_wp_attachment_image_alt', true)); ?>">
-                                        </div>
-                                    <?php endif; ?>
+                            <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="<?php echo esc_attr(number_format($delay, 1)); ?>s">
+                                <div class="work-process-items text-center">
+                                    <div class="icon bg-cover" style="background-image: url('<?php echo esc_url($icon_bg_image); ?>');">
+                                        <?php if (!empty($icon)) : ?>
+                                            <img src="<?php echo esc_url($icon); ?>" alt="img">
+                                        <?php endif; ?>
+                                    </div>
                                     <div class="content">
-                                        <?php if (!empty($item['item_icon']['url'])): ?>
-                                            <div class="icon">
-                                                <img src="<?php echo esc_url($item['item_icon']['url']); ?>"
-                                                    alt="<?php echo esc_attr(get_post_meta($item['item_icon']['id'], '_wp_attachment_image_alt', true)); ?>">
-                                            </div>
-                                        <?php endif; ?>
-
-                                        <?php if (!empty($item['item_title'])): ?>
-                                            <h3 class="title"><?php echo esc_html($item['item_title']); ?></h3>
-                                        <?php endif; ?>
-
-                                        <?php if (!empty($item['item_description'])): ?>
-                                            <p>
-                                                <?php echo esc_html($item['item_description']); ?>
-                                            </p>
-                                        <?php endif; ?>
+                                        <h2><?php echo esc_html($item['item_title']); ?></h2>
+                                        <p>
+                                            <?php echo wp_kses_post($item['item_description']); ?>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-                            <?php
-                        endforeach;
-                    endif;
-                    ?>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <?php
+
+
+
+
+
+
+
+
+
+
+
+<?php
     }
 } ?>

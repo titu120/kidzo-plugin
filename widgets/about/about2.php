@@ -1,31 +1,23 @@
 <?php
 
-use Elementor\Group_Control_Css_Filter;
 use Elementor\Repeater;
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Image_Size;
-use Elementor\Group_Control_Typography;
-use Elementor\Group_Control_Background;
-use Elementor\Group_Control_Border;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Utils;
 
 defined('ABSPATH') || die();
 
-class FT_About_2_Widget extends \Elementor\Widget_Base
+class FT_About2_Widget extends \Elementor\Widget_Base
 {
 
     /*
-     *
-     * @since 1.0.0
-     * @access public
-     *
-     * @return string Widget name.
-     */
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string Widget name.
+	 */
     public function get_name()
     {
-        return 'ft-about-2';
+        return 'ft-about2';
     }
 
     /**
@@ -83,50 +75,40 @@ class FT_About_2_Widget extends \Elementor\Widget_Base
      */
     protected function register_controls()
     {
-        // Content Section
+        $theme_uri = get_template_directory_uri();
+
         $this->start_controls_section(
-            'section_content',
+            'about2_content',
             [
-                'label' => esc_html__('Content', 'ftelements'),
+                'label' => esc_html__('Content', 'kidzu'),
+                'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
 
         $this->add_control(
             'sub_title',
             [
-                'label' => esc_html__('Sub Title', 'ftelements'),
+                'label' => esc_html__('Sub Title', 'kidzu'),
                 'type' => Controls_Manager::TEXT,
-                'default' => esc_html__('About our charities', 'ftelements'),
-                'label_block' => true,
+                'default' => esc_html__('About Us', 'kidzu'),
             ]
         );
 
         $this->add_control(
             'title',
             [
-                'label' => esc_html__('Title', 'ftelements'),
+                'label' => esc_html__('Title', 'kidzu'),
                 'type' => Controls_Manager::TEXTAREA,
-                'default' => esc_html__('Let together we can make a huge impact', 'ftelements'),
+                'default' => esc_html__('A Safe, Joyful & Learning-Focused Environment for Your Child', 'kidzu'),
             ]
         );
 
         $this->add_control(
             'description',
             [
-                'label' => esc_html__('Description', 'ftelements'),
+                'label' => esc_html__('Description', 'kidzu'),
                 'type' => Controls_Manager::TEXTAREA,
-                'default' => esc_html__('We are a nonprofit that makes it easy and safe to give to projects anywhere in the world, while providing local organizations the tools, training.', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'about_image',
-            [
-                'label' => esc_html__('Main Image', 'ftelements'),
-                'type' => Controls_Manager::MEDIA,
-                'default' => [
-                    'url' => Utils::get_placeholder_image_src(),
-                ],
+                'default' => esc_html__('At Kidzu, our aim is to give everyone a chance to learn a new language. Our skilled team creates fun and useful lessons so each student can reach their goals. We\'re here to help you gain skills for both work and life.', 'kidzu'),
             ]
         );
 
@@ -135,42 +117,23 @@ class FT_About_2_Widget extends \Elementor\Widget_Base
         $repeater->add_control(
             'list_text',
             [
-                'label' => esc_html__('Text', 'ftelements'),
+                'label' => esc_html__('Text', 'kidzu'),
                 'type' => Controls_Manager::TEXT,
-                'label_block' => true,
-            ]
-        );
-
-        $repeater->add_control(
-            'list_icon',
-            [
-                'label' => esc_html__('Icon', 'ftelements'),
-                'type' => Controls_Manager::MEDIA,
-                'default' => [
-                    'url' => Utils::get_placeholder_image_src(),
-                ],
+                'default' => esc_html__('Feature', 'kidzu'),
             ]
         );
 
         $this->add_control(
             'list_items',
             [
-                'label' => esc_html__('List Items', 'ftelements'),
+                'label' => esc_html__('Feature List', 'kidzu'),
                 'type' => Controls_Manager::REPEATER,
                 'fields' => $repeater->get_controls(),
                 'default' => [
-                    [
-                        'list_text' => esc_html__('consectetur adipisicing elit', 'ftelements'),
-                    ],
-                    [
-                        'list_text' => esc_html__('Ut enim ad minim veniam, quis nostrud', 'ftelements'),
-                    ],
-                    [
-                        'list_text' => esc_html__('sed do eiusmod tempor incididunt', 'ftelements'),
-                    ],
-                    [
-                        'list_text' => esc_html__('Nemo enim ipsam voluptatem quia', 'ftelements'),
-                    ],
+                    ['list_text' => esc_html__('Learn Through Fun', 'kidzu')],
+                    ['list_text' => esc_html__('Secure Environment', 'kidzu')],
+                    ['list_text' => esc_html__('Healthy Food Choices', 'kidzu')],
+                    ['list_text' => esc_html__('Bright & Cheerful Environment', 'kidzu')],
                 ],
                 'title_field' => '{{{ list_text }}}',
             ]
@@ -179,19 +142,17 @@ class FT_About_2_Widget extends \Elementor\Widget_Base
         $this->add_control(
             'button_text',
             [
-                'label' => esc_html__('Button Text', 'ftelements'),
+                'label' => esc_html__('Button Text', 'kidzu'),
                 'type' => Controls_Manager::TEXT,
-                'default' => esc_html__('Know more us', 'ftelements'),
-                'label_block' => true,
+                'default' => esc_html__('know more', 'kidzu'),
             ]
         );
 
         $this->add_control(
             'button_link',
             [
-                'label' => esc_html__('Button Link', 'ftelements'),
+                'label' => esc_html__('Button Link', 'kidzu'),
                 'type' => Controls_Manager::URL,
-                'placeholder' => esc_html__('https://your-link.com', 'ftelements'),
                 'default' => [
                     'url' => '#',
                 ],
@@ -199,487 +160,118 @@ class FT_About_2_Widget extends \Elementor\Widget_Base
         );
 
         $this->add_control(
-            'shape_1',
+            'phone_label',
             [
-                'label' => esc_html__('Shape 1', 'ftelements'),
+                'label' => esc_html__('Phone Label', 'kidzu'),
+                'type' => Controls_Manager::TEXT,
+                'default' => esc_html__('Call Us Now', 'kidzu'),
+            ]
+        );
+
+        $this->add_control(
+            'phone_number',
+            [
+                'label' => esc_html__('Phone Number', 'kidzu'),
+                'type' => Controls_Manager::TEXT,
+                'default' => esc_html__('+11 123 0654 98', 'kidzu'),
+            ]
+        );
+
+        $this->add_control(
+            'img_pencil',
+            [
+                'label' => esc_html__('Decor: Pencil', 'kidzu'),
                 'type' => Controls_Manager::MEDIA,
                 'default' => [
-                    'url' => Utils::get_placeholder_image_src(),
+                    'url' => $theme_uri . '/assets/img/home-2/shape/about-pencil.png',
                 ],
             ]
         );
 
         $this->add_control(
-            'shape_2',
+            'img_vec',
             [
-                'label' => esc_html__('Shape 2', 'ftelements'),
+                'label' => esc_html__('Decor: Vector 1', 'kidzu'),
                 'type' => Controls_Manager::MEDIA,
                 'default' => [
-                    'url' => Utils::get_placeholder_image_src(),
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Style Section - Sub Title
-        $this->start_controls_section(
-            'section_subtitle_style',
-            [
-                'label' => esc_html__('Sub Title Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_control(
-            'subtitle_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .tx-subTitle' => 'color: {{VALUE}} !important;',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'subtitle_typography',
-                'selector' => '{{WRAPPER}} .tx-subTitle',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'subtitle_margin',
-            [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .tx-subTitle' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'subtitle_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .tx-subTitle' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    'url' => $theme_uri . '/assets/img/home-2/shape/about-vec.png',
                 ],
             ]
         );
 
         $this->add_control(
-            'subtitle_icon_size',
+            'img_vec2',
             [
-                'label' => esc_html__('Icon Size', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em', 'rem'],
-                'selectors' => [
-                    '{{WRAPPER}} .tx-subTitle i' => 'font-size: {{SIZE}}{{UNIT}};',
+                'label' => esc_html__('Decor: Vector 2', 'kidzu'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => $theme_uri . '/assets/img/home-2/shape/about-shape3.png',
                 ],
             ]
         );
 
         $this->add_control(
-            'subtitle_icon_color',
+            'img_main',
             [
-                'label' => esc_html__('Icon Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .tx-subTitle i' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Style Section - Title
-        $this->start_controls_section(
-            'section_title_style',
-            [
-                'label' => esc_html__('Title Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_control(
-            'title_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .split-title' => 'color: {{VALUE}} !important;',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'title_typography',
-                'selector' => '{{WRAPPER}} .split-title',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'title_margin',
-            [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .split-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Style Section - Description
-        $this->start_controls_section(
-            'section_description_style',
-            [
-                'label' => esc_html__('Description Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_control(
-            'description_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .text' => 'color: {{VALUE}} !important;',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'description_typography',
-                'selector' => '{{WRAPPER}} .text',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'description_margin',
-            [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .text' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Style Section - List Items
-        $this->start_controls_section(
-            'section_items_style',
-            [
-                'label' => esc_html__('List Items Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_control(
-            'items_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} ul li' => 'color: {{VALUE}} !important;',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'items_typography',
-                'selector' => '{{WRAPPER}} ul li',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'items_margin',
-            [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} ul li' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'items_icon_width',
-            [
-                'label' => esc_html__('Icon Width', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range' => [
-                    'px' => ['max' => 100],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} ul li img' => 'width: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Style Section - Button
-        $this->start_controls_section(
-            'section_button_style',
-            [
-                'label' => esc_html__('Button Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'button_typography',
-                'selector' => '{{WRAPPER}} .theme-btn',
-            ]
-        );
-
-        $this->start_controls_tabs('tabs_button_style');
-
-        $this->start_controls_tab(
-            'tab_button_normal',
-            [
-                'label' => esc_html__('Normal', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'button_text_color',
-            [
-                'label' => esc_html__('Text Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn' => 'color: {{VALUE}} !important;',
+                'label' => esc_html__('Main Image', 'kidzu'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => $theme_uri . '/assets/img/home-2/about-image.png',
                 ],
             ]
         );
 
         $this->add_control(
-            'button_bg_color',
+            'img_shape1',
             [
-                'label' => esc_html__('Background Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn' => 'background-color: {{VALUE}} !important;',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'button_border',
-                'selector' => '{{WRAPPER}} .theme-btn',
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->start_controls_tab(
-            'tab_button_hover',
-            [
-                'label' => esc_html__('Hover', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'button_text_color_hover',
-            [
-                'label' => esc_html__('Text Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn:hover' => 'color: {{VALUE}} !important;',
+                'label' => esc_html__('Overlay Shape 1', 'kidzu'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => $theme_uri . '/assets/img/home-2/shape/about-shape1.png',
                 ],
             ]
         );
 
         $this->add_control(
-            'button_bg_color_hover',
+            'img_shape2',
             [
-                'label' => esc_html__('Background Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn:hover' => 'background-color: {{VALUE}} !important;',
+                'label' => esc_html__('Overlay Shape 2', 'kidzu'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => $theme_uri . '/assets/img/home-2/shape/about-shape2.png',
                 ],
             ]
         );
 
         $this->add_control(
-            'button_border_color_hover',
+            'img_check',
             [
-                'label' => esc_html__('Border Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn:hover' => 'border-color: {{VALUE}} !important;',
-                ],
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
-
-        $this->add_responsive_control(
-            'button_border_radius',
-            [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-                ],
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'button_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Style Section - Section
-        $this->start_controls_section(
-            'section_style',
-            [
-                'label' => esc_html__('Section Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'section_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-about-section-3' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name' => 'section_background',
-                'selector' => '{{WRAPPER}} .grt-about-section-3',
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Style Section - Image
-        $this->start_controls_section(
-            'section_image_style',
-            [
-                'label' => esc_html__('Image Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'image_border_radius',
-            [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-thumb img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Css_Filter::get_type(),
-            [
-                'name' => 'image_css_filters',
-                'selector' => '{{WRAPPER}} .grt-thumb img',
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Style Section - Shapes
-        $this->start_controls_section(
-            'section_shapes_style',
-            [
-                'label' => esc_html__('Shapes Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'shape1_width',
-            [
-                'label' => esc_html__('Shape 1 Width', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range' => [
-                    'px' => ['max' => 1000],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .about-line-1 img' => 'width: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'shape2_width',
-            [
-                'label' => esc_html__('Shape 2 Width', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range' => [
-                    'px' => ['max' => 1000],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .about-line-2 img' => 'width: {{SIZE}}{{UNIT}};',
+                'label' => esc_html__('List Check Icon', 'kidzu'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => $theme_uri . '/assets/img/home-2/icon/check.svg',
                 ],
             ]
         );
 
         $this->add_control(
-            'shape_opacity',
+            'img_arrow',
             [
-                'label' => esc_html__('Shapes Opacity', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => ['min' => 0, 'max' => 1, 'step' => 0.1],
+                'label' => esc_html__('Button Arrow Icon', 'kidzu'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => $theme_uri . '/assets/img/icon/arrow1.svg',
                 ],
-                'selectors' => [
-                    '{{WRAPPER}} .about-line-1, {{WRAPPER}} .about-line-2' => 'opacity: {{SIZE}};',
+            ]
+        );
+
+        $this->add_control(
+            'img_phone',
+            [
+                'label' => esc_html__('Phone Icon', 'kidzu'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => $theme_uri . '/assets/img/home-1/icon/telephone.svg',
                 ],
             ]
         );
@@ -699,82 +291,116 @@ class FT_About_2_Widget extends \Elementor\Widget_Base
     {
 
         $settings = $this->get_settings_for_display();
+        $theme_uri = get_template_directory_uri();
 
-        $about_image = !empty($settings['about_image']['url']) ? $settings['about_image']['url'] : '';
-        $shape_1 = !empty($settings['shape_1']['url']) ? $settings['shape_1']['url'] : '';
-        $shape_2 = !empty($settings['shape_2']['url']) ? $settings['shape_2']['url'] : '';
+        $img_pencil = !empty($settings['img_pencil']['url']) ? $settings['img_pencil']['url'] : $theme_uri . '/assets/img/home-2/shape/about-pencil.png';
+        $img_vec = !empty($settings['img_vec']['url']) ? $settings['img_vec']['url'] : $theme_uri . '/assets/img/home-2/shape/about-vec.png';
+        $img_vec2 = !empty($settings['img_vec2']['url']) ? $settings['img_vec2']['url'] : $theme_uri . '/assets/img/home-2/shape/about-shape3.png';
+        $img_main = !empty($settings['img_main']['url']) ? $settings['img_main']['url'] : $theme_uri . '/assets/img/home-2/about-image.png';
+        $img_shape1 = !empty($settings['img_shape1']['url']) ? $settings['img_shape1']['url'] : $theme_uri . '/assets/img/home-2/shape/about-shape1.png';
+        $img_shape2 = !empty($settings['img_shape2']['url']) ? $settings['img_shape2']['url'] : $theme_uri . '/assets/img/home-2/shape/about-shape2.png';
+        $img_check = !empty($settings['img_check']['url']) ? $settings['img_check']['url'] : $theme_uri . '/assets/img/home-2/icon/check.svg';
+        $img_arrow = !empty($settings['img_arrow']['url']) ? $settings['img_arrow']['url'] : $theme_uri . '/assets/img/icon/arrow1.svg';
+        $img_phone = !empty($settings['img_phone']['url']) ? $settings['img_phone']['url'] : $theme_uri . '/assets/img/home-1/icon/telephone.svg';
 
-        $this->add_render_attribute('button_link', 'class', 'theme-btn wow fadeInUp');
-        $this->add_render_attribute('button_link', 'data-wow-delay', '.7s');
+        $list_items = !empty($settings['list_items']) && is_array($settings['list_items']) ? $settings['list_items'] : [];
+        $count = count($list_items);
+        $mid = $count > 0 ? (int) ceil($count / 2) : 0;
+        $col1 = $mid > 0 ? array_slice($list_items, 0, $mid) : [];
+        $col2 = $mid > 0 ? array_slice($list_items, $mid) : [];
 
+        $phone_number_raw = !empty($settings['phone_number']) ? $settings['phone_number'] : '';
+        $phone_number_url = preg_replace('/[^0-9\+]/', '', $phone_number_raw);
+
+        $this->add_render_attribute('about2_button', 'class', 'theme-btn');
         if (!empty($settings['button_link']['url'])) {
-            $this->add_link_attributes('button_link', $settings['button_link']);
+            $this->add_link_attributes('about2_button', $settings['button_link']);
+        } else {
+            $this->add_render_attribute('about2_button', 'href', '#');
         }
 
         ?>
 
 
-        <section class="grt-about-section-3 fix section-padding section-bg">
-            <?php if ($shape_1): ?>
-                <div class="about-line-1">
-                    <img src="<?php echo esc_url($shape_1); ?>" alt="img">
-                </div>
-            <?php endif; ?>
-            <?php if ($shape_2): ?>
-                <div class="about-line-2">
-                    <img src="<?php echo esc_url($shape_2); ?>" alt="img">
-                </div>
-            <?php endif; ?>
+        <section class="about-section-2 fix section-padding">
+            <div class="about-pencil bz-gsap-animate-circle">
+                <img src="<?php echo esc_url($img_pencil); ?>" alt="">
+            </div>
+            <div class="about-vec bz-gsap-animate-circle">
+                <img src="<?php echo esc_url($img_vec); ?>" alt="">
+            </div>
+            <div class="about-vec2 bz-gsap-animate-circle">
+                <img src="<?php echo esc_url($img_vec2); ?>" alt="">
+            </div>
             <div class="container">
-                <div class="grt-about-wrapper-3">
+                <div class="about-wrapper-2">
                     <div class="row g-4 align-items-center">
-                        <div class="col-lg-6 wow fadeInUp" data-wow-delay=".3s">
-                            <div class="grt-thumb">
-                                <?php if ($about_image): ?>
-                                    <img src="<?php echo esc_url($about_image); ?>" alt="img">
-                                <?php endif; ?>
-                            </div>
-                        </div>
                         <div class="col-lg-6">
-                            <div class="grt-about-content">
-                                <div class="grt-section-title mb-0">
-                                    <?php if ($settings['sub_title']): ?>
-                                        <span class="grt-sub-title tz-sub-tilte tz-sub-anim tx-subTitle">
-                                            <i class="fa-sharp fa-solid fa-heart"></i>
-                                            <?php echo esc_html($settings['sub_title']); ?>
-                                        </span>
-                                    <?php endif; ?>
-                                    <?php if ($settings['title']): ?>
-                                        <h2 class="split-title text-white">
-                                            <?php echo wp_kses_post($settings['title']); ?>
-                                        </h2>
-                                    <?php endif; ?>
+                            <div class="about-content-2">
+                                <div class="section-title mb-0">
+                                    <span class="sec-sub tz-sub-tilte tz-sub-anim tx-subTitle"><?php echo esc_html($settings['sub_title']); ?></span>
+                                    <h2 class="wow fadeInUp" data-wow-delay=".3s">
+                                        <?php echo esc_html($settings['title']); ?>
+                                    </h2>
                                 </div>
-                                <?php if ($settings['description']): ?>
-                                    <p class="text wow fadeInUp" data-wow-delay=".3s">
-                                        <?php echo wp_kses_post($settings['description']); ?>
-                                    </p>
-                                <?php endif; ?>
-
-                                <?php if ($settings['list_items']): ?>
-                                    <ul class="wow fadeInUp" data-wow-delay=".5s">
-                                        <?php foreach ($settings['list_items'] as $item): ?>
-                                            <li>
-                                                <?php if (!empty($item['list_icon']['url'])): ?>
-                                                    <img src="<?php echo esc_url($item['list_icon']['url']); ?>" alt="img">
-                                                <?php endif; ?>
-                                                <?php echo esc_html($item['list_text']); ?>
-                                            </li>
+                                <p class="about-text wow fadeInUp" data-wow-delay=".5s">
+                                    <?php echo esc_html($settings['description']); ?>
+                                </p>
+                                <div class="about-list wow fadeInUp" data-wow-delay=".7s">
+                                    <?php if (!empty($col1)) : ?>
+                                    <ul>
+                                        <?php foreach ($col1 as $item) : ?>
+                                        <li>
+                                            <img src="<?php echo esc_url($img_check); ?>" alt="">
+                                            <?php echo esc_html(!empty($item['list_text']) ? $item['list_text'] : ''); ?>
+                                        </li>
                                         <?php endforeach; ?>
                                     </ul>
-                                <?php endif; ?>
-
-                                <?php if ($settings['button_text']): ?>
-                                    <a <?php echo $this->get_render_attribute_string('button_link'); ?>>
-                                        <?php echo esc_html($settings['button_text']); ?>
-                                        <i class="fa-regular fa-arrow-up-right"></i>
+                                    <?php endif; ?>
+                                    <?php if (!empty($col2)) : ?>
+                                    <ul>
+                                        <?php foreach ($col2 as $item) : ?>
+                                        <li>
+                                            <img src="<?php echo esc_url($img_check); ?>" alt="">
+                                            <?php echo esc_html(!empty($item['list_text']) ? $item['list_text'] : ''); ?>
+                                        </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="about-button wow fadeInUp" data-wow-delay=".6s">
+                                    <a <?php echo $this->get_render_attribute_string('about2_button'); ?>>
+                                        <span class="theme-bg">
+                                            <svg width="170" height="59" viewBox="0 0 170 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M0 20.0865C0 11.6149 6.60344 4.61156 15.0604 4.11409L85 0L154.94 4.11409C163.397 4.61156 170 11.6149 170 20.0865V39.7352C170 48.2794 163.287 55.3159 154.752 55.7175L85 59L15.2479 55.7175C6.71321 55.3159 0 48.2794 0 39.7352V20.0865Z" fill="#F39F5F"></path>
+                                            </svg>
+                                        </span>
+                                        <span class="theme-text"><?php echo esc_html($settings['button_text']); ?> <img src="<?php echo esc_url($img_arrow); ?>" alt=""></span>
+                                        <span class="theme-text2"><?php echo esc_html($settings['button_text']); ?> <img src="<?php echo esc_url($img_arrow); ?>" alt=""></span>
                                     </a>
-                                <?php endif; ?>
+                                    <div class="author-icon">
+                                        <div class="icon">
+                                            <img src="<?php echo esc_url($img_phone); ?>" alt="">
+                                        </div>
+                                        <div class="content">
+                                            <span><?php echo esc_html($settings['phone_label']); ?></span>
+                                            <h3>
+                                                <a href="tel:<?php echo esc_attr($phone_number_url); ?>"><?php echo esc_html($phone_number_raw); ?></a>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 wow fadeInUp" data-wow-delay=".3s">
+                            <div class="about-image">
+                                <img src="<?php echo esc_url($img_main); ?>" alt="">
+                                <div class="shape1">
+                                    <img src="<?php echo esc_url($img_shape1); ?>" alt="">
+                                </div>
+                                <div class="shape2">
+                                    <img src="<?php echo esc_url($img_shape2); ?>" alt="">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -783,6 +409,12 @@ class FT_About_2_Widget extends \Elementor\Widget_Base
         </section>
 
 
-        <?php
+
+
+
+
+
+
+<?php
     }
-} ?>
+}

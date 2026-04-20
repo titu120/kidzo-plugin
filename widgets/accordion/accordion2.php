@@ -3,29 +3,26 @@
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Repeater;
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Border;
-use Elementor\Core\Schemes\Typography;
 use Elementor\Utils;
 
 defined('ABSPATH') || die();
 
-class FT_Accordion_2_Widget extends \Elementor\Widget_Base
+class FT_Accordion2_Widget extends \Elementor\Widget_Base
 {
 
     /*
-     *
-     * @since 1.0.0
-     * @access public
-     *
-     * @return string Widget name.
-     */
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string Widget name.
+	 */
     public function get_name()
     {
-        return 'ft-accordion-2';
+        return 'ft-accordion2';
     }
 
     /**
@@ -84,114 +81,233 @@ class FT_Accordion_2_Widget extends \Elementor\Widget_Base
     protected function register_controls()
     {
         $this->start_controls_section(
-            'section_content',
+            'content_section',
             [
                 'label' => esc_html__('Content', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_CONTENT,
             ]
         );
 
         $this->add_control(
-            'subtitle',
+            'faq_subtitle',
             [
-                'label' => esc_html__('Subtitle', 'ftelements'),
-                'type' => Controls_Manager::TEXT,
-                'default' => esc_html__('Still Have Questions?', 'ftelements'),
+                'label'       => esc_html__('Subtitle', 'ftelements'),
+                'type'        => Controls_Manager::TEXT,
+                'default'     => esc_html__('Faq', 'ftelements'),
+                'label_block' => true,
             ]
         );
 
         $this->add_control(
-            'title',
+            'faq_title',
             [
-                'label' => esc_html__('Title', 'ftelements'),
-                'type' => Controls_Manager::TEXTAREA,
-                'default' => esc_html__('More questions, clear <br> answers', 'ftelements'),
+                'label'       => esc_html__('Title', 'ftelements'),
+                'type'        => Controls_Manager::TEXT,
+                'default'     => esc_html__('Frequently Ask Question', 'ftelements'),
+                'label_block' => true,
+            ]
+        );
+
+        $this->add_control(
+            'faq_description',
+            [
+                'label'   => esc_html__('Description', 'ftelements'),
+                'type'    => Controls_Manager::TEXTAREA,
+                'default' => esc_html__('Qualified teachers who understand children’s needs and focus on personal attention. through play-based and academic learning.', 'ftelements'),
+            ]
+        );
+
+        $this->add_control(
+            'faq_main_image',
+            [
+                'label'   => esc_html__('Main Image', 'ftelements'),
+                'type'    => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => Utils::get_placeholder_image_src(),
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'faq_top_shape_image',
+            [
+                'label'   => esc_html__('Top Shape Image', 'ftelements'),
+                'type'    => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => Utils::get_placeholder_image_src(),
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'faq_bottom_shape_image',
+            [
+                'label'   => esc_html__('Bottom Shape Image', 'ftelements'),
+                'type'    => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => Utils::get_placeholder_image_src(),
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'faq_plane_shape_image',
+            [
+                'label'   => esc_html__('Plane Shape Image', 'ftelements'),
+                'type'    => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => Utils::get_placeholder_image_src(),
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'faq_inner_shape_image',
+            [
+                'label'   => esc_html__('Inner Shape Image', 'ftelements'),
+                'type'    => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => Utils::get_placeholder_image_src(),
+                ],
             ]
         );
 
         $repeater = new Repeater();
 
         $repeater->add_control(
-            'question',
+            'item_question',
             [
-                'label' => esc_html__('Question', 'ftelements'),
-                'type' => Controls_Manager::TEXT,
-                'default' => esc_html__('Accordion Question', 'ftelements'),
+                'label'       => esc_html__('Question', 'ftelements'),
+                'type'        => Controls_Manager::TEXT,
+                'default'     => esc_html__('What age can my child enroll?', 'ftelements'),
                 'label_block' => true,
             ]
         );
 
         $repeater->add_control(
-            'answer',
+            'item_answer',
             [
-                'label' => esc_html__('Answer', 'ftelements'),
-                'type' => Controls_Manager::WYSIWYG,
-                'default' => esc_html__('Accordion Answer content goes here.', 'ftelements'),
+                'label'   => esc_html__('Answer', 'ftelements'),
+                'type'    => Controls_Manager::TEXTAREA,
+                'default' => esc_html__('School runs from morning to early afternoon, Sunday to Thursday. and focus on personal attention. through play-based and academic learning.', 'ftelements'),
             ]
         );
 
         $this->add_control(
-            'accordion_items',
+            'faq_items',
             [
-                'label' => esc_html__('Accordion Items', 'ftelements'),
-                'type' => Controls_Manager::REPEATER,
-                'fields' => $repeater->get_controls(),
-                'default' => [
+                'label'       => esc_html__('FAQ Items', 'ftelements'),
+                'type'        => Controls_Manager::REPEATER,
+                'fields'      => $repeater->get_controls(),
+                'title_field' => '{{{ item_question }}}',
+                'default'     => [
                     [
-                        'question' => esc_html__('What is your mission as a charity organization?', 'ftelements'),
-                        'answer' => esc_html__('Our mission is to support vulnerable individuals and families by providing essential resources such as food, healthcare, education, and emergency assistance. We work to improve quality of life and create long-term opportunities so people can become self-reliant and hopeful about their future. Every program we run is focused on dignity, compassion, and sustainable impact.', 'ftelements'),
+                        'item_question' => esc_html__('What age can my child enroll?', 'ftelements'),
+                        'item_answer'   => esc_html__('School runs from morning to early afternoon, Sunday to Thursday. and focus on personal attention. through play-based and academic learning.', 'ftelements'),
                     ],
                     [
-                        'question' => esc_html__('Who can receive help from your organization?', 'ftelements'),
-                        'answer' => esc_html__('Our mission is to support vulnerable individuals and families by providing essential resources such as food, healthcare, education, and emergency assistance. We work to improve quality of life and create long-term opportunities so people can become self-reliant and hopeful about their future. Every program we run is focused on dignity, compassion, and sustainable impact.', 'ftelements'),
+                        'item_question' => esc_html__('What is the school timing?', 'ftelements'),
+                        'item_answer'   => esc_html__('School runs from morning to early afternoon, Sunday to Thursday. and focus on personal attention. through play-based and academic learning.', 'ftelements'),
                     ],
                     [
-                        'question' => esc_html__('Can I choose where my donation goes?', 'ftelements'),
-                        'answer' => esc_html__('Our mission is to support vulnerable individuals and families by providing essential resources such as food, healthcare, education, and emergency assistance. We work to improve quality of life and create long-term opportunities so people can become self-reliant and hopeful about their future. Every program we run is focused on dignity, compassion, and sustainable impact.', 'ftelements'),
+                        'item_question' => esc_html__('Is transportation service available?', 'ftelements'),
+                        'item_answer'   => esc_html__('School runs from morning to early afternoon, Sunday to Thursday. and focus on personal attention. through play-based and academic learning.', 'ftelements'),
                     ],
                     [
-                        'question' => esc_html__('Do you work with other organizations or partners?', 'ftelements'),
-                        'answer' => esc_html__('Our mission is to support vulnerable individuals and families by providing essential resources such as food, healthcare, education, and emergency assistance. We work to improve quality of life and create long-term opportunities so people can become self-reliant and hopeful about their future. Every program we run is focused on dignity, compassion, and sustainable impact.', 'ftelements'),
-                    ],
-                    [
-                        'question' => esc_html__('How do you ensure transparency and trust?', 'ftelements'),
-                        'answer' => esc_html__('Our mission is to support vulnerable individuals and families by providing essential resources such as food, healthcare, education, and emergency assistance. We work to improve quality of life and create long-term opportunities so people can become self-reliant and hopeful about their future. Every program we run is focused on dignity, compassion, and sustainable impact.', 'ftelements'),
+                        'item_question' => esc_html__('How can I apply for admission?', 'ftelements'),
+                        'item_answer'   => esc_html__('School runs from morning to early afternoon, Sunday to Thursday. and focus on personal attention. through play-based and academic learning.', 'ftelements'),
                     ],
                 ],
-                'title_field' => '{{{ question }}}',
             ]
         );
 
         $this->end_controls_section();
 
-        // Style Tab
         $this->start_controls_section(
-            'section_style',
+            'layout_style',
             [
-                'label' => esc_html__('Section Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Layout', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_responsive_control(
-            'section_padding',
+            'layout_row_align_items',
             [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
+                'label'   => esc_html__('Row Vertical Align', 'ftelements'),
+                'type'    => Controls_Manager::SELECT,
+                'options' => [
+                    'stretch'    => esc_html__('Stretch', 'ftelements'),
+                    'flex-start' => esc_html__('Start', 'ftelements'),
+                    'center'     => esc_html__('Center', 'ftelements'),
+                    'flex-end'   => esc_html__('End', 'ftelements'),
+                ],
                 'selectors' => [
-                    '{{WRAPPER}} .grt-faq-section-2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .faq-section .row' => 'align-items: {{VALUE}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
+            'layout_row_gap',
+            [
+                'label'      => esc_html__('Row Gap', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'rem'],
+                'range'      => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 120,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .faq-section .row' => 'gap: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'layout_container_padding',
+            [
+                'label'      => esc_html__('Container Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-section .container' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'section_style',
+            [
+                'label' => esc_html__('Section', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'section_padding',
+            [
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-section' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
             'section_margin',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-faq-section-2' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-section' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -199,259 +315,733 @@ class FT_Accordion_2_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Background::get_type(),
             [
-                'name' => 'section_background',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-faq-section-2',
+                'name'     => 'section_background',
+                'label'    => esc_html__('Background', 'ftelements'),
+                'selector' => '{{WRAPPER}} .faq-section',
             ]
         );
 
         $this->add_group_control(
             Group_Control_Border::get_type(),
             [
-                'name' => 'section_border',
-                'label' => esc_html__('Border', 'ftelements'),
-                'selector' => '{{WRAPPER}} .grt-faq-section-2',
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Header Style
-        $this->start_controls_section(
-            'header_style',
-            [
-                'label' => esc_html__('Header Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'name'     => 'section_border',
+                'selector' => '{{WRAPPER}} .faq-section',
             ]
         );
 
         $this->add_responsive_control(
-            'header_alignment',
+            'section_border_radius',
             [
-                'label' => esc_html__('Alignment', 'ftelements'),
-                'type' => Controls_Manager::CHOOSE,
-                'options' => [
-                    'left' => [
-                        'title' => esc_html__('Left', 'ftelements'),
-                        'icon' => 'eicon-text-align-left',
-                    ],
-                    'center' => [
-                        'title' => esc_html__('Center', 'ftelements'),
-                        'icon' => 'eicon-text-align-center',
-                    ],
-                    'right' => [
-                        'title' => esc_html__('Right', 'ftelements'),
-                        'icon' => 'eicon-text-align-right',
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-section-title' => 'text-align: {{VALUE}};',
+                'label'      => esc_html__('Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-section' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'header_max_width',
+            'section_min_height',
             [
-                'label' => esc_html__('Max Width', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range' => [
+                'label'      => esc_html__('Min Height', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'vh', 'em'],
+                'range'      => [
                     'px' => [
                         'min' => 0,
-                        'max' => 1200,
+                        'max' => 2000,
+                    ],
+                    'vh' => [
+                        'min' => 0,
+                        'max' => 100,
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .grt-section-title' => 'max-width: {{SIZE}}{{UNIT}}; margin-left: auto; margin-right: auto;',
+                    '{{WRAPPER}} .faq-section' => 'min-height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'section_max_width',
+            [
+                'label'      => esc_html__('Max Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vw'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-section' => 'max-width: {{SIZE}}{{UNIT}}; margin-left: auto; margin-right: auto;',
                 ],
             ]
         );
 
         $this->add_control(
-            'subtitle_heading',
+            'section_z_index',
+            [
+                'label'     => esc_html__('Z-Index', 'ftelements'),
+                'type'      => Controls_Manager::NUMBER,
+                'min'       => -9999,
+                'max'       => 99999,
+                'selectors' => [
+                    '{{WRAPPER}} .faq-section' => 'z-index: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'section_overflow',
+            [
+                'label'   => esc_html__('Overflow', 'ftelements'),
+                'type'    => Controls_Manager::SELECT,
+                'options' => [
+                    'visible' => esc_html__('Visible', 'ftelements'),
+                    'hidden'  => esc_html__('Hidden', 'ftelements'),
+                    'auto'    => esc_html__('Auto', 'ftelements'),
+                    'clip'    => esc_html__('Clip', 'ftelements'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .faq-section' => 'overflow: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'decorative_shapes_style',
+            [
+                'label' => esc_html__('Decorative Shapes', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'shape_top_width',
+            [
+                'label'      => esc_html__('Top Shape Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vw'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-section .top-shape img' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'shape_top_opacity',
+            [
+                'label'      => esc_html__('Top Shape Opacity', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => [''],
+                'range'      => [
+                    '' => [
+                        'min'  => 0,
+                        'max'  => 1,
+                        'step' => 0.05,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .faq-section .top-shape img' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'shape_bottom_width',
+            [
+                'label'      => esc_html__('Bottom Shape Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vw'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-section .bottom-shape img' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'shape_bottom_opacity',
+            [
+                'label'      => esc_html__('Bottom Shape Opacity', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => [''],
+                'range'      => [
+                    '' => [
+                        'min'  => 0,
+                        'max'  => 1,
+                        'step' => 0.05,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .faq-section .bottom-shape img' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'shape_plane_width',
+            [
+                'label'      => esc_html__('Plane Shape Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vw'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-section .plane-shape img' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'shape_plane_opacity',
+            [
+                'label'      => esc_html__('Plane Shape Opacity', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => [''],
+                'range'      => [
+                    '' => [
+                        'min'  => 0,
+                        'max'  => 1,
+                        'step' => 0.05,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .faq-section .plane-shape img' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'faq_image_column_style',
+            [
+                'label' => esc_html__('Image Column', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'faq_image_column_padding',
+            [
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-section .faq-image' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'faq_image_column_align',
+            [
+                'label'   => esc_html__('Horizontal Align', 'ftelements'),
+                'type'    => Controls_Manager::CHOOSE,
+                'options' => [
+                    'flex-start' => [
+                        'title' => esc_html__('Left', 'ftelements'),
+                        'icon'  => 'eicon-h-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'ftelements'),
+                        'icon'  => 'eicon-h-align-center',
+                    ],
+                    'flex-end' => [
+                        'title' => esc_html__('Right', 'ftelements'),
+                        'icon'  => 'eicon-h-align-right',
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .faq-section .faq-image' => 'display: flex; flex-direction: column; align-items: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'inner_shape_style',
+            [
+                'label' => esc_html__('Inner Shape Image', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'inner_shape_width',
+            [
+                'label'      => esc_html__('Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vw'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-section .faq-shape2 img' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'inner_shape_opacity',
+            [
+                'label'      => esc_html__('Opacity', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => [''],
+                'range'      => [
+                    '' => [
+                        'min'  => 0,
+                        'max'  => 1,
+                        'step' => 0.05,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .faq-section .faq-shape2 img' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'inner_shape_margin',
+            [
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-section .faq-shape2 img' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'faq_content_column_style',
+            [
+                'label' => esc_html__('Text Column', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'faq_content_padding',
+            [
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name'     => 'faq_content_background',
+                'label'    => esc_html__('Background', 'ftelements'),
+                'selector' => '{{WRAPPER}} .faq-content-1',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name'     => 'faq_content_border',
+                'selector' => '{{WRAPPER}} .faq-content-1',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'faq_content_border_radius',
+            [
+                'label'      => esc_html__('Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'section_heading_style',
+            [
+                'label' => esc_html__('Heading Block', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'section_heading_block_margin',
+            [
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .section-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'section_heading_block_padding',
+            [
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .section-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'section_heading_block_alignment',
+            [
+                'label'   => esc_html__('Alignment', 'ftelements'),
+                'type'    => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => esc_html__('Left', 'ftelements'),
+                        'icon'  => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'ftelements'),
+                        'icon'  => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__('Right', 'ftelements'),
+                        'icon'  => 'eicon-text-align-right',
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .faq-content-1 .section-title' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'subtitle_style',
             [
                 'label' => esc_html__('Subtitle', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name'     => 'subtitle_typography',
+                'selector' => '{{WRAPPER}} .faq-content-1 .sec-sub',
             ]
         );
 
         $this->add_control(
             'subtitle_color',
             [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-sub-title' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .faq-content-1 .sec-sub' => 'color: {{VALUE}};',
                 ],
             ]
         );
 
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'subtitle_typography',
-                'selector' => '{{WRAPPER}} .grt-sub-title',
-            ]
-        );
-
-        $this->add_responsive_control(
+        $this->add_control(
             'subtitle_margin',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-sub-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'subtitle_icon_heading',
-            [
-                'label' => esc_html__('Subtitle Icon', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_control(
-            'subtitle_icon_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .grt-sub-title i' => 'color: {{VALUE}};',
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .sec-sub' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'subtitle_icon_size',
+            'subtitle_padding',
             [
-                'label' => esc_html__('Size', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 100,
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .sec-sub' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'subtitle_max_width',
+            [
+                'label'      => esc_html__('Max Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vw'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .sec-sub' => 'max-width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'subtitle_alignment',
+            [
+                'label'   => esc_html__('Alignment', 'ftelements'),
+                'type'    => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => esc_html__('Left', 'ftelements'),
+                        'icon'  => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'ftelements'),
+                        'icon'  => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__('Right', 'ftelements'),
+                        'icon'  => 'eicon-text-align-right',
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .grt-sub-title i' => 'font-size: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'subtitle_icon_spacing',
-            [
-                'label' => esc_html__('Spacing', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-sub-title i' => 'margin-right: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'title_heading',
-            [
-                'label' => esc_html__('Title', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_control(
-            'title_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .split-title' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'title_typography',
-                'selector' => '{{WRAPPER}} .split-title',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'title_margin',
-            [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .split-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .faq-content-1 .sec-sub' => 'text-align: {{VALUE}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Accordion Style
         $this->start_controls_section(
-            'accordion_style',
+            'title_style',
             [
-                'label' => esc_html__('Accordion Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Title', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name'     => 'title_typography',
+                'selector' => '{{WRAPPER}} .faq-content-1 h2',
             ]
         );
 
         $this->add_control(
-            'accordion_box_heading',
+            'title_color',
             [
-                'label' => esc_html__('Accordion Box', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'accordion_box_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
+                'label'     => esc_html__('Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .accordion-box' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .faq-content-1 h2' => 'color: {{VALUE}};',
                 ],
             ]
         );
 
         $this->add_control(
-            'accordion_item_heading',
+            'title_margin',
             [
-                'label' => esc_html__('Accordion Item', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 h2' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'title_padding',
+            [
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 h2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'title_max_width',
+            [
+                'label'      => esc_html__('Max Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vw'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 h2' => 'max-width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'title_alignment',
+            [
+                'label'   => esc_html__('Alignment', 'ftelements'),
+                'type'    => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => esc_html__('Left', 'ftelements'),
+                        'icon'  => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'ftelements'),
+                        'icon'  => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__('Right', 'ftelements'),
+                        'icon'  => 'eicon-text-align-right',
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .faq-content-1 h2' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'description_style',
+            [
+                'label' => esc_html__('Description', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name'     => 'description_typography',
+                'selector' => '{{WRAPPER}} .faq-content-1 .faq-text',
             ]
         );
 
         $this->add_control(
-            'accordion_item_bg',
+            'description_color',
             [
-                'label' => esc_html__('Background Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .accordion' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .faq-content-1 .faq-text' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'description_margin',
+            [
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .faq-text' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'description_padding',
+            [
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .faq-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'description_max_width',
+            [
+                'label'      => esc_html__('Max Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vw'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .faq-text' => 'max-width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'description_alignment',
+            [
+                'label'   => esc_html__('Alignment', 'ftelements'),
+                'type'    => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => esc_html__('Left', 'ftelements'),
+                        'icon'  => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'ftelements'),
+                        'icon'  => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__('Right', 'ftelements'),
+                        'icon'  => 'eicon-text-align-right',
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .faq-content-1 .faq-text' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'accordion_item_style',
+            [
+                'label' => esc_html__('Accordion Item', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'accordion_item_gap',
+            [
+                'label'      => esc_html__('Item Gap', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .accordion' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'accordion_list_padding',
+            [
+                'label'      => esc_html__('List Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'accordion_list_margin',
+            [
+                'label'      => esc_html__('List Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'accordion_item_padding',
+            [
+                'label'      => esc_html__('Item Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .accordion' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -459,322 +1049,557 @@ class FT_Accordion_2_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Border::get_type(),
             [
-                'name' => 'accordion_item_border',
-                'label' => esc_html__('Border', 'ftelements'),
-                'selector' => '{{WRAPPER}} .accordion',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'accordion_item_radius',
-            [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .accordion' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
+                'name'     => 'accordion_item_border',
+                'selector' => '{{WRAPPER}} .faq-content-1 .accordion-box .accordion',
             ]
         );
 
         $this->add_control(
-            'accordion_item_active_border_color',
+            'accordion_item_radius',
             [
-                'label' => esc_html__('Active Border Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .accordion.active-block' => 'border-color: {{VALUE}};',
+                'label'      => esc_html__('Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .accordion' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
-        $this->add_responsive_control(
-            'accordion_item_width',
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
             [
-                'label' => esc_html__('Item Width', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1200,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .accordion' => 'max-width: {{SIZE}}{{UNIT}}; margin-left: auto; margin-right: auto;',
-                ],
+                'name'     => 'accordion_item_background',
+                'label'    => esc_html__('Background', 'ftelements'),
+                'selector' => '{{WRAPPER}} .faq-content-1 .accordion-box .accordion',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name'     => 'accordion_item_background_active',
+                'label'    => esc_html__('Background (Active Item)', 'ftelements'),
+                'selector' => '{{WRAPPER}} .faq-content-1 .accordion-box .accordion.active-block',
             ]
         );
 
         $this->add_responsive_control(
             'accordion_item_margin',
             [
-                'label' => esc_html__('Margin Bottom', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px'],
-                'range' => [
+                'label'      => esc_html__('Item Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .accordion' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'accordion_item_min_height',
+            [
+                'label'      => esc_html__('Item Min Height', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em'],
+                'range'      => [
                     'px' => [
                         'min' => 0,
-                        'max' => 100,
+                        'max' => 500,
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .accordion' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .accordion' => 'min-height: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
 
-        $this->add_control(
-            'accordion_header_heading',
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'question_style',
             [
-                'label' => esc_html__('Accordion Header', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->start_controls_tabs('accordion_header_tabs');
-
-        $this->start_controls_tab(
-            'accordion_header_normal',
-            [
-                'label' => esc_html__('Normal', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'accordion_header_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .acc-btn' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'accordion_header_bg',
-            [
-                'label' => esc_html__('Background Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .acc-btn' => 'background-color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'accordion_icon_color',
-            [
-                'label' => esc_html__('Icon Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .acc-btn .icon' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'accordion_icon_bg',
-            [
-                'label' => esc_html__('Icon Background Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .acc-btn .icon' => 'background-color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->start_controls_tab(
-            'accordion_header_active',
-            [
-                'label' => esc_html__('Active', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'accordion_header_active_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .accordion.active-block .acc-btn' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'accordion_header_active_bg',
-            [
-                'label' => esc_html__('Background Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .accordion.active-block .acc-btn' => 'background-color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'accordion_icon_active_color',
-            [
-                'label' => esc_html__('Icon Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .accordion.active-block .acc-btn .icon' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'accordion_icon_active_bg',
-            [
-                'label' => esc_html__('Icon Background Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .accordion.active-block .acc-btn .icon' => 'background-color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'accordion_header_typography',
-                'selector' => '{{WRAPPER}} .acc-btn',
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'accordion_header_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .acc-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'accordion_icon_heading',
-            [
-                'label' => esc_html__('Icon Settings', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'accordion_icon_size',
-            [
-                'label' => esc_html__('Icon Size', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .acc-btn .icon' => 'font-size: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'accordion_icon_box_size',
-            [
-                'label' => esc_html__('Icon Box Size', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 150,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .acc-btn .icon' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}}; text-align: center;',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'accordion_icon_radius',
-            [
-                'label' => esc_html__('Icon Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .acc-btn .icon' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'accordion_content_heading',
-            [
-                'label' => esc_html__('Accordion Content', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_control(
-            'accordion_content_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .acc-content .text' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'accordion_content_bg',
-            [
-                'label' => esc_html__('Background Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .acc-content' => 'background-color: {{VALUE}};',
-                ],
+                'label' => esc_html__('Question', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name' => 'accordion_content_typography',
-                'selector' => '{{WRAPPER}} .acc-content .text',
+                'name'     => 'question_typography',
+                'selector' => '{{WRAPPER}} .faq-content-1 .accordion-box .acc-btn',
+            ]
+        );
+
+        $this->add_control(
+            'question_color',
+            [
+                'label'     => esc_html__('Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-btn' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'question_active_color',
+            [
+                'label'     => esc_html__('Active Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-btn.active' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name'     => 'question_btn_background',
+                'label'    => esc_html__('Background', 'ftelements'),
+                'selector' => '{{WRAPPER}} .faq-content-1 .accordion-box .acc-btn',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name'     => 'question_btn_background_active',
+                'label'    => esc_html__('Background (Active)', 'ftelements'),
+                'selector' => '{{WRAPPER}} .faq-content-1 .accordion-box .acc-btn.active',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name'     => 'question_btn_border',
+                'selector' => '{{WRAPPER}} .faq-content-1 .accordion-box .acc-btn',
             ]
         );
 
         $this->add_responsive_control(
-            'accordion_content_padding',
+            'question_btn_border_radius',
             [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
+                'label'      => esc_html__('Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'question_btn_min_height',
+            [
+                'label'      => esc_html__('Min Height', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em'],
+                'range'      => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 200,
+                    ],
+                ],
                 'selectors' => [
-                    '{{WRAPPER}} .acc-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-btn' => 'min-height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'question_padding',
+            [
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'question_alignment',
+            [
+                'label'   => esc_html__('Alignment', 'ftelements'),
+                'type'    => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => esc_html__('Left', 'ftelements'),
+                        'icon'  => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'ftelements'),
+                        'icon'  => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__('Right', 'ftelements'),
+                        'icon'  => 'eicon-text-align-right',
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-btn' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'answer_style',
+            [
+                'label' => esc_html__('Answer', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name'     => 'answer_typography',
+                'selector' => '{{WRAPPER}} .faq-content-1 .accordion-box .acc-content .text',
+            ]
+        );
+
+        $this->add_control(
+            'answer_color',
+            [
+                'label'     => esc_html__('Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-content .text' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name'     => 'answer_content_background',
+                'label'    => esc_html__('Background', 'ftelements'),
+                'selector' => '{{WRAPPER}} .faq-content-1 .accordion-box .acc-content .content',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name'     => 'answer_content_border',
+                'selector' => '{{WRAPPER}} .faq-content-1 .accordion-box .acc-content .content',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'answer_content_border_radius',
+            [
+                'label'      => esc_html__('Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-content .content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'answer_margin_top',
+            [
+                'label'      => esc_html__('Spacing Above Answer', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-content .content' => 'margin-top: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'answer_padding',
+            [
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-content .content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'answer_alignment',
+            [
+                'label'   => esc_html__('Alignment', 'ftelements'),
+                'type'    => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => esc_html__('Left', 'ftelements'),
+                        'icon'  => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'ftelements'),
+                        'icon'  => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__('Right', 'ftelements'),
+                        'icon'  => 'eicon-text-align-right',
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-content .text' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'icon_style',
+            [
+                'label' => esc_html__('Icon', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'icon_size',
+            [
+                'label'      => esc_html__('Size', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-btn .icon svg' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'icon_fill_color',
+            [
+                'label'     => esc_html__('Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-btn .icon svg path' => 'fill: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'icon_fill_color_active',
+            [
+                'label'     => esc_html__('Color (Active)', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-btn.active .icon svg path' => 'fill: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'icon_height',
+            [
+                'label'      => esc_html__('Height', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-btn .icon svg' => 'height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'icon_opacity',
+            [
+                'label'      => esc_html__('Opacity', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => [''],
+                'range'      => [
+                    '' => [
+                        'min'  => 0,
+                        'max'  => 1,
+                        'step' => 0.05,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-btn .icon svg' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'icon_opacity_active',
+            [
+                'label'      => esc_html__('Opacity (Active)', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => [''],
+                'range'      => [
+                    '' => [
+                        'min'  => 0,
+                        'max'  => 1,
+                        'step' => 0.05,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-btn.active .icon svg' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'icon_spacing',
+            [
+                'label'      => esc_html__('Spacing', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-content-1 .accordion-box .acc-btn .icon' => 'margin-left: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'image_style',
+            [
+                'label' => esc_html__('Main Image', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'image_width',
+            [
+                'label'      => esc_html__('Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vw'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-image > img' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'image_height',
+            [
+                'label'      => esc_html__('Height', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vh'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-image > img' => 'height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'image_border_radius',
+            [
+                'label'      => esc_html__('Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-image > img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name'     => 'image_border',
+                'selector' => '{{WRAPPER}} .faq-image > img',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'image_margin',
+            [
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-image > img' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'image_max_width',
+            [
+                'label'      => esc_html__('Max Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vw'],
+                'selectors'  => [
+                    '{{WRAPPER}} .faq-image > img' => 'max-width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Css_Filter::get_type(),
+            [
+                'name'     => 'image_css_filters',
+                'selector' => '{{WRAPPER}} .faq-image > img',
+            ]
+        );
+
+        $this->add_control(
+            'image_object_fit',
+            [
+                'label'   => esc_html__('Object Fit', 'ftelements'),
+                'type'    => Controls_Manager::SELECT,
+                'options' => [
+                    'cover'   => esc_html__('Cover', 'ftelements'),
+                    'contain' => esc_html__('Contain', 'ftelements'),
+                    'fill'    => esc_html__('Fill', 'ftelements'),
+                    'none'    => esc_html__('None', 'ftelements'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .faq-image > img' => 'object-fit: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'image_opacity',
+            [
+                'label'      => esc_html__('Opacity', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => [''],
+                'range'      => [
+                    '' => [
+                        'min'  => 0,
+                        'max'  => 1,
+                        'step' => 0.05,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .faq-image > img' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'image_display',
+            [
+                'label'   => esc_html__('Display', 'ftelements'),
+                'type'    => Controls_Manager::SELECT,
+                'options' => [
+                    'block' => esc_html__('Block', 'ftelements'),
+                    'inline-block' => esc_html__('Inline Block', 'ftelements'),
+                    'inline' => esc_html__('Inline', 'ftelements'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .faq-image > img' => 'display: {{VALUE}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
     }
-
 
     /**
      * Render rsgallery widget output on the frontend.
@@ -786,93 +1611,92 @@ class FT_Accordion_2_Widget extends \Elementor\Widget_Base
      */
     protected function render()
     {
-
         $settings = $this->get_settings_for_display();
+        $faq_items = !empty($settings['faq_items']) ? $settings['faq_items'] : [];
+        $main_image_url = !empty($settings['faq_main_image']['url']) ? $settings['faq_main_image']['url'] : '';
+        $top_shape_image_url = !empty($settings['faq_top_shape_image']['url']) ? $settings['faq_top_shape_image']['url'] : '';
+        $bottom_shape_image_url = !empty($settings['faq_bottom_shape_image']['url']) ? $settings['faq_bottom_shape_image']['url'] : '';
+        $plane_shape_image_url = !empty($settings['faq_plane_shape_image']['url']) ? $settings['faq_plane_shape_image']['url'] : '';
+        $inner_shape_image_url = !empty($settings['faq_inner_shape_image']['url']) ? $settings['faq_inner_shape_image']['url'] : '';
 
         ?>
-        <section class="grt-faq-section-2 fix section-padding">
-            <div class="container">
-                <?php if (!empty($settings['title']) || !empty($settings['subtitle'])): ?>
-                    <div class="grt-section-title text-center">
-                        <?php if (!empty($settings['subtitle'])): ?>
-                            <span class="grt-sub-title tz-sub-tilte tz-sub-anim tx-subTitle">
-                                <i class="fa-sharp fa-solid fa-heart"></i> <?php echo esc_html($settings['subtitle']); ?>
-                            </span>
-                        <?php endif; ?>
-                        <?php if (!empty($settings['title'])): ?>
-                            <h2 class="split-title">
-                                <?php echo wp_kses_post($settings['title']); ?>
-                            </h2>
-                        <?php endif; ?>
-                    </div>
+        <section class="faq-section faq-section-2">
+            <div class="top-shape">
+                <?php if (!empty($top_shape_image_url)) : ?>
+                    <img src="<?php echo esc_url($top_shape_image_url); ?>" alt="<?php echo esc_attr($settings['faq_title']); ?>">
                 <?php endif; ?>
-                <div class="row g-4">
-                    <div class="col-lg-12">
-                        <div class="grt-faq-content-1">
-                            <?php if (!empty($settings['accordion_items'])): ?>
-                                <ul class="accordion-box style-2 wow fadeInUp list-unstyled" data-wow-delay=".3s">
-                                    <?php
-                                    $i = 0;
-                                    foreach ($settings['accordion_items'] as $item):
-                                        $i++;
-                                        $active_class = ($i == 1) ? 'active-block' : '';
-                                        $btn_active_class = ($i == 1) ? 'active' : '';
-                                        $content_current_class = ($i == 1) ? 'current' : '';
-                                        $display_style = ($i == 1) ? 'display: block;' : '';
-                                        ?>
-                                        <!--Block-->
-                                        <li
-                                            class="accordion block <?php echo esc_attr($active_class); ?> elementor-repeater-item-<?php echo esc_attr($item['_id']); ?>">
-                                            <div class="acc-btn <?php echo esc_attr($btn_active_class); ?>">
-                                                <?php echo esc_html($item['question']); ?>
-                                                <div class="icon fa-regular fa-plus"></div>
+            </div>
+            <div class="bottom-shape">
+                <?php if (!empty($bottom_shape_image_url)) : ?>
+                    <img src="<?php echo esc_url($bottom_shape_image_url); ?>" alt="<?php echo esc_attr($settings['faq_title']); ?>">
+                <?php endif; ?>
+            </div>
+            <div class="plane-shape">
+                <?php if (!empty($plane_shape_image_url)) : ?>
+                    <img src="<?php echo esc_url($plane_shape_image_url); ?>" alt="<?php echo esc_attr($settings['faq_title']); ?>">
+                <?php endif; ?>
+            </div>
+            <div class="container">
+                <div class="row g-4 align-items-center">
+                    <div class="col-lg-6">
+                        <div class="faq-image style-2 wow fadeInUp" data-wow-delay=".3s">
+                            <div class="faq-shape2">
+                                <?php if (!empty($inner_shape_image_url)) : ?>
+                                    <img src="<?php echo esc_url($inner_shape_image_url); ?>" alt="<?php echo esc_attr($settings['faq_title']); ?>">
+                                <?php endif; ?>
+                            </div>
+                            <?php if (!empty($main_image_url)) : ?>
+                                <img src="<?php echo esc_url($main_image_url); ?>" alt="<?php echo esc_attr($settings['faq_title']); ?>">
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="faq-content-1">
+                            <div class="section-title mb-0">
+                                <span class="sec-sub tz-sub-tilte tz-sub-anim tx-subTitle"><?php echo esc_html($settings['faq_subtitle']); ?></span>
+                                <h2 class="tx-title sec_title  tz-itm-title tz-itm-anim">
+                                    <?php echo esc_html($settings['faq_title']); ?>
+                                </h2>
+                            </div>
+                            <p class="faq-text wow fadeInUp" data-wow-delay=".3s">
+                                <?php echo esc_html($settings['faq_description']); ?>
+                            </p>
+                            <ul class="accordion-box list-unstyled">
+                                <?php foreach ($faq_items as $index => $item) : ?>
+                                    <li class="accordion block <?php echo $index === 0 ? 'active-block' : ''; ?> wow fadeInUp"<?php if ($index > 0) : ?> data-wow-delay="<?php echo esc_attr(sprintf('%.1fs', 0.2 * $index)); ?>"<?php endif; ?>>
+                                        <div class="acc-btn <?php echo $index === 0 ? 'active' : ''; ?>">
+                                            <?php echo esc_html($item['item_question']); ?>
+                                            <div class="icon">
+                                                <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M9.23648 0.105787C9.05424 0.810401 9.17318 1.66949 9.18478 2.39223C9.19887 3.26717 9.24767 4.15775 9.42971 5.01705C9.42877 5.01767 9.42784 5.01695 9.42691 5.01767C9.41707 5.02513 9.40847 5.03383 9.39862 5.0414C8.15505 5.1307 6.91117 5.15039 5.66719 5.15515C5.65838 5.15256 5.6503 5.1535 5.64077 5.15526C3.85535 5.16168 2.06982 5.13754 0.28512 5.23928C0.261498 5.24063 0.248651 5.25441 0.231867 5.26415C0.156339 5.28135 0.0928289 5.33781 0.0963515 5.43893C0.154474 7.08707 0.0382291 8.73458 0.0754233 10.3822C-0.0380241 10.4403 -0.0201005 10.6369 0.106401 10.6492C0.159965 10.7292 0.279111 10.7221 0.322314 10.6312C2.55075 10.37 4.80996 10.7056 7.04078 10.6689C7.05011 10.6876 7.08015 10.696 7.09652 10.6733C7.09787 10.6715 7.09932 10.6698 7.10067 10.6679C7.94007 10.6516 8.77544 10.5828 9.60335 10.406C9.60055 10.417 9.59154 10.4214 9.5905 10.4338C9.58905 10.4511 9.58667 10.4689 9.58501 10.4864C9.5846 10.4869 9.58408 10.4874 9.58356 10.4879C9.58004 10.4916 9.58491 10.4949 9.58366 10.4991C9.4438 11.9811 8.82237 13.776 9.29481 15.2288C9.31584 15.2937 9.39293 15.3144 9.44328 15.2681C9.45043 15.2615 9.45768 15.2548 9.46483 15.2483C9.47736 15.2368 9.48348 15.2205 9.48493 15.2037C9.50969 15.2213 9.53994 15.2305 9.576 15.2102C13.2202 13.1551 16.8216 10.4453 19.9434 7.65212C20.0426 7.56333 19.9982 7.44419 19.9115 7.38741C18.4433 5.18323 16.0637 4.06399 13.924 2.62669C12.5897 1.73062 11.06 0.606093 9.56698 0.0100574C9.52647 -0.00610542 9.4928 0.00466919 9.46359 0.0238361C9.38578 -0.0253754 9.26352 0.00145817 9.23648 0.105787ZM3.51853 10.0224C3.24864 10.0167 2.97957 10.0159 2.71175 10.0218C4.30727 8.827 5.35637 6.95777 6.75204 5.5444C7.03902 5.5359 7.32632 5.53321 7.61289 5.51922C6.05788 6.76776 4.84146 8.53266 3.51853 10.0224ZM7.83232 5.5099C7.90961 5.50575 7.9867 5.49881 8.06399 5.49425C6.57228 6.68715 5.55664 8.59492 4.35327 10.0286C4.34592 10.0374 4.34498 10.0469 4.34436 10.0563C4.11094 10.0447 3.877 10.0306 3.64451 10.0244C5.06514 8.55027 6.46847 7.03257 7.83232 5.5099ZM5.05519 7.20611C4.29857 8.1975 3.57551 9.2583 2.57489 10.0243C2.57334 10.0255 2.57365 10.0274 2.5723 10.0286C2.38643 10.0343 2.20109 10.0434 2.01657 10.0564C3.57623 8.77012 4.89347 7.18673 6.08233 5.55683C6.21609 5.55465 6.34995 5.55538 6.4836 5.55217C5.90973 5.97104 5.46961 6.66322 5.05519 7.20611ZM5.45107 5.56128C5.58793 5.56025 5.72479 5.56139 5.86166 5.55952C4.63559 7.15234 3.37866 8.70236 1.89773 10.0675C1.67425 10.0853 1.45233 10.1123 1.23124 10.1433C2.85908 8.876 4.13477 7.14581 5.45107 5.56128ZM1.15675 10.1518C0.945808 10.183 0.737252 10.2272 0.529109 10.2735C1.43441 9.29695 2.23921 8.23397 3.1701 7.27998C3.5982 6.84142 4.00692 6.36266 4.39927 5.89168C4.49262 5.77958 4.64803 5.68509 4.73371 5.5588C4.89026 5.559 5.0468 5.56305 5.20325 5.56232C3.76687 7.00636 2.73569 8.82576 1.15675 10.1518ZM4.4461 10.0609C5.79421 8.57317 6.89263 6.90866 8.30715 5.47768C8.51394 5.4641 8.72094 5.45291 8.92743 5.43561C7.37387 6.79304 6.25794 8.58933 4.83079 10.0783C4.70232 10.0707 4.57457 10.0676 4.4461 10.0609ZM0.474613 5.49384C0.660273 5.49809 0.846762 5.50026 1.03294 5.50316C0.803559 5.78051 0.637066 6.12624 0.484663 6.45808C0.486113 6.1366 0.484456 5.81522 0.474613 5.49384ZM0.481658 6.73885C0.482591 6.7373 0.484352 6.73761 0.485284 6.73595C0.710107 6.30693 0.974611 5.91675 1.22575 5.50637C1.33029 5.50803 1.43462 5.50979 1.53905 5.51166C1.49212 5.62096 1.40022 5.75275 1.37017 5.80538C1.25041 6.01549 1.11541 6.21741 0.981448 6.41882C0.818271 6.66405 0.647012 6.90369 0.47741 7.14446C0.479793 7.00926 0.480104 6.87395 0.481658 6.73885ZM0.448919 8.21418C0.452027 8.2118 0.456482 8.21584 0.458762 8.21138C0.711454 7.71429 1.04382 7.26029 1.37204 6.81117C1.65177 6.42845 2.02154 6.0446 2.2044 5.60304C2.22616 5.55051 2.14369 5.50368 2.10846 5.54719C1.49284 6.30703 0.867069 7.20279 0.453789 8.09628C0.462595 7.85353 0.466014 7.61079 0.471712 7.36804C0.752378 6.96875 1.04475 6.57775 1.32044 6.17483C1.40302 6.05423 1.664 5.74964 1.70876 5.51425C2.13198 5.52098 2.55438 5.52968 2.97781 5.53538C1.96176 6.43156 1.0491 7.73739 0.420428 8.91579C0.430892 8.68195 0.440113 8.44812 0.448919 8.21418ZM0.418977 8.95174C0.427991 8.96624 0.445189 8.97463 0.456068 8.95536C1.18876 7.66103 2.23237 6.677 3.18419 5.55724C3.18906 5.55144 3.18699 5.54512 3.18999 5.53901C3.40643 5.5416 3.62223 5.54792 3.83877 5.54978C3.73889 5.78631 3.40995 6.10624 3.30365 6.24114C2.95222 6.68684 2.58722 7.12188 2.22036 7.55505C1.63468 8.24671 1.04662 8.94397 0.417112 9.59647C0.395252 9.61905 0.429234 9.65314 0.451509 9.63097C1.22316 8.86575 1.94135 8.04064 2.65695 7.22362C3.00288 6.82878 3.3483 6.43125 3.66761 6.01424C3.75713 5.89727 3.92797 5.72208 3.98351 5.55144C4.15507 5.55279 4.32654 5.55641 4.49801 5.55704C4.29266 5.69234 4.07468 6.02574 3.95636 6.16488C3.58711 6.5993 3.20502 7.03112 2.8108 7.44264C1.9543 8.33664 1.25983 9.37082 0.433275 10.2921C0.407995 10.298 0.382198 10.3007 0.357022 10.3069C0.377535 9.85527 0.398878 9.40356 0.418977 8.95174ZM19.6698 7.41984C16.5312 10.2096 12.9463 12.6837 9.48327 15.0508C9.4641 15.064 9.45685 15.0817 9.45074 15.0992C9.43344 15.0582 9.41613 15.0172 9.39883 14.9761C9.39707 14.9696 9.39065 14.9694 9.38536 14.9676C9.50295 14.9146 9.53766 14.8166 9.49425 14.6763C11.2498 13.2665 13.2253 12.1588 14.9544 10.718C16.4177 9.49867 17.5263 7.87135 19.254 6.98533C19.2573 6.98367 19.2572 6.98004 19.2599 6.97807C19.3975 7.12436 19.5393 7.26609 19.6698 7.41984ZM19.1719 6.88328C17.7387 7.4876 16.6717 8.79074 15.5898 9.86087C13.7573 11.6735 11.4674 12.9315 9.47477 14.556C9.47654 14.3697 9.48368 14.1837 9.50026 13.9981C9.50192 13.9724 9.50731 13.947 9.50938 13.9212C12.9678 11.9781 15.6661 8.94044 18.6927 6.41923C18.8544 6.57174 19.0177 6.72279 19.1719 6.88328ZM18.6026 6.33231C15.449 8.69356 12.8633 11.6928 9.52202 13.8135C9.54046 13.6217 9.5675 13.4307 9.5963 13.24C11.1973 12.4564 12.4618 11.1761 13.7206 9.93764C15.14 8.54105 16.628 7.21046 18.1817 5.96472C18.3229 6.08594 18.4658 6.20581 18.6026 6.33231ZM18.0682 5.86567C15.2054 8.12342 12.8 11.3722 9.61174 13.1299C9.63888 12.9583 9.66914 12.7873 9.69929 12.6165C12.5795 10.5149 14.963 7.83126 17.7385 5.60034C17.8486 5.68861 17.9603 5.77492 18.0682 5.86567ZM17.6232 5.50741C14.8466 7.66404 12.4738 10.2784 9.72498 12.4685C9.7513 12.3224 9.77896 12.1748 9.80558 12.0267C9.81833 12.0395 9.83832 12.0433 9.85407 12.0253C12.0028 9.54995 15.5275 8.06457 17.1691 5.17349C17.3197 5.2857 17.4759 5.39137 17.6232 5.50741ZM17.0592 5.09299C15.0694 7.82918 11.9247 9.32907 9.81874 11.9531C9.86609 11.6845 9.90619 11.4136 9.92566 11.1428C12.1429 8.99981 14.5589 7.05744 16.7109 4.84952C16.8264 4.93137 16.9452 5.00918 17.0592 5.09299ZM16.5811 4.75897C14.3672 6.8408 12.0265 8.81177 9.93095 11.0143C9.93955 10.8201 9.93944 10.6262 9.91613 10.4336C9.91002 10.3831 9.88702 10.3491 9.85822 10.3246C11.0004 9.31352 12.1941 8.36233 13.3459 7.36214C14.318 6.51797 15.4361 5.56688 16.048 4.39895C16.226 4.51861 16.4056 4.6361 16.5811 4.75897ZM15.9023 4.30094C14.1937 6.64385 11.784 8.22485 9.7831 10.2875C9.76072 10.284 9.73772 10.2844 9.71534 10.2896C9.71773 10.2239 9.68105 10.1563 9.60418 10.165C9.41779 10.1861 9.23047 10.2021 9.04243 10.2142C11.3469 8.36503 13.4512 6.22187 15.4681 4.07114C15.4794 4.05912 15.4806 4.04607 15.4826 4.03333C15.622 4.12346 15.764 4.20914 15.9023 4.30094ZM15.3816 3.96899C15.378 3.97147 15.374 3.97002 15.3704 3.97334C13.1837 6.03766 11.147 8.23542 8.88464 10.2212C8.62915 10.2345 8.372 10.2385 8.11413 10.2389C10.5025 8.1889 12.4076 5.64935 14.8151 3.61228C15.004 3.73122 15.1938 3.84808 15.3816 3.96899ZM14.673 3.52276C12.1583 5.46162 10.3115 8.11109 7.96763 10.2391C7.79202 10.2381 7.61589 10.2342 7.43956 10.2288C8.61682 8.74277 10.0691 7.52738 11.3763 6.15535C12.0924 5.4037 12.6932 4.55321 13.4038 3.79597C13.5176 3.67475 13.6483 3.56483 13.7693 3.45117C13.8737 3.35337 13.9788 3.25598 14.0845 3.15932C14.2807 3.28106 14.4768 3.39968 14.673 3.52276ZM13.8716 3.02774C12.8149 3.64222 11.9793 5.1767 11.2361 6.01517C9.95757 7.45735 8.44898 8.65242 7.33119 10.2247C7.05788 10.2153 6.78374 10.201 6.50919 10.1851C9.32973 8.30804 11.3834 5.41313 13.3606 2.71227C13.531 2.81784 13.701 2.92238 13.8716 3.02774ZM12.895 2.42487C13.0006 2.4889 13.1064 2.55551 13.2122 2.62078C11.1418 5.28393 9.16562 8.20092 6.37585 10.1715C6.37357 10.1731 6.37388 10.1756 6.37201 10.1775C6.21536 10.1681 6.0585 10.1575 5.90165 10.1472C7.39615 8.67843 8.79005 7.11193 10.1842 5.54864C11.0241 4.60688 12.3456 3.57664 12.8649 2.4144C12.8662 2.41213 12.8646 2.41026 12.8655 2.40798C12.875 2.41327 12.8859 2.41917 12.895 2.42487ZM12.7599 2.34675C12.7584 2.34841 12.7564 2.3481 12.755 2.34996C11.8562 3.59042 10.6765 4.68572 9.66738 5.84019C8.41096 7.2778 7.12823 8.69148 5.85834 10.1171C5.85016 10.1263 5.85513 10.1356 5.85907 10.1442C5.5583 10.1244 5.25764 10.1046 4.95698 10.0859C6.50711 8.67397 7.61859 6.84805 9.15878 5.41655C9.25751 5.40764 9.35646 5.40173 9.45509 5.39199C9.50544 5.38702 9.54315 5.36392 9.57123 5.33366C9.65204 5.35273 9.74964 5.31346 9.73783 5.21504C9.72695 5.1248 9.7199 5.03456 9.71027 4.94432C10.5093 3.998 11.4261 3.05737 12.037 1.97896C12.3073 2.11022 12.5576 2.2333 12.7599 2.34675ZM11.9328 1.92819C11.515 2.53541 11.0721 3.11954 10.6017 3.68946C10.2981 4.05726 9.964 4.43096 9.6996 4.83761C9.67732 4.61444 9.66603 4.39097 9.65028 4.1678C10.4321 3.47915 11.097 2.6644 11.6939 1.81215C11.7743 1.85121 11.8548 1.89037 11.9328 1.92819ZM11.5804 1.75662C10.9652 2.56287 10.3632 3.36808 9.64427 4.08679C9.62769 3.84031 9.61443 3.59363 9.60283 3.34674C10.19 2.83089 10.6451 2.15912 11.0526 1.48932C11.2279 1.58143 11.4056 1.67073 11.5804 1.75662ZM10.9268 1.42208C10.4905 2.03656 10.14 2.69652 9.59661 3.22977C9.58781 3.02816 9.58304 2.82613 9.57817 2.62389C9.82631 2.38602 10.0704 2.14545 10.2923 1.88219C10.4376 1.70989 10.6021 1.51025 10.7003 1.29413C10.7755 1.33713 10.8494 1.38054 10.9268 1.42208ZM10.5476 1.20804C10.4117 1.43016 10.2891 1.65768 10.1233 1.86675C9.95188 2.08328 9.76373 2.28625 9.57392 2.48703C9.5733 2.45543 9.57154 2.42394 9.57102 2.39234C9.56791 2.20005 9.57579 1.99802 9.58532 1.79361C9.81926 1.55335 10.0465 1.28657 10.2294 1.00663C10.3313 1.0749 10.4368 1.14245 10.5476 1.20804ZM10.078 0.899915C9.91271 1.12163 9.75855 1.35215 9.59527 1.57656C9.61309 1.20275 9.62728 0.823455 9.58625 0.465502C9.71545 0.615935 9.88577 0.760256 10.078 0.899915Z" fill="#385469" />
+                                                </svg>
                                             </div>
-                                            <div class="acc-content <?php echo esc_attr($content_current_class); ?>"
-                                                style="<?php echo esc_attr($display_style); ?>">
-                                                <div class="content">
-                                                    <div class="text">
-                                                        <?php echo wp_kses_post($item['answer']); ?>
-                                                    </div>
+                                        </div>
+                                        <div class="acc-content <?php echo $index === 0 ? 'current' : ''; ?>">
+                                            <div class="content">
+                                                <div class="text">
+                                                    <?php echo esc_html($item['item_answer']); ?>
                                                 </div>
                                             </div>
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            <?php endif; ?>
+                                        </div>
+                                    </li>
+                                <?php endforeach; ?>
+
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <script>
-            jQuery(document).ready(function ($) {
-                var initAccordion2 = function () {
-                    $(".accordion-box.style-2").each(function () {
-                        var $box = $(this);
-                        $box.find(".acc-btn").off("click").on("click", function () {
-                            var $target = $(this).closest(".accordion");
-                            if ($target.hasClass("active-block")) {
-                                $target.removeClass("active-block");
-                                $(this).removeClass("active");
-                                $target.find(".acc-content").slideUp(300);
-                            } else {
-                                $box.find(".accordion").removeClass("active-block");
-                                $box.find(".acc-btn").removeClass("active");
-                                $box.find(".acc-content").slideUp(300);
-                                $target.addClass("active-block");
-                                $(this).addClass("active");
-                                $target.find(".acc-content").slideDown(300);
-                            }
-                        });
-                    });
-                };
-                initAccordion2();
-                if (typeof elementorFrontend !== "undefined") {
-                    elementorFrontend.hooks.addAction("frontend/element_ready/ft-accordion-2.default", initAccordion2);
-                }
-            });
-        </script>
 
-        <?php
+
+
+
+
+
+
+
+
+<?php
     }
 } ?>

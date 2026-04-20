@@ -3,7 +3,6 @@
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Repeater;
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
@@ -13,19 +12,19 @@ use Elementor\Utils;
 
 defined('ABSPATH') || die();
 
-class FT_Banner_3_Widget extends \Elementor\Widget_Base
+class FT_Banner3_Widget extends \Elementor\Widget_Base
 {
 
     /*
-     *
-     * @since 1.0.0
-     * @access public
-     *
-     * @return string Widget name.
-     */
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string Widget name.
+	 */
     public function get_name()
     {
-        return 'ft-banner-3';
+        return 'ft-banner3';
     }
 
     /**
@@ -83,214 +82,147 @@ class FT_Banner_3_Widget extends \Elementor\Widget_Base
      */
     protected function register_controls()
     {
+        $theme_uri = get_template_directory_uri();
+
         $this->start_controls_section(
-            'content_section',
+            'ft_banner3_section_settings',
             [
-                'label' => esc_html__('Content', 'ftelements'),
+                'label' => esc_html__('Section Settings', 'ftelements'),
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
 
         $this->add_control(
-            'banner_bg',
+            'section_class',
             [
-                'label' => esc_html__('Background Image', 'ftelements'),
-                'type' => Controls_Manager::MEDIA,
-                'default' => [
-                    'url' => Utils::get_placeholder_image_src(),
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'title',
-            [
-                'label' => esc_html__('Title', 'ftelements'),
-                'type' => Controls_Manager::TEXTAREA,
-                'default' => esc_html__('Empowering lives through heartly.', 'ftelements'),
-                'placeholder' => esc_html__('Type your title here', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'description',
-            [
-                'label' => esc_html__('Description', 'ftelements'),
-                'type' => Controls_Manager::TEXTAREA,
-                'default' => esc_html__('Your generous support helps us provide vital resources, ensuring every child can thrive.', 'ftelements'),
-                'placeholder' => esc_html__('Type your description here', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'btn_text',
-            [
-                'label' => esc_html__('Button Text', 'ftelements'),
+                'label' => esc_html__('Section Class', 'ftelements'),
                 'type' => Controls_Manager::TEXT,
-                'default' => esc_html__('Donate now', 'ftelements'),
+                'default' => 'hero-section-3',
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'ft_banner3_images',
+            [
+                'label' => esc_html__('Images', 'ftelements'),
+                'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
 
         $this->add_control(
-            'btn_link',
+            'slider_bg_1',
             [
-                'label' => esc_html__('Button Link', 'ftelements'),
-                'type' => Controls_Manager::URL,
-                'placeholder' => esc_html__('https://your-link.com', 'ftelements'),
-                'default' => [
-                    'url' => '#',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'btn_icon',
-            [
-                'label' => esc_html__('Button Icon', 'ftelements'),
-                'type' => Controls_Manager::ICONS,
-                'default' => [
-                    'value' => 'fa-sharp fa-solid fa-heart',
-                    'library' => 'solid',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'shape_img',
-            [
-                'label' => esc_html__('Shape Image', 'ftelements'),
+                'label' => esc_html__('Slider Background 1', 'ftelements'),
                 'type' => Controls_Manager::MEDIA,
                 'default' => [
-                    'url' => Utils::get_placeholder_image_src(),
+                    'url' => $theme_uri . '/assets/img/home-3/hero-slider-bg.jpg',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'slider_bg_2',
+            [
+                'label' => esc_html__('Slider Background 2', 'ftelements'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => $theme_uri . '/assets/img/home-3/hero-slider-bg2.jpg',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'slider_bg_3',
+            [
+                'label' => esc_html__('Slider Background 3', 'ftelements'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => $theme_uri . '/assets/img/home-3/hero-slider-bg3.jpg',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'button_arrow_image',
+            [
+                'label' => esc_html__('Button Arrow Image', 'ftelements'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => $theme_uri . '/assets/img/icon/arrow1.svg',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'phone_icon_image',
+            [
+                'label' => esc_html__('Phone Icon Image', 'ftelements'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => $theme_uri . '/assets/img/icon/telephone.svg',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'line_shape_image',
+            [
+                'label' => esc_html__('Line Shape Image', 'ftelements'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => $theme_uri . '/assets/img/home-3/line.png',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'hero_line_image',
+            [
+                'label' => esc_html__('Hero Line Image', 'ftelements'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => $theme_uri . '/assets/img/home-3/hero-line.png',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Section Style
         $this->start_controls_section(
-            'section_style',
+            'ft_banner3_style_section',
             [
-                'label' => esc_html__('Section Style', 'ftelements'),
+                'label' => esc_html__('Section', 'ftelements'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_responsive_control(
-            'section_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-section-3' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'section_margin',
-            [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-section-3' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name' => 'section_background',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-hero-section-3',
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name' => 'section_background_overlay',
-                'label' => esc_html__('Overlay Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-hero-section-3::before',
-            ]
-        );
-
-        $this->add_control(
-            'overlay_opacity',
-            [
-                'label' => esc_html__('Overlay Opacity', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => [
-                        'max' => 1,
-                        'min' => 0,
-                        'step' => 0.01,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-section-3::before' => 'opacity: {{SIZE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'section_border',
-                'selector' => '{{WRAPPER}} .grt-hero-section-3',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'section_height',
+            'banner_min_height',
             [
                 'label' => esc_html__('Min Height', 'ftelements'),
                 'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'vh', 'em'],
+                'size_units' => ['px', 'vh'],
                 'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1000,
-                    ],
+                    'px' => ['min' => 300, 'max' => 1400],
+                    'vh' => ['min' => 40, 'max' => 100],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .grt-hero-section-3' => 'min-height: {{SIZE}}{{UNIT}}; display: flex; align-items: center;',
+                    '{{WRAPPER}} .hero-3' => 'min-height: {{SIZE}}{{UNIT}};',
                 ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Hero Content Wrapper Style
-        $this->start_controls_section(
-            'hero_content_style',
-            [
-                'label' => esc_html__('Hero Content Wrapper', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_responsive_control(
             'content_max_width',
             [
-                'label' => esc_html__('Max Width', 'ftelements'),
+                'label' => esc_html__('Content Max Width', 'ftelements'),
                 'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%', 'em', 'rem'],
+                'size_units' => ['px', '%'],
                 'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1200,
-                    ],
-                    '%' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
+                    'px' => ['min' => 300, 'max' => 1200],
+                    '%' => ['min' => 30, 'max' => 100],
                 ],
                 'selectors' => [
                     '{{WRAPPER}} .hero-content' => 'max-width: {{SIZE}}{{UNIT}};',
@@ -299,61 +231,7 @@ class FT_Banner_3_Widget extends \Elementor\Widget_Base
         );
 
         $this->add_responsive_control(
-            'content_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .hero-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'content_margin',
-            [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .hero-content' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name' => 'content_bg',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .hero-content',
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'content_border',
-                'selector' => '{{WRAPPER}} .hero-content',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'content_border_radius',
-            [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .hero-content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'content_align',
+            'section_alignment',
             [
                 'label' => esc_html__('Content Alignment', 'ftelements'),
                 'type' => Controls_Manager::CHOOSE,
@@ -377,32 +255,66 @@ class FT_Banner_3_Widget extends \Elementor\Widget_Base
             ]
         );
 
+        $this->add_responsive_control(
+            'section_padding',
+            [
+                'label' => esc_html__('Section Padding', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .hero-3' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
         $this->end_controls_section();
 
-        // Title Style
         $this->start_controls_section(
-            'title_style_section',
+            'ft_banner3_subtitle_style',
             [
-                'label' => esc_html__('Title', 'ftelements'),
+                'label' => esc_html__('Subtitle', 'ftelements'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
-        $this->add_responsive_control(
-            'title_max_width',
+        $this->add_control(
+            'subtitle_color',
             [
-                'label' => esc_html__('Max Width', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%', 'em', 'rem'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1200,
-                    ],
-                ],
+                'label' => esc_html__('Color', 'ftelements'),
+                'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .hero-content h1' => 'max-width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .hero-content .sub-text' => 'color: {{VALUE}};',
                 ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'subtitle_typography',
+                'selector' => '{{WRAPPER}} .hero-content .sub-text',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'subtitle_margin',
+            [
+                'label' => esc_html__('Margin', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .hero-content .sub-text' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'ft_banner3_title_style',
+            [
+                'label' => esc_html__('Title', 'ftelements'),
+                'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
@@ -430,7 +342,7 @@ class FT_Banner_3_Widget extends \Elementor\Widget_Base
             [
                 'label' => esc_html__('Margin', 'ftelements'),
                 'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
+                'size_units' => ['px', '%'],
                 'selectors' => [
                     '{{WRAPPER}} .hero-content h1' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
@@ -439,35 +351,16 @@ class FT_Banner_3_Widget extends \Elementor\Widget_Base
 
         $this->end_controls_section();
 
-        // Description Style
         $this->start_controls_section(
-            'desc_style_section',
+            'ft_banner3_description_style',
             [
                 'label' => esc_html__('Description', 'ftelements'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
-        $this->add_responsive_control(
-            'desc_max_width',
-            [
-                'label' => esc_html__('Max Width', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%', 'em', 'rem'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1200,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .hero-content p' => 'max-width: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
         $this->add_control(
-            'desc_color',
+            'description_color',
             [
                 'label' => esc_html__('Color', 'ftelements'),
                 'type' => Controls_Manager::COLOR,
@@ -480,17 +373,17 @@ class FT_Banner_3_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name' => 'desc_typography',
+                'name' => 'description_typography',
                 'selector' => '{{WRAPPER}} .hero-content p',
             ]
         );
 
         $this->add_responsive_control(
-            'desc_margin',
+            'description_margin',
             [
                 'label' => esc_html__('Margin', 'ftelements'),
                 'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
+                'size_units' => ['px', '%'],
                 'selectors' => [
                     '{{WRAPPER}} .hero-content p' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
@@ -499,293 +392,284 @@ class FT_Banner_3_Widget extends \Elementor\Widget_Base
 
         $this->end_controls_section();
 
-        // Button Style
         $this->start_controls_section(
-            'button_style_section',
+            'ft_banner3_button_style',
             [
                 'label' => esc_html__('Button', 'ftelements'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'button_typography',
-                'selector' => '{{WRAPPER}} .theme-btn',
-            ]
-        );
-
-        $this->start_controls_tabs('button_tabs');
-
-        $this->start_controls_tab(
-            'button_normal',
-            [
-                'label' => esc_html__('Normal', 'ftelements'),
-            ]
-        );
-
         $this->add_control(
-            'button_color',
+            'button_text_color',
             [
-                'label' => esc_html__('Color', 'ftelements'),
+                'label' => esc_html__('Text Color', 'ftelements'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .theme-btn' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .hero-button .theme-btn .theme-text' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .hero-button .theme-btn .theme-text2' => 'color: {{VALUE}};',
                 ],
             ]
         );
 
         $this->add_control(
-            'button_bg_color',
+            'button_hover_text_color',
             [
-                'label' => esc_html__('Background Color', 'ftelements'),
+                'label' => esc_html__('Hover Text Color', 'ftelements'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .theme-btn' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .hero-button .theme-btn:hover .theme-text' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .hero-button .theme-btn:hover .theme-text2' => 'color: {{VALUE}};',
                 ],
             ]
         );
 
         $this->add_group_control(
-            Group_Control_Border::get_type(),
+            Group_Control_Typography::get_type(),
             [
-                'name' => 'button_border',
-                'selector' => '{{WRAPPER}} .theme-btn',
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->start_controls_tab(
-            'button_hover',
-            [
-                'label' => esc_html__('Hover', 'ftelements'),
+                'name' => 'button_text_typography',
+                'selector' => '{{WRAPPER}} .hero-button .theme-btn .theme-text, {{WRAPPER}} .hero-button .theme-btn .theme-text2',
             ]
         );
 
         $this->add_control(
-            'button_hover_color',
+            'button_bg_fill',
             [
-                'label' => esc_html__('Color', 'ftelements'),
+                'label' => esc_html__('Button Background Fill', 'ftelements'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .theme-btn:hover' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'button_hover_bg_color',
-            [
-                'label' => esc_html__('Background Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn:hover' => 'background-color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'button_hover_border',
-                'selector' => '{{WRAPPER}} .theme-btn:hover',
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
-
-        $this->add_responsive_control(
-            'button_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'button_border_radius',
-            [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Button Icon Style
-        $this->start_controls_section(
-            'button_icon_style_section',
-            [
-                'label' => esc_html__('Button Icon', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'icon_size',
-            [
-                'label' => esc_html__('Size', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em', 'rem'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .hero-button .theme-btn .theme-bg path' => 'fill: {{VALUE}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'icon_spacing',
+            'button_icon_size',
             [
-                'label' => esc_html__('Spacing', 'ftelements'),
+                'label' => esc_html__('Arrow Icon Size', 'ftelements'),
                 'type' => Controls_Manager::SLIDER,
                 'size_units' => ['px'],
                 'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 50,
-                    ],
+                    'px' => ['min' => 10, 'max' => 60],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .theme-btn i' => 'margin-left: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .hero-button .theme-btn img' => 'width: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
 
-        $this->add_control(
-            'icon_color',
+        $this->add_responsive_control(
+            'button_icon_spacing',
             [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label' => esc_html__('Arrow Spacing', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 40],
+                ],
                 'selectors' => [
-                    '{{WRAPPER}} .theme-btn i' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .hero-button .theme-btn img' => 'margin-left: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Hero Shape Style
         $this->start_controls_section(
-            'shape_style_section',
+            'ft_banner3_call_style',
             [
-                'label' => esc_html__('Hero Shape', 'ftelements'),
+                'label' => esc_html__('Call Box', 'ftelements'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
-        $this->add_responsive_control(
-            'shape_width',
+        $this->add_control(
+            'call_label_color',
             [
-                'label' => esc_html__('Width', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1000,
-                    ],
-                    '%' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                ],
+                'label' => esc_html__('Label Color', 'ftelements'),
+                'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .hero-shape img' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
+                    '{{WRAPPER}} .author-icon .content span' => 'color: {{VALUE}};',
                 ],
             ]
         );
 
-        $this->add_responsive_control(
-            'shape_opacity',
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
             [
-                'label' => esc_html__('Opacity', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1,
-                        'step' => 0.1,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .hero-shape img' => 'opacity: {{SIZE}};',
-                ],
+                'name' => 'call_label_typography',
+                'selector' => '{{WRAPPER}} .author-icon .content span',
             ]
         );
 
-        $this->add_responsive_control(
-            'shape_position_top',
+        $this->add_control(
+            'call_number_color',
             [
-                'label' => esc_html__('Top Position', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%', 'vh'],
-                'range' => [
-                    'px' => ['min' => -500, 'max' => 500],
-                    '%' => ['min' => -100, 'max' => 100],
-                ],
+                'label' => esc_html__('Number Color', 'ftelements'),
+                'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .hero-shape' => 'top: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'shape_position_right',
-            [
-                'label' => esc_html__('Right Position', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%', 'vw'],
-                'range' => [
-                    'px' => ['min' => -500, 'max' => 500],
-                    '%' => ['min' => -100, 'max' => 100],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .hero-shape' => 'right: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .author-icon .content .number' => 'color: {{VALUE}};',
                 ],
             ]
         );
 
         $this->add_control(
-            'shape_z_index',
+            'call_number_hover_color',
             [
-                'label' => esc_html__('Z-Index', 'ftelements'),
-                'type' => Controls_Manager::NUMBER,
+                'label' => esc_html__('Number Hover Color', 'ftelements'),
+                'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .hero-shape' => 'z-index: {{VALUE}};',
+                    '{{WRAPPER}} .author-icon .content .number:hover' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'call_number_typography',
+                'selector' => '{{WRAPPER}} .author-icon .content .number',
+            ]
+        );
+
+        $this->add_control(
+            'call_icon_bg_color',
+            [
+                'label' => esc_html__('Icon Background', 'ftelements'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .author-icon .icon' => 'background-color: {{VALUE}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'shape_display',
+            'call_icon_size',
             [
-                'label' => esc_html__('Display', 'ftelements'),
-                'type' => Controls_Manager::SELECT,
-                'options' => [
-                    'block' => esc_html__('Show', 'ftelements'),
-                    'none' => esc_html__('Hide', 'ftelements'),
+                'label' => esc_html__('Icon Size', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => ['min' => 16, 'max' => 120],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .hero-shape' => 'display: {{VALUE}};',
+                    '{{WRAPPER}} .author-icon .icon img' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'call_icon_radius',
+            [
+                'label' => esc_html__('Icon Border Radius', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .author-icon .icon' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'ft_banner3_social_style',
+            [
+                'label' => esc_html__('Social Icons', 'ftelements'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'social_icon_color',
+            [
+                'label' => esc_html__('Icon Color', 'ftelements'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .social-icon a' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'social_icon_bg_color',
+            [
+                'label' => esc_html__('Background Color', 'ftelements'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .social-icon a' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'social_icon_hover_color',
+            [
+                'label' => esc_html__('Hover Icon Color', 'ftelements'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .social-icon a:hover' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'social_icon_hover_bg_color',
+            [
+                'label' => esc_html__('Hover Background Color', 'ftelements'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .social-icon a:hover' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'social_icon_typography',
+                'selector' => '{{WRAPPER}} .social-icon a',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'social_icon_size',
+            [
+                'label' => esc_html__('Icon Size', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => ['min' => 10, 'max' => 60],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .social-icon a' => 'font-size: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'social_icon_box_size',
+            [
+                'label' => esc_html__('Box Size', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => ['min' => 24, 'max' => 120],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .social-icon a' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'social_icon_radius',
+            [
+                'label' => esc_html__('Border Radius', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .social-icon a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -805,59 +689,243 @@ class FT_Banner_3_Widget extends \Elementor\Widget_Base
     {
 
         $settings = $this->get_settings_for_display();
+        $theme_uri = get_template_directory_uri();
+        $widget_id = 'ft-banner3-' . $this->get_id();
 
-        $bg_url = !empty($settings['banner_bg']['url']) ? $settings['banner_bg']['url'] : '';
-        $shape_url = !empty($settings['shape_img']['url']) ? $settings['shape_img']['url'] : '';
+        $section_class = !empty($settings['section_class']) ? $settings['section_class'] : 'hero-section-3';
 
-        $this->add_render_attribute('wrapper', 'class', 'grt-hero-section-3 grt-hero-3 bg-cover');
-        if ($bg_url) {
-            $this->add_render_attribute('wrapper', 'style', 'background-image: url(' . esc_url($bg_url) . ');');
-        }
-
-        if (!empty($settings['btn_link']['url'])) {
-            $this->add_link_attributes('button_link', $settings['btn_link']);
-        }
-        $this->add_render_attribute('button_link', 'class', 'theme-btn wow fadeInUp');
-        $this->add_render_attribute('button_link', 'data-wow-delay', '.5s');
+        $slider_bg_1 = !empty($settings['slider_bg_1']['url']) ? $settings['slider_bg_1']['url'] : $theme_uri . '/assets/img/home-3/hero-slider-bg.jpg';
+        $slider_bg_2 = !empty($settings['slider_bg_2']['url']) ? $settings['slider_bg_2']['url'] : $theme_uri . '/assets/img/home-3/hero-slider-bg2.jpg';
+        $slider_bg_3 = !empty($settings['slider_bg_3']['url']) ? $settings['slider_bg_3']['url'] : $theme_uri . '/assets/img/home-3/hero-slider-bg3.jpg';
+        $button_arrow_image = !empty($settings['button_arrow_image']['url']) ? $settings['button_arrow_image']['url'] : $theme_uri . '/assets/img/icon/arrow1.svg';
+        $phone_icon_image = !empty($settings['phone_icon_image']['url']) ? $settings['phone_icon_image']['url'] : $theme_uri . '/assets/img/icon/telephone.svg';
+        $line_shape_image = !empty($settings['line_shape_image']['url']) ? $settings['line_shape_image']['url'] : $theme_uri . '/assets/img/home-3/line.png';
+        $hero_line_image = !empty($settings['hero_line_image']['url']) ? $settings['hero_line_image']['url'] : $theme_uri . '/assets/img/home-3/hero-line.png';
 
         ?>
 
-                <section <?php echo $this->get_render_attribute_string('wrapper'); ?>>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-9">
-                                <div class="hero-content">
-                                    <?php if (!empty($settings['title'])): ?>
-                                            <h1 class="split-title">
-                                                <?php echo wp_kses_post($settings['title']); ?>
+
+
+
+
+        <section id="<?php echo esc_attr($widget_id); ?>" class="<?php echo esc_attr($section_class); ?>">
+            <div class="swiper banner-active">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="hero-3">
+                            <div class="hero-bg bg-cover" style="background-image: url('<?php echo esc_url($slider_bg_1); ?>');">
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="hero-content">
+                                            <span class="sub-text">First impression & quick trust</span>
+                                            <h1>
+                                                Trusted & Loving <br>
+                                                Private Nannies for Your
+                                                Little Ones
                                             </h1>
-                                    <?php endif; ?>
-
-                                    <?php if (!empty($settings['description'])): ?>
-                                            <p class="wow fadeInUp" data-wow-delay=".3s">
-                                                <?php echo wp_kses_post($settings['description']); ?>
+                                            <p>
+                                                Professional, background-checked nannies providing safe, caring & personalized grow in a safe, loving, and stimulating environment. childcare at your home.
                                             </p>
-                                    <?php endif; ?>
+                                        </div>
+                                        <div class="hero-button">
+                                            <a href="contact.html" class="theme-btn">
+                                                <span class="theme-bg">
+                                                    <svg width="225" height="59" viewBox="0 0 225 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M0 20.1062C0 11.6265 6.61558 4.6195 15.0813 4.13258L86.9318 0L209.579 4.44155C218.185 4.75319 225 11.8198 225 20.4311V39.4568C225 48.1129 218.116 55.1994 209.463 55.4501L86.9318 59L15.2646 55.7024C6.72303 55.3093 0 48.2699 0 39.7193V20.1062Z" fill="#F39F5F" />
+                                                    </svg>
 
-                                    <?php if (!empty($settings['btn_text'])): ?>
-                                            <a <?php echo $this->get_render_attribute_string('button_link'); ?>>
-                                                <?php echo esc_html($settings['btn_text']); ?>
-                                                <?php if (!empty($settings['btn_icon']['value'])): ?>
-                                                        <i class="<?php echo esc_attr($settings['btn_icon']['value']); ?>"></i>
-                                                <?php endif; ?>
+                                                </span>
+                                                <span class="theme-text">Book a Consultation<img src="<?php echo esc_url($button_arrow_image); ?>" alt=""></span>
+                                                <span class="theme-text2">Book a Consultation<img src="<?php echo esc_url($button_arrow_image); ?>" alt=""></span>
                                             </a>
-                                    <?php endif; ?>
+                                            <div class="author-icon">
+                                                <div class="icon">
+                                                    <img src="<?php echo esc_url($phone_icon_image); ?>" alt="img">
+                                                </div>
+                                                <div class="content">
+                                                    <span>Call Us Now</span>
+                                                    <a class="number" href="tel:+11123065498">+11 123 0654 98</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <?php if ($shape_url): ?>
-                            <div class="hero-shape">
-                                <img src="<?php echo esc_url($shape_url); ?>" alt="<?php echo esc_attr__('shape', 'ftelements'); ?>">
+                    <div class="swiper-slide">
+                        <div class="hero-3">
+                            <div class="hero-bg bg-cover" style="background-image: url('<?php echo esc_url($slider_bg_2); ?>');">
                             </div>
-                    <?php endif; ?>
-                </section>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="hero-content">
+                                            <span class="sub-text">First impression & quick trust</span>
+                                            <h1>
+                                                Trusted & Loving <br>
+                                                Private Nannies for Your
+                                                Little Ones
+                                            </h1>
+                                            <p>
+                                                Professional, background-checked nannies providing safe, caring & personalized grow in a safe, loving, and stimulating environment. childcare at your home.
+                                            </p>
+                                        </div>
+                                        <div class="hero-button">
+                                            <a href="contact.html" class="theme-btn">
+                                                <span class="theme-bg">
+                                                    <svg width="225" height="59" viewBox="0 0 225 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M0 20.1062C0 11.6265 6.61558 4.6195 15.0813 4.13258L86.9318 0L209.579 4.44155C218.185 4.75319 225 11.8198 225 20.4311V39.4568C225 48.1129 218.116 55.1994 209.463 55.4501L86.9318 59L15.2646 55.7024C6.72303 55.3093 0 48.2699 0 39.7193V20.1062Z" fill="#F39F5F" />
+                                                    </svg>
 
-                <?php
+                                                </span>
+                                                <span class="theme-text">Book a Consultation<img src="<?php echo esc_url($button_arrow_image); ?>" alt=""></span>
+                                                <span class="theme-text2">Book a Consultation<img src="<?php echo esc_url($button_arrow_image); ?>" alt=""></span>
+                                            </a>
+                                            <div class="author-icon">
+                                                <div class="icon">
+                                                    <img src="<?php echo esc_url($phone_icon_image); ?>" alt="img">
+                                                </div>
+                                                <div class="content">
+                                                    <span>Call Us Now</span>
+                                                    <a class="number" href="tel:+11123065498">+11 123 0654 98</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="hero-3">
+                            <div class="hero-bg bg-cover" style="background-image: url('<?php echo esc_url($slider_bg_3); ?>');">
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="hero-content">
+                                            <span class="sub-text">First impression & quick trust</span>
+                                            <h1>
+                                                Trusted & Loving <br>
+                                                Private Nannies for Your
+                                                Little Ones
+                                            </h1>
+                                            <p>
+                                                Professional, background-checked nannies providing safe, caring & personalized grow in a safe, loving, and stimulating environment. childcare at your home.
+                                            </p>
+                                        </div>
+                                        <div class="hero-button">
+                                            <a href="contact.html" class="theme-btn">
+                                                <span class="theme-bg">
+                                                    <svg width="225" height="59" viewBox="0 0 225 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M0 20.1062C0 11.6265 6.61558 4.6195 15.0813 4.13258L86.9318 0L209.579 4.44155C218.185 4.75319 225 11.8198 225 20.4311V39.4568C225 48.1129 218.116 55.1994 209.463 55.4501L86.9318 59L15.2646 55.7024C6.72303 55.3093 0 48.2699 0 39.7193V20.1062Z" fill="#F39F5F" />
+                                                    </svg>
+
+                                                </span>
+                                                <span class="theme-text">Book a Consultation<img src="<?php echo esc_url($button_arrow_image); ?>" alt=""></span>
+                                                <span class="theme-text2">Book a Consultation<img src="<?php echo esc_url($button_arrow_image); ?>" alt=""></span>
+                                            </a>
+                                            <div class="author-icon">
+                                                <div class="icon">
+                                                    <img src="<?php echo esc_url($phone_icon_image); ?>" alt="img">
+                                                </div>
+                                                <div class="content">
+                                                    <span>Call Us Now</span>
+                                                    <a class="number" href="tel:+11123065498">+11 123 0654 98</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="social-icon d-grid align-items-center">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-vimeo-v"></i></a>
+                <a href="#"><i class="fab fa-pinterest-p"></i></a>
+            </div>
+            <div class="line-shape">
+                <img src="<?php echo esc_url($line_shape_image); ?>" alt="img">
+            </div>
+            <div class="hero-line">
+                <img src="<?php echo esc_url($hero_line_image); ?>" alt="">
+            </div>
+            <div class="swiper-dots">
+                <div class="hero-dot"></div>
+            </div>
+        </section>
+
+        <?php if (\Elementor\Plugin::$instance->editor->is_edit_mode()) : ?>
+            <script>
+                (function ($) {
+                    "use strict";
+
+                    const widgetSelector = "#<?php echo esc_js($widget_id); ?>";
+
+                    const initBanner3Slider = function ($scope) {
+                        if (typeof Swiper === "undefined") {
+                            return;
+                        }
+
+                        const $widget = $scope && $scope.length ? $scope.find(widgetSelector) : $(widgetSelector);
+                        if (!$widget.length) {
+                            return;
+                        }
+
+                        $widget.each(function () {
+                            const sliderEl = this.querySelector(".banner-active");
+                            if (!sliderEl) {
+                                return;
+                            }
+
+                            // Re-init safely when Elementor re-renders live preview.
+                            if (sliderEl.swiper) {
+                                sliderEl.swiper.destroy(true, true);
+                            }
+
+                            const paginationEl = this.querySelector(".hero-dot");
+                            new Swiper(sliderEl, {
+                                slidesPerView: 1,
+                                spaceBetween: 0,
+                                loop: true,
+                                autoplay: {
+                                    delay: 3000,
+                                    disableOnInteraction: false
+                                },
+                                pagination: {
+                                    el: paginationEl,
+                                    clickable: true
+                                },
+                                speed: 500
+                            });
+                        });
+                    };
+
+                    $(window).on("elementor/frontend/init", function () {
+                        elementorFrontend.hooks.addAction("frontend/element_ready/ft-banner3.default", initBanner3Slider);
+                    });
+
+                    $(function () {
+                        initBanner3Slider($(document));
+                    });
+                })(jQuery);
+            </script>
+        <?php endif; ?>
+
+
+
+
+
+
+
+
+<?php
     }
 } ?>

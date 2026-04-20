@@ -344,170 +344,268 @@ final class TPelements_Elementor_Extension {
         if( isset( $tpelements_addon_setting['tp_copyright_setting'] ) == 'tpelement_copyright' ){
 		require_once( __DIR__ . '/widgets/header-footer/copyright.php' );
 		\Elementor\Plugin::instance()->widgets_manager->register( new \Themephi_Elementor_Copyright_Widget() );
+
 		}
 
-		//Cart
-        if( isset( $tpelements_addon_setting['tp_cart_setting'] ) == 'tpelement_cart' ){
-		require_once( __DIR__ . '/widgets/woocommerce/cart.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \Themephi_Product_Cart() );
-		}
 
-		// About Widgets
-		require_once( __DIR__ . '/widgets/about/about1.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_About_1_Widget() );
-		require_once( __DIR__ . '/widgets/about/about2.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_About_2_Widget() );
-		require_once( __DIR__ . '/widgets/about/about3.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_About_3_Widget() );
-		require_once( __DIR__ . '/widgets/about/about4.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_About_4_Widget() );
-		require_once( __DIR__ . '/widgets/about/about5.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_About_5_Widget() );
 
-		// Accordion Widgets
-		require_once( __DIR__ . '/widgets/accordion/accordion1.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Accordion_1_Widget() );
-		require_once( __DIR__ . '/widgets/accordion/accordion2.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Accordion_2_Widget() );
-
-		// Banner Widgets
 		require_once( __DIR__ . '/widgets/banner/banner1.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Banner_1_Widget() );
-		require_once( __DIR__ . '/widgets/banner/banner2.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Banner_2_Widget() );
-		require_once( __DIR__ . '/widgets/banner/banner3.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Banner_3_Widget() );
-		require_once( __DIR__ . '/widgets/banner/banner4.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Banner_4_Widget() );
-		require_once( __DIR__ . '/widgets/banner/banner5.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Banner_5_Widget() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \Kidzu_Banner1_Widget() );
 
-		// Blog Widgets
-		require_once( __DIR__ . '/widgets/blog/blog1.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Blog_1_Widget() );
-		require_once( __DIR__ . '/widgets/blog/blog2.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Blog_2_Widget() );
-		require_once( __DIR__ . '/widgets/blog/blog3.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Blog_3_Widget() );
-		require_once( __DIR__ . '/widgets/blog/blog4.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Blog_4_Widget() );
-		require_once( __DIR__ . '/widgets/blog/blog5.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Blog_5_Widget() );
-
-		// Brand Widgets
-		require_once( __DIR__ . '/widgets/brand/brand1.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Brand_1_Widget() );
-		require_once( __DIR__ . '/widgets/brand/brand2.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Brand_2_Widget() );
-		require_once( __DIR__ . '/widgets/brand/brand3.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Brand_3_Widget() );
-		require_once( __DIR__ . '/widgets/brand/brand4.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Brand_4_Widget() );
-		require_once( __DIR__ . '/widgets/brand/brand5.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Brand_5_Widget() );
-		require_once( __DIR__ . '/widgets/brand/brand6.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Brand_6_Widget() );
-
-		// Contact Widgets
-		require_once( __DIR__ . '/widgets/contact/contact1.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Contact_1_Widget() );
-		require_once( __DIR__ . '/widgets/contact/contact2.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Contact_2_Widget() );
-
-		// Counter Widgets
-		require_once( __DIR__ . '/widgets/counter/counter1.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Counter_1_Widget() );
-		require_once( __DIR__ . '/widgets/counter/counter2.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Counter_2_Widget() );
-		require_once( __DIR__ . '/widgets/counter/counter3.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Counter_3_Widget() );
-		require_once( __DIR__ . '/widgets/counter/counter4.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Counter_4_Widget() );
-		require_once( __DIR__ . '/widgets/counter/counter5.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Counter_5_Widget() );
-
-		// CTA Widgets
-		require_once( __DIR__ . '/widgets/cta/cta1.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_CTA_1_Widget() );
-		require_once( __DIR__ . '/widgets/cta/cta2.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_CTA_2_Widget() );
-
-		// Donation Widgets
-		require_once( __DIR__ . '/widgets/donation/donation1.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Donation_1_Widget() );
-		require_once( __DIR__ . '/widgets/donation/donation2.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Donation_2_Widget() );
-		require_once( __DIR__ . '/widgets/donation/donation3.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Donation_3_Widget() );
-		require_once( __DIR__ . '/widgets/donation/donation4.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Donation_4_Widget() );
-		require_once( __DIR__ . '/widgets/donation/donation5.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Donation_5_Widget() );
-		require_once( __DIR__ . '/widgets/donation/donation6.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Donation_6_Widget() );
-		require_once( __DIR__ . '/widgets/donation/donation7.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Donation_7_Widget() );
-		require_once( __DIR__ . '/widgets/donation/donation8.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Donation_8_Widget() );
-
-		// Feature Widgets
 		require_once( __DIR__ . '/widgets/feature/feature1.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Feature_1_Widget() );
-		require_once( __DIR__ . '/widgets/feature/feature2.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Feature_2_Widget() );
-		require_once( __DIR__ . '/widgets/feature/feature3.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Feature_3_Widget() );
-		require_once( __DIR__ . '/widgets/feature/feature4.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Feature_4_Widget() );
-		require_once( __DIR__ . '/widgets/feature/feature5.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Feature_5_Widget() );
-		require_once( __DIR__ . '/widgets/feature/feature6.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Feature_6_Widget() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \Kidzu_Feature1_Widget() );
 
-		// Gallery Widget
-		require_once( __DIR__ . '/widgets/gallery/gallery.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Gallery_Widget() );
+		require_once( __DIR__ . '/widgets/about/about1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \Kidzu_About1_Widget() );
 
-		// Info Widgets
-		require_once( __DIR__ . '/widgets/info/info1.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Info_1_Widget() );
-		require_once( __DIR__ . '/widgets/info/info2.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Info_2_Widget() );
-		require_once( __DIR__ . '/widgets/info/info3.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Info_3_Widget() );
-		require_once( __DIR__ . '/widgets/info/info4.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Info_4_Widget() );
+		require_once( __DIR__ . '/widgets/choose/choose1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \Kidzu_Choose1_Widget() );
 
-		// Price Widget
-		require_once( __DIR__ . '/widgets/price/price.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Price_Widget() );
+		require_once( __DIR__ . '/widgets/counter/counter1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Counter1_Widget() );
 
-		// Project Widgets
-		require_once( __DIR__ . '/widgets/project/project1.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Project_1_Widget() );
-		require_once( __DIR__ . '/widgets/project/project2.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Project_2_Widget() );
-		require_once( __DIR__ . '/widgets/project/project3.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Project_3_Widget() );
+		require_once( __DIR__ . '/widgets/schedule/schedule1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Schedule1_Widget() );
 
-		// Team Widget
-		require_once( __DIR__ . '/widgets/team/team1.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Team_1_Widget() );
+		require_once( __DIR__ . '/widgets/cta/cta1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Cta1_Widget() );
 
-		// Testimonial Widgets
+		require_once( __DIR__ . '/widgets/accordion/accordion1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Accordion1_Widget() );
+
 		require_once( __DIR__ . '/widgets/testimonial/testimonial1.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Testimonial_1_Widget() );
-		require_once( __DIR__ . '/widgets/testimonial/testimonial2.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Testimonial_2_Widget() );
-		require_once( __DIR__ . '/widgets/testimonial/testimonial3.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Testimonial_3_Widget() );
-		require_once( __DIR__ . '/widgets/testimonial/testimonial4.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Testimonial_4_Widget() );
-		require_once( __DIR__ . '/widgets/testimonial/testimonial5.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Testimonial_5_Widget() );
-		require_once( __DIR__ . '/widgets/testimonial/testimonial6.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Testimonial_6_Widget() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Testimonial1_Widget() );
+
+		require_once( __DIR__ . '/widgets/newsletter/newsletter1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Newsletter1_Widget() );
+
+		require_once( __DIR__ . '/widgets/blog/blog1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Blog1_Widget() );
+
+		require_once( __DIR__ . '/widgets/brand/brand1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Brand1_Widget() );
+
+		require_once( __DIR__ . '/widgets/gallery/gallery1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Gallery1_Widget() );
+
+		require_once( __DIR__ . '/widgets/banner/banner2.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Banner2_Widget() );
+
+		require_once( __DIR__ . '/widgets/about/about2.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_About2_Widget() );
+
+		require_once( __DIR__ . '/widgets/feature/feature2.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Feature2_Widget() );
+
+		require_once( __DIR__ . '/widgets/feature/feature3.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Feature3_Widget() );
+
+		require_once( __DIR__ . '/widgets/feature/feature4.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Feature4_Widget() );
 		
+		require_once( __DIR__ . '/widgets/cta/cta2.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Cta2_Widget() );
+
+		require_once( __DIR__ . '/widgets/accordion/accordion2.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Accordion2_Widget() );
+
+		require_once( __DIR__ . '/widgets/testimonial/testimonial2.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Testimonial2_Widget() );
+
+		require_once( __DIR__ . '/widgets/blog/blog2.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Blog2_Widget() );
+
+		require_once( __DIR__ . '/widgets/brand/brand3.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Brand3_Widget() );
+
+		require_once( __DIR__ . '/widgets/choose/choose2.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Choose2_Widget() );
+
+		require_once( __DIR__ . '/widgets/brand/brand2.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Brand2_Widget() );
+
+		require_once( __DIR__ . '/widgets/cta/cta3.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Cta3_Widget() );
+
+		require_once( __DIR__ . '/widgets/banner/banner3.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Banner3_Widget() );
+
+		require_once( __DIR__ . '/widgets/about/about3.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_About3_Widget() );
+
+		require_once( __DIR__ . '/widgets/choose/choose3.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Choose3_Widget() );
+
+		require_once( __DIR__ . '/widgets/how-work/how-work1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_HowWork1_Widget() );
+
+		require_once( __DIR__ . '/widgets/contact/contact1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Contact1_Widget() );
+
+		require_once( __DIR__ . '/widgets/accordion/accordion3.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Accordion3_Widget() );
+
+		require_once( __DIR__ . '/widgets/testimonial/testimonial3.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Testimonial3_Widget() );
+
+		require_once( __DIR__ . '/widgets/brand/brand4.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Brand4_Widget() );
+
+		require_once( __DIR__ . '/widgets/gallery/gallery2.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Gallery2_Widget() );
+
+		require_once( __DIR__ . '/widgets/cta/cta4.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Cta4_Widget() );
+
+		require_once( __DIR__ . '/widgets/blog/blog3.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Blog3_Widget() );
+
+		require_once( __DIR__ . '/widgets/banner/banner4.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Banner4_Widget() );
+
+		require_once( __DIR__ . '/widgets/how-work/how-work2.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_HowWork2_Widget() );
+
+		require_once( __DIR__ . '/widgets/about/about4.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_About4_Widget() );
+
+		require_once( __DIR__ . '/widgets/feature/feature5.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Feature5_Widget() );
+
+		require_once( __DIR__ . '/widgets/testimonial/testimonial4.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Testimonial4_Widget() );
+
+		require_once( __DIR__ . '/widgets/about/about5.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_About5_Widget() );
+
+		require_once( __DIR__ . '/widgets/blog/blog4.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Blog4_Widget() );
+
+		require_once( __DIR__ . '/widgets/cta/cta5.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Cta5_Widget() );
+
+		require_once( __DIR__ . '/widgets/brand/brand5.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Brand5_Widget() );
+
+		require_once( __DIR__ . '/widgets/banner/banner5.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Banner5_Widget() );
+
+		require_once( __DIR__ . '/widgets/feature/feature6.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Feature6_Widget() );
+
+		require_once( __DIR__ . '/widgets/about/about6.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_About6_Widget() );
+
+		require_once( __DIR__ . '/widgets/feature/feature7.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Feature7_Widget() );
+
+		require_once( __DIR__ . '/widgets/counter/counter2.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Counter2_Widget() );
+
+		require_once( __DIR__ . '/widgets/contact/contact2.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Contact2_Widget() );
+
+		require_once( __DIR__ . '/widgets/price/price1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Price1_Widget() );
+
+		require_once( __DIR__ . '/widgets/testimonial/testimonial5.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Testimonial5_Widget() );
+
+		require_once( __DIR__ . '/widgets/blog/blog5.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Blog5_Widget() );
+
+		require_once( __DIR__ . '/widgets/contact/contact3.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Contact3_Widget() );
+
+		require_once( __DIR__ . '/widgets/choose/choose4.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Choose4_Widget() );
+
+		require_once( __DIR__ . '/widgets/testimonial/testimonial6.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Testimonial6_Widget() );
+
+		require_once( __DIR__ . '/widgets/about/about7.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_About7_Widget() );
+
+		require_once( __DIR__ . '/widgets/about/about8.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_About8_Widget() );
+
+		require_once( __DIR__ . '/widgets/schedule/schedule2.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Schedule2_Widget() );
+
+		require_once( __DIR__ . '/widgets/testimonial/testimonial7.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Testimonial7_Widget() );
+
+		require_once( __DIR__ . '/widgets/video/video1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Video1_Widget() );
+
+		require_once( __DIR__ . '/widgets/feature/feature8.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Feature8_Widget() );
+
+		require_once( __DIR__ . '/widgets/contact/contact5.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Contact5_Widget() );
+
+		require_once( __DIR__ . '/widgets/contact/contact6.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Contact6_Widget() );
+
+		require_once( __DIR__ . '/widgets/blog/blog6.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Blog6_Widget() );
+
+		
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+		
+		
+
+
+
 		// Register widget				
 		add_action( 'elementor/elements/categories_registered', [$this, 'add_category'] );
         add_action( 'elementor/elements/categories_registered', [$this, 'resgister_tpaddon_category'] );

@@ -3,7 +3,6 @@
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Repeater;
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
@@ -13,19 +12,19 @@ use Elementor\Utils;
 
 defined('ABSPATH') || die();
 
-class FT_Blog_4_Widget extends \Elementor\Widget_Base
+class FT_Blog4_Widget extends \Elementor\Widget_Base
 {
 
     /*
-     *
-     * @since 1.0.0
-     * @access public
-     *
-     * @return string Widget name.
-     */
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string Widget name.
+	 */
     public function get_name()
     {
-        return 'ft-blog-4';
+        return 'ft-blog4';
     }
 
     /**
@@ -87,159 +86,271 @@ class FT_Blog_4_Widget extends \Elementor\Widget_Base
             'content_section',
             [
                 'label' => esc_html__('Content', 'ftelements'),
-                'tab' => Controls_Manager::TAB_CONTENT,
+                'tab'   => Controls_Manager::TAB_CONTENT,
             ]
         );
 
-        $this->add_control(
-            'subtitle',
+        $this->add_control('section_subtitle', [
+            'label'       => esc_html__('Subtitle', 'ftelements'),
+            'type'        => Controls_Manager::TEXT,
+            'default'     => esc_html__('Our Blogs', 'ftelements'),
+            'label_block' => true,
+        ]);
+
+        $this->add_control('section_title', [
+            'label'       => esc_html__('Title', 'ftelements'),
+            'type'        => Controls_Manager::TEXT,
+            'default'     => esc_html__('Explore Blogs And News', 'ftelements'),
+            'label_block' => true,
+        ]);
+
+        $this->add_control('show_header', [
+            'label'        => esc_html__('Show Header', 'ftelements'),
+            'type'         => Controls_Manager::SWITCHER,
+            'return_value' => 'yes',
+            'default'      => 'yes',
+        ]);
+
+        $this->add_control('show_subtitle', [
+            'label'        => esc_html__('Show Subtitle', 'ftelements'),
+            'type'         => Controls_Manager::SWITCHER,
+            'return_value' => 'yes',
+            'default'      => 'yes',
+            'condition'    => ['show_header' => 'yes'],
+        ]);
+
+        $this->add_control('show_view_all_button', [
+            'label'        => esc_html__('Show Header Button', 'ftelements'),
+            'type'         => Controls_Manager::SWITCHER,
+            'return_value' => 'yes',
+            'default'      => 'yes',
+            'condition'    => ['show_header' => 'yes'],
+        ]);
+
+        $this->add_control('view_all_text', [
+            'label'       => esc_html__('Header Button Text', 'ftelements'),
+            'type'        => Controls_Manager::TEXT,
+            'default'     => esc_html__('See All Article', 'ftelements'),
+            'label_block' => true,
+            'condition'   => ['show_view_all_button' => 'yes'],
+        ]);
+
+        $this->add_control('view_all_link', [
+            'label'       => esc_html__('Header Button Link', 'ftelements'),
+            'type'        => Controls_Manager::URL,
+            'options'     => ['url', 'is_external', 'nofollow'],
+            'label_block' => true,
+            'default'     => [
+                'url' => '#',
+            ],
+            'condition'   => ['show_view_all_button' => 'yes'],
+        ]);
+
+        $this->add_control('posts_per_page', [
+            'label'   => esc_html__('Posts Count', 'ftelements'),
+            'type'    => Controls_Manager::NUMBER,
+            'default' => 3,
+            'min'     => 1,
+            'max'     => 30,
+        ]);
+
+        $this->add_control('offset', [
+            'label'   => esc_html__('Offset', 'ftelements'),
+            'type'    => Controls_Manager::NUMBER,
+            'default' => 0,
+            'min'     => 0,
+        ]);
+
+        $this->add_control('order', [
+            'label'   => esc_html__('Order', 'ftelements'),
+            'type'    => Controls_Manager::SELECT,
+            'default' => 'DESC',
+            'options' => [
+                'DESC' => esc_html__('Descending', 'ftelements'),
+                'ASC'  => esc_html__('Ascending', 'ftelements'),
+            ],
+        ]);
+
+        $this->add_control('orderby', [
+            'label'   => esc_html__('Order By', 'ftelements'),
+            'type'    => Controls_Manager::SELECT,
+            'default' => 'date',
+            'options' => [
+                'date'          => esc_html__('Date', 'ftelements'),
+                'title'         => esc_html__('Title', 'ftelements'),
+                'modified'      => esc_html__('Modified', 'ftelements'),
+                'comment_count' => esc_html__('Comment Count', 'ftelements'),
+                'rand'          => esc_html__('Random', 'ftelements'),
+            ],
+        ]);
+
+        $this->add_control('title_words_main', [
+            'label'       => esc_html__('Main Post Title Words', 'ftelements'),
+            'type'        => Controls_Manager::NUMBER,
+            'default'     => 12,
+            'min'         => 0,
+            'max'         => 40,
+            'description' => esc_html__('0 keeps full title.', 'ftelements'),
+        ]);
+
+        $this->add_control('title_words_small', [
+            'label'       => esc_html__('Small Post Title Words', 'ftelements'),
+            'type'        => Controls_Manager::NUMBER,
+            'default'     => 8,
+            'min'         => 0,
+            'max'         => 40,
+            'description' => esc_html__('0 keeps full title.', 'ftelements'),
+        ]);
+
+        $this->add_control('excerpt_length', [
+            'label'   => esc_html__('Excerpt Length (Words)', 'ftelements'),
+            'type'    => Controls_Manager::NUMBER,
+            'default' => 20,
+            'min'     => 0,
+            'max'     => 200,
+        ]);
+
+        $this->add_control('words_per_minute', [
+            'label'       => esc_html__('Reading Speed (Words / Min)', 'ftelements'),
+            'type'        => Controls_Manager::NUMBER,
+            'default'     => 200,
+            'min'         => 1,
+            'max'         => 600,
+            'description' => esc_html__('Used to calculate read time.', 'ftelements'),
+        ]);
+
+        $this->add_group_control(
+            Group_Control_Image_Size::get_type(),
             [
-                'label' => esc_html__('Subtitle', 'ftelements'),
-                'type' => Controls_Manager::TEXT,
-                'default' => esc_html__('News & Articles', 'ftelements'),
+                'name'    => 'thumbnail',
+                'default' => 'large',
             ]
         );
 
+        $this->add_control('show_featured_image', [
+            'label'        => esc_html__('Featured Image', 'ftelements'),
+            'type'         => Controls_Manager::SWITCHER,
+            'return_value' => 'yes',
+            'default'      => 'yes',
+        ]);
+
+        $this->add_control('show_title', [
+            'label'        => esc_html__('Post Title', 'ftelements'),
+            'type'         => Controls_Manager::SWITCHER,
+            'return_value' => 'yes',
+            'default'      => 'yes',
+        ]);
+
+        $this->add_control('show_excerpt', [
+            'label'        => esc_html__('Excerpt (Main Post)', 'ftelements'),
+            'type'         => Controls_Manager::SWITCHER,
+            'return_value' => 'yes',
+            'default'      => 'yes',
+        ]);
+
+        $this->add_control('show_category', [
+            'label'        => esc_html__('Category', 'ftelements'),
+            'type'         => Controls_Manager::SWITCHER,
+            'return_value' => 'yes',
+            'default'      => 'yes',
+        ]);
+
+        $this->add_control('show_date', [
+            'label'        => esc_html__('Date', 'ftelements'),
+            'type'         => Controls_Manager::SWITCHER,
+            'return_value' => 'yes',
+            'default'      => 'yes',
+        ]);
+
+        $this->add_control('show_author', [
+            'label'        => esc_html__('Author Name', 'ftelements'),
+            'type'         => Controls_Manager::SWITCHER,
+            'return_value' => 'yes',
+            'default'      => 'yes',
+        ]);
+
+        $this->add_control('show_comments', [
+            'label'        => esc_html__('Comment Count', 'ftelements'),
+            'type'         => Controls_Manager::SWITCHER,
+            'return_value' => 'yes',
+            'default'      => 'no',
+        ]);
+
+        $this->add_control('show_word_count', [
+            'label'        => esc_html__('Word Count', 'ftelements'),
+            'type'         => Controls_Manager::SWITCHER,
+            'return_value' => 'yes',
+            'default'      => 'no',
+        ]);
+
+        $this->add_control('show_read_time', [
+            'label'        => esc_html__('Read Time', 'ftelements'),
+            'type'         => Controls_Manager::SWITCHER,
+            'return_value' => 'yes',
+            'default'      => 'no',
+        ]);
+
+        $this->add_control('show_read_more_button', [
+            'label'        => esc_html__('Main Post Read More Button', 'ftelements'),
+            'type'         => Controls_Manager::SWITCHER,
+            'return_value' => 'yes',
+            'default'      => 'yes',
+        ]);
+
+        $this->add_control('read_more_text', [
+            'label'       => esc_html__('Read More Text', 'ftelements'),
+            'type'        => Controls_Manager::TEXT,
+            'default'     => esc_html__('Read More', 'ftelements'),
+            'label_block' => true,
+            'condition'   => ['show_read_more_button' => 'yes'],
+        ]);
+
         $this->add_control(
-            'title',
+            'button_arrow_image',
             [
-                'label' => esc_html__('Title', 'ftelements'),
-                'type' => Controls_Manager::TEXTAREA,
-                'default' => esc_html__('Latest news & articles from the blog posts', 'ftelements'),
+                'label'       => esc_html__('Button Arrow Image', 'ftelements'),
+                'type'        => Controls_Manager::MEDIA,
+                'description' => esc_html__('Used on the header button and main post read more button.', 'ftelements'),
+                'default'     => [
+                    'url' => 'assets/img/icon/arrow1.svg',
+                ],
             ]
         );
+
+        $this->add_control('word_count_suffix', [
+            'label'       => esc_html__('Word Count Suffix', 'ftelements'),
+            'type'        => Controls_Manager::TEXT,
+            'default'     => esc_html__('words', 'ftelements'),
+            'label_block' => true,
+            'condition'   => ['show_word_count' => 'yes'],
+        ]);
+
+        $this->add_control('read_time_suffix', [
+            'label'       => esc_html__('Read Time Suffix', 'ftelements'),
+            'type'        => Controls_Manager::TEXT,
+            'default'     => esc_html__('min read', 'ftelements'),
+            'label_block' => true,
+            'condition'   => ['show_read_time' => 'yes'],
+        ]);
 
         $this->end_controls_section();
 
         $this->start_controls_section(
-            'query_section',
+            'section_style_layout',
             [
-                'label' => esc_html__('Query Settings', 'ftelements'),
-                'tab' => Controls_Manager::TAB_CONTENT,
-            ]
-        );
-
-        $this->add_control(
-            'posts_per_page',
-            [
-                'label' => esc_html__('Posts Count', 'ftelements'),
-                'type' => Controls_Manager::NUMBER,
-                'default' => 3,
-            ]
-        );
-
-        $this->add_control(
-            'category',
-            [
-                'label' => esc_html__('Category', 'ftelements'),
-                'type' => Controls_Manager::SELECT2,
-                'multiple' => true,
-                'options' => $this->get_blog_categories(),
-                'label_block' => true,
-            ]
-        );
-
-        $this->add_control(
-            'orderby',
-            [
-                'label' => esc_html__('Order By', 'ftelements'),
-                'type' => Controls_Manager::SELECT,
-                'default' => 'date',
-                'options' => [
-                    'date' => esc_html__('Date', 'ftelements'),
-                    'title' => esc_html__('Title', 'ftelements'),
-                    'rand' => esc_html__('Random', 'ftelements'),
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'order',
-            [
-                'label' => esc_html__('Order', 'ftelements'),
-                'type' => Controls_Manager::SELECT,
-                'default' => 'DESC',
-                'options' => [
-                    'ASC' => esc_html__('ASC', 'ftelements'),
-                    'DESC' => esc_html__('DESC', 'ftelements'),
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        $this->start_controls_section(
-            'image_override_section',
-            [
-                'label' => esc_html__('Post Image Overrides', 'ftelements'),
-                'tab' => Controls_Manager::TAB_CONTENT,
-            ]
-        );
-
-        $this->add_control(
-            'image_override_note',
-            [
-                'type' => Controls_Manager::RAW_HTML,
-                'raw' => esc_html__('Items below map to posts in order (1st item = 1st post, etc.)', 'ftelements'),
-                'content_classes' => 'elementor-descriptor',
-            ]
-        );
-
-        $repeater = new Repeater();
-
-        $repeater->add_control(
-            'image_source',
-            [
-                'label' => esc_html__('Image Source', 'ftelements'),
-                'type' => Controls_Manager::SELECT,
-                'default' => 'post_thumbnail',
-                'options' => [
-                    'post_thumbnail' => esc_html__('Post Thumbnail', 'ftelements'),
-                    'custom' => esc_html__('Custom Image', 'ftelements'),
-                ],
-            ]
-        );
-
-        $repeater->add_control(
-            'custom_image',
-            [
-                'label' => esc_html__('Custom Image', 'ftelements'),
-                'type' => Controls_Manager::MEDIA,
-                'condition' => [
-                    'image_source' => 'custom',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'post_image_overrides',
-            [
-                'label' => esc_html__('Overrides', 'ftelements'),
-                'type' => Controls_Manager::REPEATER,
-                'fields' => $repeater->get_controls(),
-                'title_field' => 'Post #{{{ _sortable_id + 1 }}} Override',
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Section Style
-        $this->start_controls_section(
-            'section_style',
-            [
-                'label' => esc_html__('Section Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Layout', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_responsive_control(
             'section_padding',
             [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-news-section-4' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Section Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -247,86 +358,68 @@ class FT_Blog_4_Widget extends \Elementor\Widget_Base
         $this->add_responsive_control(
             'section_margin',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-news-section-4' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Section Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
+        $this->add_responsive_control(
+            'header_area_margin',
             [
-                'name' => 'section_bg',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-news-section-4',
+                'label'      => esc_html__('Header Area Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4 .section-title-area' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
             ]
         );
 
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
+        $this->add_responsive_control(
+            'column_gap',
             [
-                'name' => 'section_border',
-                'label' => esc_html__('Border', 'ftelements'),
-                'selector' => '{{WRAPPER}} .grt-news-section-4',
+                'label'      => esc_html__('Column Gap', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4 .row' => 'column-gap: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'right_items_gap',
+            [
+                'label'      => esc_html__('Right Items Gap', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4 .news-right-items + .news-right-items' => 'margin-top: {{SIZE}}{{UNIT}};',
+                ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Header Style (Title & Subtitle)
         $this->start_controls_section(
             'section_style_header',
             [
-                'label' => esc_html__('Title & Subtitle', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'header_alignment',
-            [
-                'label' => esc_html__('Alignment', 'ftelements'),
-                'type' => Controls_Manager::CHOOSE,
-                'options' => [
-                    'left' => [
-                        'title' => esc_html__('Left', 'ftelements'),
-                        'icon' => 'eicon-text-align-left',
-                    ],
-                    'center' => [
-                        'title' => esc_html__('Center', 'ftelements'),
-                        'icon' => 'eicon-text-align-center',
-                    ],
-                    'right' => [
-                        'title' => esc_html__('Right', 'ftelements'),
-                        'icon' => 'eicon-text-align-right',
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-section-title' => 'text-align: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'subtitle_heading',
-            [
-                'label' => esc_html__('Subtitle', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
+                'label' => esc_html__('Header', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_control(
             'subtitle_color',
             [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Subtitle Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-sub-title' => 'color: {{VALUE}} !important;',
+                    '{{WRAPPER}} .news-section-4 .section-title .sec-sub' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -334,51 +427,18 @@ class FT_Blog_4_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name' => 'subtitle_typography',
-                'label' => esc_html__('Typography', 'ftelements'),
-                'selector' => '{{WRAPPER}} .grt-sub-title',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'subtitle_margin',
-            [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-sub-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
+                'name'     => 'subtitle_typography',
+                'selector' => '{{WRAPPER}} .news-section-4 .section-title .sec-sub',
             ]
         );
 
         $this->add_control(
-            'subtitle_icon_color',
+            'section_title_color',
             [
-                'label' => esc_html__('Icon Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Title Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-sub-title i' => 'color: {{VALUE}} !important;',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'title_heading',
-            [
-                'label' => esc_html__('Title', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_control(
-            'title_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .split-title' => 'color: {{VALUE}} !important;',
+                    '{{WRAPPER}} .news-section-4 .section-title h2' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -386,269 +446,246 @@ class FT_Blog_4_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name' => 'title_typography',
-                'label' => esc_html__('Typography', 'ftelements'),
-                'selector' => '{{WRAPPER}} .split-title',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'title_max_width',
-            [
-                'label' => esc_html__('Max Width', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1200,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .split-title' => 'max-width: {{SIZE}}{{UNIT}}; margin-left: auto; margin-right: auto;',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'title_margin',
-            [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .split-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
+                'name'     => 'section_title_typography',
+                'selector' => '{{WRAPPER}} .news-section-4 .section-title h2',
             ]
         );
 
         $this->end_controls_section();
 
-        // Blog Item Style
         $this->start_controls_section(
-            'item_style',
+            'section_style_main_card',
             [
-                'label' => esc_html__('Blog Item', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'item_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-news-box-items-4' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'item_margin',
-            [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-news-box-items-4' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->start_controls_tabs('item_tabs');
-
-        $this->start_controls_tab(
-            'item_normal',
-            [
-                'label' => esc_html__('Normal', 'ftelements'),
+                'label' => esc_html__('Main Card', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_group_control(
             Group_Control_Background::get_type(),
             [
-                'name' => 'item_bg',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-news-box-items-4',
+                'name'     => 'main_card_background',
+                'selector' => '{{WRAPPER}} .news-section-4 .news-single-items',
             ]
         );
 
         $this->add_group_control(
             Group_Control_Border::get_type(),
             [
-                'name' => 'item_border',
-                'label' => esc_html__('Border', 'ftelements'),
-                'selector' => '{{WRAPPER}} .grt-news-box-items-4',
+                'name'     => 'main_card_border',
+                'selector' => '{{WRAPPER}} .news-section-4 .news-single-items',
             ]
         );
 
-        $this->end_controls_tab();
-
-        $this->start_controls_tab(
-            'item_hover',
+        $this->add_responsive_control(
+            'main_card_radius',
             [
-                'label' => esc_html__('Hover', 'ftelements'),
+                'label'      => esc_html__('Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4 .news-single-items' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'main_card_padding',
+            [
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4 .news-single-items' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'section_style_side_card',
+            [
+                'label' => esc_html__('Right Cards', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_group_control(
             Group_Control_Background::get_type(),
             [
-                'name' => 'item_hover_bg',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-news-box-items-4:hover',
+                'name'     => 'side_card_background',
+                'selector' => '{{WRAPPER}} .news-section-4 .news-right-items',
             ]
         );
 
-        $this->add_control(
-            'item_hover_border_color',
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
             [
-                'label' => esc_html__('Border Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .grt-news-box-items-4:hover' => 'border-color: {{VALUE}} !important;',
-                ],
+                'name'     => 'side_card_border',
+                'selector' => '{{WRAPPER}} .news-section-4 .news-right-items',
             ]
         );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
 
         $this->add_responsive_control(
-            'item_border_radius',
+            'side_card_radius',
             [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-news-box-items-4' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4 .news-right-items' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
-                'separator' => 'before',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'side_card_padding',
+            [
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4 .news-right-items' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Thumbnail Style
         $this->start_controls_section(
-            'thumb_style',
+            'section_style_images',
             [
-                'label' => esc_html__('Thumbnail', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Images', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_responsive_control(
-            'thumb_margin',
+            'main_image_height',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-thumb' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Main Image Height', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'vh'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4 .news-single-items .news-image img' => 'height: {{SIZE}}{{UNIT}}; object-fit: cover;',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'thumb_border_radius',
+            'side_image_height',
             [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-thumb, {{WRAPPER}} .grt-thumb img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Right Image Height', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'vh'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4 .news-right-items .news-thumb img' => 'height: {{SIZE}}{{UNIT}}; object-fit: cover;',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'image_radius',
+            [
+                'label'      => esc_html__('Image Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4 .news-single-items .news-image img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .news-section-4 .news-right-items .news-thumb img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_group_control(
-            Group_Control_Css_Filter::get_type(),
+            Group_Control_Border::get_type(),
             [
-                'name' => 'thumb_filters',
-                'selector' => '{{WRAPPER}} .grt-thumb img',
-            ]
-        );
-
-        $this->add_control(
-            'thumb_hover_zoom',
-            [
-                'label' => esc_html__('Hover Zoom Effect', 'ftelements'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('On', 'ftelements'),
-                'label_off' => esc_html__('Off', 'ftelements'),
-                'return_value' => 'yes',
-                'prefix_class' => 'ft-thumb-zoom-',
+                'name'     => 'image_border',
+                'selector' => '{{WRAPPER}} .news-section-4 .news-single-items .news-image img, {{WRAPPER}} .news-section-4 .news-right-items .news-thumb img',
             ]
         );
 
         $this->end_controls_section();
 
-        // Content Wrapper Style
         $this->start_controls_section(
-            'content_wrapper_style',
+            'section_style_meta',
             [
-                'label' => esc_html__('Content Wrapper', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Meta', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
-        $this->add_responsive_control(
-            'content_padding',
+        $this->add_control(
+            'meta_text_color',
             [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
+                'label'     => esc_html__('Text Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .news-section-4 .news-content ul li' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'meta_icon_color',
+            [
+                'label'     => esc_html__('Icon Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .news-section-4 .news-content ul li i' => 'color: {{VALUE}};',
                 ],
             ]
         );
 
         $this->add_group_control(
-            Group_Control_Background::get_type(),
+            Group_Control_Typography::get_type(),
             [
-                'name' => 'content_bg',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-content',
+                'name'     => 'meta_typography',
+                'selector' => '{{WRAPPER}} .news-section-4 .news-content ul li',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'meta_gap',
+            [
+                'label'      => esc_html__('Meta Item Gap', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4 .news-content ul' => 'gap: {{SIZE}}{{UNIT}};',
+                ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Blog Title Style
         $this->start_controls_section(
-            'blog_title_style',
+            'section_style_post_title',
             [
                 'label' => esc_html__('Post Title', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_control(
-            'blog_title_color',
+            'post_title_color',
             [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-news-box-items-4 .title a' => 'color: {{VALUE}} !important;',
+                    '{{WRAPPER}} .news-section-4 .news-content h3 a' => 'color: {{VALUE}};',
                 ],
             ]
         );
 
         $this->add_control(
-            'blog_title_hover_color',
+            'post_title_hover_color',
             [
-                'label' => esc_html__('Hover Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Hover Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-news-box-items-4 .title a:hover' => 'color: {{VALUE}} !important;',
+                    '{{WRAPPER}} .news-section-4 .news-content h3 a:hover' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -656,42 +693,40 @@ class FT_Blog_4_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name' => 'blog_title_typography',
-                'label' => esc_html__('Typography', 'ftelements'),
-                'selector' => '{{WRAPPER}} .grt-news-box-items-4 .title a',
+                'name'     => 'post_title_typography',
+                'selector' => '{{WRAPPER}} .news-section-4 .news-content h3',
             ]
         );
 
         $this->add_responsive_control(
-            'blog_title_margin',
+            'post_title_margin',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-news-box-items-4 .title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4 .news-content h3' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Blog Excerpt Style
         $this->start_controls_section(
-            'blog_content_style',
+            'section_style_excerpt',
             [
-                'label' => esc_html__('Post Excerpt', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Excerpt', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_control(
-            'blog_content_color',
+            'excerpt_color',
             [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-news-box-items-4 .grt-content p' => 'color: {{VALUE}} !important;',
+                    '{{WRAPPER}} .news-section-4 .news-single-items .news-content p' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -699,132 +734,176 @@ class FT_Blog_4_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name' => 'blog_content_typography',
-                'label' => esc_html__('Typography', 'ftelements'),
-                'selector' => '{{WRAPPER}} .grt-news-box-items-4 .grt-content p',
+                'name'     => 'excerpt_typography',
+                'selector' => '{{WRAPPER}} .news-section-4 .news-single-items .news-content p',
             ]
         );
 
         $this->add_responsive_control(
-            'blog_content_margin',
+            'excerpt_margin',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-news-box-items-4 .grt-content p' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4 .news-single-items .news-content p' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Meta Style
         $this->start_controls_section(
-            'meta_style',
+            'section_style_author',
             [
-                'label' => esc_html__('Meta Info', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'meta_wrapper_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .tag-items' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name' => 'meta_wrapper_bg',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .tag-items',
+                'label' => esc_html__('Author', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_control(
-            'meta_color',
+            'author_text_color',
             [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Text Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .tag-items .date' => 'color: {{VALUE}} !important;',
+                    '{{WRAPPER}} .news-section-4 .post-items .content span' => 'color: {{VALUE}};',
                 ],
-                'separator' => 'before',
+            ]
+        );
+
+        $this->add_control(
+            'author_name_color',
+            [
+                'label'     => esc_html__('Name Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .news-section-4 .post-items .content h4' => 'color: {{VALUE}};',
+                ],
             ]
         );
 
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name' => 'meta_typography',
-                'label' => esc_html__('Typography', 'ftelements'),
-                'selector' => '{{WRAPPER}} .tag-items .date',
+                'name'     => 'author_text_typography',
+                'selector' => '{{WRAPPER}} .news-section-4 .post-items .content span',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name'     => 'author_name_typography',
+                'selector' => '{{WRAPPER}} .news-section-4 .post-items .content h4',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'author_avatar_radius',
+            [
+                'label'      => esc_html__('Avatar Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4 .post-items .thumb img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'section_style_buttons',
+            [
+                'label' => esc_html__('Buttons', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_control(
-            'dot_color',
+            'button_text_color',
             [
-                'label' => esc_html__('Separator Dot Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Text Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .dotss' => 'background-color: {{VALUE}} !important;',
-                ],
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'dot_size',
-            [
-                'label' => esc_html__('Separator Dot Size', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 50,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .dotss' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .news-section-4 .theme-btn .theme-text'  => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .news-section-4 .theme-btn .theme-text2' => 'color: {{VALUE}};',
                 ],
             ]
         );
 
-        $this->add_responsive_control(
-            'meta_margin',
+        $this->add_control(
+            'button_bg_color',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
+                'label'     => esc_html__('Background Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .tag-items' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .news-section-4 .theme-btn .theme-bg svg path' => 'fill: {{VALUE}};',
                 ],
-                'separator' => 'before',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name'     => 'button_typography',
+                'selector' => '{{WRAPPER}} .news-section-4 .theme-btn .theme-text',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'button_padding',
+            [
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4 .theme-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'button_radius',
+            [
+                'label'      => esc_html__('Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .news-section-4 .theme-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name'     => 'button_border',
+                'selector' => '{{WRAPPER}} .news-section-4 .theme-btn',
             ]
         );
 
         $this->end_controls_section();
     }
 
-    protected function get_blog_categories()
+    private function get_post_word_count($post_id)
     {
-        $categories = get_categories();
-        $options = [];
-        foreach ($categories as $category) {
-            $options[$category->slug] = $category->name;
+        $content = get_post_field('post_content', $post_id);
+        $text    = wp_strip_all_tags((string) $content);
+        if (function_exists('mb_strlen')) {
+            return count(preg_split('/\s+/u', $text, -1, PREG_SPLIT_NO_EMPTY));
         }
-        return $options;
+        return str_word_count($text);
+    }
+
+    private function get_trimmed_title($post_id, $word_limit)
+    {
+        $title = get_the_title($post_id);
+        if ($word_limit > 0) {
+            return wp_trim_words($title, $word_limit, '...');
+        }
+        return $title;
     }
 
     /**
@@ -840,113 +919,255 @@ class FT_Blog_4_Widget extends \Elementor\Widget_Base
 
         $settings = $this->get_settings_for_display();
 
-        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-        $args = [
-            'post_type' => 'post',
-            'posts_per_page' => $settings['posts_per_page'],
-            'orderby' => $settings['orderby'],
-            'order' => $settings['order'],
-            'paged' => $paged,
+        $query_args = [
+            'post_type'           => 'post',
+            'post_status'         => 'publish',
+            'posts_per_page'      => ! empty($settings['posts_per_page']) ? absint($settings['posts_per_page']) : 3,
+            'ignore_sticky_posts' => true,
+            'order'               => ! empty($settings['order']) ? $settings['order'] : 'DESC',
+            'orderby'             => ! empty($settings['orderby']) ? $settings['orderby'] : 'date',
         ];
 
-        if (!empty($settings['category'])) {
-            $args['category_name'] = implode(',', $settings['category']);
+        if (! empty($settings['offset'])) {
+            $query_args['offset'] = absint($settings['offset']);
         }
 
-        $query = new \WP_Query($args);
+        $blog_query        = new \WP_Query($query_args);
+        $excerpt_words     = isset($settings['excerpt_length']) ? absint($settings['excerpt_length']) : 20;
+        $wpm               = ! empty($settings['words_per_minute']) ? max(1, absint($settings['words_per_minute'])) : 200;
+        $word_suffix       = ! empty($settings['word_count_suffix']) ? $settings['word_count_suffix'] : __('words', 'ftelements');
+        $read_suffix       = ! empty($settings['read_time_suffix']) ? $settings['read_time_suffix'] : __('min read', 'ftelements');
+        $view_all_text     = ! empty($settings['view_all_text']) ? $settings['view_all_text'] : __('See All Article', 'ftelements');
+        $read_more_text    = ! empty($settings['read_more_text']) ? $settings['read_more_text'] : __('Read More', 'ftelements');
+        $view_all_link     = ! empty($settings['view_all_link']['url']) ? $settings['view_all_link']['url'] : '#';
+        $header_external   = ! empty($settings['view_all_link']['is_external']) ? ' target="_blank"' : '';
+        $header_nofollow   = ! empty($settings['view_all_link']['nofollow']) ? ' rel="nofollow"' : '';
+        $main_title_words  = isset($settings['title_words_main']) ? absint($settings['title_words_main']) : 12;
+        $small_title_words = isset($settings['title_words_small']) ? absint($settings['title_words_small']) : 8;
+
+        $default_base_url = plugin_dir_url(dirname(__FILE__, 3));
+
+        $get_image_url = static function ($image, $fallback) use ($default_base_url) {
+            if (! empty($image['id'])) {
+                $src = wp_get_attachment_image_url((int) $image['id'], 'full');
+                if (! empty($src)) {
+                    return $src;
+                }
+            }
+            if (! empty($image['url'])) {
+                $url = $image['url'];
+                if (preg_match('#^(https?:)?//#', $url)) {
+                    return $url;
+                }
+
+                return $default_base_url . ltrim($url, '/');
+            }
+
+            return $default_base_url . ltrim($fallback, '/');
+        };
+
+        $get_image_alt = static function ($image, $fallback_alt = '') {
+            if (! empty($image['id'])) {
+                $attachment_alt = get_post_meta($image['id'], '_wp_attachment_image_alt', true);
+                if (! empty($attachment_alt)) {
+                    return $attachment_alt;
+                }
+            }
+
+            return $fallback_alt;
+        };
+
+        $button_arrow_image_url = $get_image_url(isset($settings['button_arrow_image']) ? $settings['button_arrow_image'] : [], 'assets/img/icon/arrow1.svg');
+        $button_arrow_alt       = $get_image_alt(isset($settings['button_arrow_image']) ? $settings['button_arrow_image'] : [], '');
+
+        $posts = $blog_query->posts;
 
         ?>
-                <style>
-                    .ft-thumb-zoom-yes .grt-thumb img {
-                        transition: transform 0.5s ease;
-                    }
-
-                    .ft-thumb-zoom-yes .grt-news-box-items-4:hover .grt-thumb img {
-                        transform: scale(1.1);
-                    }
-
-                    .grt-thumb {
-                        overflow: hidden;
-                    }
-                </style>
-
-                <section class="grt-news-section-4 fix section-padding">
-                    <div class="container">
-                        <div class="grt-section-title text-center">
-                            <?php if (!empty($settings['subtitle'])): ?>
-                                    <span class="grt-sub-title tz-sub-tilte tz-sub-anim tx-subTitle">
-                                        <i class="fa-sharp fa-solid fa-heart"></i> <?php echo esc_html($settings['subtitle']); ?>
-                                    </span>
+        <section class="news-section-4 section-padding fix">
+            <div class="container">
+                <?php if ('yes' === $settings['show_header']) : ?>
+                    <div class="section-title-area">
+                        <div class="section-title mb-0">
+                            <?php if ('yes' === $settings['show_subtitle'] && ! empty($settings['section_subtitle'])) : ?>
+                                <span class="sec-sub tz-sub-tilte tz-sub-anim tx-subTitle"><?php echo esc_html($settings['section_subtitle']); ?></span>
                             <?php endif; ?>
-
-                            <?php if (!empty($settings['title'])): ?>
-                                    <h2 class="split-title">
-                                        <?php echo wp_kses_post($settings['title']); ?>
-                                    </h2>
+                            <?php if (! empty($settings['section_title'])) : ?>
+                                <h2 class="tx-title sec_title  tz-itm-title tz-itm-anim">
+                                    <?php echo esc_html($settings['section_title']); ?>
+                                </h2>
                             <?php endif; ?>
                         </div>
-                        <div class="row">
-                            <?php
-                            if ($query->have_posts()):
-                                $count = 0;
-                                while ($query->have_posts()):
-                                    $query->the_post();
-                                    $post_id = get_the_ID();
-                                    $delay = 0.3 + ($count * 0.2);
-
-                                    // Image logic
-                                    $image_url = get_the_post_thumbnail_url($post_id, 'full');
-
-                                    if (!empty($settings['post_image_overrides'][$count])) {
-                                        $override = $settings['post_image_overrides'][$count];
-                                        if ($override['image_source'] === 'custom' && !empty($override['custom_image']['url'])) {
-                                            $image_url = $override['custom_image']['url'];
-                                        }
-                                    }
+                        <?php if ('yes' === $settings['show_view_all_button']) : ?>
+                            <a href="<?php echo esc_url($view_all_link); ?>" class="theme-btn"<?php echo $header_external . $header_nofollow; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+                                <span class="theme-bg">
+                                    <svg width="170" height="59" viewBox="0 0 170 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M0 20.0865C0 11.6149 6.60344 4.61156 15.0604 4.11409L85 0L154.94 4.11409C163.397 4.61156 170 11.6149 170 20.0865V39.7352C170 48.2794 163.287 55.3159 154.752 55.7175L85 59L15.2479 55.7175C6.71321 55.3159 0 48.2794 0 39.7352V20.0865Z" fill="#F39F5F"></path>
+                                    </svg>
+                                </span>
+                                <span class="theme-text"><?php echo esc_html($view_all_text); ?> <img src="<?php echo esc_url($button_arrow_image_url); ?>" alt="<?php echo esc_attr($button_arrow_alt); ?>"></span>
+                                <span class="theme-text2"><?php echo esc_html($view_all_text); ?><img src="<?php echo esc_url($button_arrow_image_url); ?>" alt="<?php echo esc_attr($button_arrow_alt); ?>"></span>
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+                <div class="news-wrapper-4">
+                    <div class="row align-items-center">
+                        <div class="col-xl-6 col-lg-6 wow fadeInUp" data-wow-delay=".3s">
+                            <div class="news-single-items">
+                                <?php if (! empty($posts[0])) : ?>
+                                    <?php
+                                    $post_id        = $posts[0]->ID;
+                                    $word_count     = $this->get_post_word_count($post_id);
+                                    $read_mins      = max(1, (int) ceil($word_count / $wpm));
+                                    $first_category = get_the_category($post_id);
                                     ?>
-                                            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="<?php echo esc_attr($delay); ?>s">
-                                                <div class="grt-news-box-items-4">
-                                                    <div class="grt-thumb">
-                                                        <?php if ($image_url): ?>
-                                                                <img src="<?php echo esc_url($image_url); ?>" alt="<?php the_title_attribute(); ?>">
-                                                        <?php else: ?>
-                                                                <img src="<?php echo esc_url(Utils::get_placeholder_image_src()); ?>"
-                                                                    alt="<?php the_title_attribute(); ?>">
-                                                        <?php endif; ?>
+                                    <?php if ('yes' === $settings['show_featured_image']) : ?>
+                                        <div class="news-image">
+                                            <?php if (has_post_thumbnail($post_id)) : ?>
+                                                <?php echo Group_Control_Image_Size::get_attachment_image_html($settings, 'thumbnail', get_post_thumbnail_id($post_id)); ?>
+                                            <?php else : ?>
+                                                <?php $placeholder = Utils::get_placeholder_image_src(); ?>
+                                                <img src="<?php echo esc_url($placeholder); ?>" alt="<?php echo esc_attr(get_the_title($post_id)); ?>">
+                                            <?php endif; ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <div class="news-content">
+                                        <ul class="list-unstyled">
+                                            <?php if ('yes' === $settings['show_category'] && ! empty($first_category)) : ?>
+                                                <li>
+                                                    <i class="fas fa-tag"></i> <?php echo esc_html($first_category[0]->name); ?>
+                                                </li>
+                                            <?php endif; ?>
+                                            <?php if ('yes' === $settings['show_date']) : ?>
+                                                <li>
+                                                    <i class="fa-solid fa-calendar-days"></i> <?php echo esc_html(get_the_date('', $post_id)); ?>
+                                                </li>
+                                            <?php endif; ?>
+                                            <?php if ('yes' === $settings['show_comments']) : ?>
+                                                <li>
+                                                    <i class="fa-regular fa-comments"></i> <?php echo esc_html(number_format_i18n(get_comments_number($post_id))); ?>
+                                                </li>
+                                            <?php endif; ?>
+                                            <?php if ('yes' === $settings['show_word_count']) : ?>
+                                                <li>
+                                                    <i class="fa-solid fa-align-left"></i> <?php echo esc_html(number_format_i18n($word_count) . ' ' . $word_suffix); ?>
+                                                </li>
+                                            <?php endif; ?>
+                                            <?php if ('yes' === $settings['show_read_time']) : ?>
+                                                <li>
+                                                    <i class="fa-regular fa-clock"></i> <?php echo esc_html($read_mins . ' ' . $read_suffix); ?>
+                                                </li>
+                                            <?php endif; ?>
+                                        </ul>
+                                        <?php if ('yes' === $settings['show_title']) : ?>
+                                            <h3>
+                                                <a href="<?php echo esc_url(get_permalink($post_id)); ?>"><?php echo esc_html($this->get_trimmed_title($post_id, $main_title_words)); ?></a>
+                                            </h3>
+                                        <?php endif; ?>
+                                        <?php if ('yes' === $settings['show_excerpt'] && $excerpt_words > 0) : ?>
+                                            <p>
+                                                <?php echo esc_html(wp_trim_words(get_the_excerpt($post_id), $excerpt_words, '...')); ?>
+                                            </p>
+                                        <?php endif; ?>
+                                        <div class="post-author-items">
+                                            <?php if ('yes' === $settings['show_author']) : ?>
+                                                <div class="post-items">
+                                                    <div class="thumb">
+                                                        <?php echo get_avatar(get_the_author_meta('ID', $posts[0]->post_author), 55); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                                                     </div>
-                                                    <div class="grt-content">
-                                                        <h3 class="title">
-                                                            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                                                        </h3>
-                                                        <p>
-                                                            <?php echo wp_trim_words(get_the_excerpt(), 15, '...'); ?>
-                                                        </p>
-                                                    </div>
-                                                    <div class="tag-items">
-                                                        <span class="date"><?php echo get_the_date(); ?></span>
-                                                        <div class="dotss"></div>
-                                                        <span class="date">By <?php echo get_the_author(); ?> </span>
+                                                    <div class="content">
+                                                        <span><?php esc_html_e('By Admin', 'ftelements'); ?></span>
+                                                        <h4><?php echo esc_html(get_the_author_meta('display_name', $posts[0]->post_author)); ?></h4>
                                                     </div>
                                                 </div>
+                                            <?php endif; ?>
+                                            <?php if ('yes' === $settings['show_read_more_button']) : ?>
+                                                <a href="<?php echo esc_url(get_permalink($post_id)); ?>" class="theme-btn">
+                                                    <span class="theme-bg">
+                                                        <svg width="170" height="59" viewBox="0 0 170 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M0 20.0865C0 11.6149 6.60344 4.61156 15.0604 4.11409L85 0L154.94 4.11409C163.397 4.61156 170 11.6149 170 20.0865V39.7352C170 48.2794 163.287 55.3159 154.752 55.7175L85 59L15.2479 55.7175C6.71321 55.3159 0 48.2794 0 39.7352V20.0865Z" fill="#F39F5F"></path>
+                                                        </svg>
+                                                    </span>
+                                                    <span class="theme-text"><?php echo esc_html($read_more_text); ?> <img src="<?php echo esc_url($button_arrow_image_url); ?>" alt="<?php echo esc_attr($button_arrow_alt); ?>"></span>
+                                                    <span class="theme-text2"><?php echo esc_html($read_more_text); ?> <img src="<?php echo esc_url($button_arrow_image_url); ?>" alt="<?php echo esc_attr($button_arrow_alt); ?>"></span>
+                                                </a>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                <?php else : ?>
+                                    <div class="news-content">
+                                        <p><?php esc_html_e('No posts found.', 'ftelements'); ?></p>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-8 mt-5 mt-xl-0">
+                            <?php for ($i = 1; $i <= 2; $i++) : ?>
+                                <?php if (! empty($posts[$i])) : ?>
+                                    <?php
+                                    $post_id        = $posts[$i]->ID;
+                                    $word_count     = $this->get_post_word_count($post_id);
+                                    $read_mins      = max(1, (int) ceil($word_count / $wpm));
+                                    $first_category = get_the_category($post_id);
+                                    $delay          = 1 === $i ? '.4s' : '.6s';
+                                    ?>
+                                    <div class="news-right-items wow fadeInUp" data-wow-delay="<?php echo esc_attr($delay); ?>">
+                                        <?php if ('yes' === $settings['show_featured_image']) : ?>
+                                            <div class="news-thumb">
+                                                <?php if (has_post_thumbnail($post_id)) : ?>
+                                                    <?php echo Group_Control_Image_Size::get_attachment_image_html($settings, 'thumbnail', get_post_thumbnail_id($post_id)); ?>
+                                                <?php else : ?>
+                                                    <?php $placeholder = Utils::get_placeholder_image_src(); ?>
+                                                    <img src="<?php echo esc_url($placeholder); ?>" alt="<?php echo esc_attr(get_the_title($post_id)); ?>">
+                                                <?php endif; ?>
                                             </div>
-                                            <?php
-                                            $count++;
-                                endwhile;
-                                wp_reset_postdata();
-                            endif;
-                            ?>
+                                        <?php endif; ?>
+                                        <div class="news-content">
+                                            <ul>
+                                                <?php if ('yes' === $settings['show_category'] && ! empty($first_category)) : ?>
+                                                    <li><i class="fas fa-tag"></i> <?php echo esc_html($first_category[0]->name); ?></li>
+                                                <?php endif; ?>
+                                                <?php if ('yes' === $settings['show_date']) : ?>
+                                                    <li><i class="fa-solid fa-calendar-days"></i> <?php echo esc_html(get_the_date('', $post_id)); ?></li>
+                                                <?php endif; ?>
+                                                <?php if ('yes' === $settings['show_comments']) : ?>
+                                                    <li><i class="fa-regular fa-comments"></i> <?php echo esc_html(number_format_i18n(get_comments_number($post_id))); ?></li>
+                                                <?php endif; ?>
+                                                <?php if ('yes' === $settings['show_word_count']) : ?>
+                                                    <li><i class="fa-solid fa-align-left"></i> <?php echo esc_html(number_format_i18n($word_count) . ' ' . $word_suffix); ?></li>
+                                                <?php endif; ?>
+                                                <?php if ('yes' === $settings['show_read_time']) : ?>
+                                                    <li><i class="fa-regular fa-clock"></i> <?php echo esc_html($read_mins . ' ' . $read_suffix); ?></li>
+                                                <?php endif; ?>
+                                            </ul>
+                                            <?php if ('yes' === $settings['show_title']) : ?>
+                                                <h3>
+                                                    <a href="<?php echo esc_url(get_permalink($post_id)); ?>">
+                                                        <?php echo esc_html($this->get_trimmed_title($post_id, $small_title_words)); ?>
+                                                    </a>
+                                                </h3>
+                                            <?php endif; ?>
+                                            <?php if ('yes' === $settings['show_author']) : ?>
+                                                <div class="post-items">
+                                                    <div class="thumb">
+                                                        <?php echo get_avatar(get_the_author_meta('ID', $posts[$i]->post_author), 55); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                                                    </div>
+                                                    <div class="content">
+                                                        <span><?php esc_html_e('By Admin', 'ftelements'); ?></span>
+                                                        <h4><?php echo esc_html(get_the_author_meta('display_name', $posts[$i]->post_author)); ?></h4>
+                                                    </div>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            <?php endfor; ?>
                         </div>
                     </div>
-                </section>
-
-
-
-
-
-
-
-
-
-                <?php
+                </div>
+            </div>
+        </section>
+<?php
+        wp_reset_postdata();
     }
 } ?>

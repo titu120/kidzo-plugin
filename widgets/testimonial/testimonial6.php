@@ -1,31 +1,26 @@
 <?php
 
-use Elementor\Group_Control_Css_Filter;
 use Elementor\Repeater;
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Image_Size;
-use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Border;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Utils;
+use Elementor\Group_Control_Typography;
 
 defined('ABSPATH') || die();
 
-class FT_Testimonial_6_Widget extends \Elementor\Widget_Base
+class FT_Testimonial6_Widget extends \Elementor\Widget_Base
 {
 
     /*
-     *
-     * @since 1.0.0
-     * @access public
-     *
-     * @return string Widget name.
-     */
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string Widget name.
+	 */
     public function get_name()
     {
-        return 'ft-testimonial-6';
+        return 'ft-testimonial6';
     }
 
     /**
@@ -84,327 +79,249 @@ class FT_Testimonial_6_Widget extends \Elementor\Widget_Base
     protected function register_controls()
     {
         $this->start_controls_section(
-            'content_section',
+            'content_heading',
             [
-                'label' => esc_html__('Content', 'ftelements'),
-                'tab' => Controls_Manager::TAB_CONTENT,
+                'label' => esc_html__('Heading', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_CONTENT,
             ]
         );
 
         $this->add_control(
-            'subtitle',
+            'subtitle_text',
             [
-                'label' => esc_html__('Subtitle', 'ftelements'),
-                'type' => Controls_Manager::TEXT,
-                'default' => esc_html__('Donor feedback', 'ftelements'),
+                'label'   => esc_html__('Subtitle', 'ftelements'),
+                'type'    => Controls_Manager::TEXT,
+                'default' => esc_html__('Testimonials', 'ftelements'),
             ]
         );
 
         $this->add_control(
-            'title',
+            'title_text',
             [
-                'label' => esc_html__('Title', 'ftelements'),
-                'type' => Controls_Manager::TEXTAREA,
-                'default' => wp_kses_post('Feedback from people <br> we do help.'),
+                'label'   => esc_html__('Title', 'ftelements'),
+                'type'    => Controls_Manager::TEXTAREA,
+                'default' => esc_html__("Parents' Words Are The Key\nTo Happy Kids", 'ftelements'),
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'content_navigation',
+            [
+                'label' => esc_html__('Navigation', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_CONTENT,
+            ]
+        );
+
+        $this->add_control(
+            'prev_arrow_image',
+            [
+                'label'   => esc_html__('Prev Arrow Image', 'ftelements'),
+                'type'    => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => 'assets/img/home-3/arrow-left.png',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'next_arrow_image',
+            [
+                'label'   => esc_html__('Next Arrow Image', 'ftelements'),
+                'type'    => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => 'assets/img/home-3/arrow-right.png',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'video_icon_class',
+            [
+                'label'       => esc_html__('Video Icon Class', 'ftelements'),
+                'type'        => Controls_Manager::TEXT,
+                'default'     => 'fa-solid fa-play',
+                'placeholder' => esc_html__('fa-solid fa-play', 'ftelements'),
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'content_items',
+            [
+                'label' => esc_html__('Testimonial Items', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_CONTENT,
             ]
         );
 
         $repeater = new Repeater();
 
         $repeater->add_control(
-            'rating',
+            'review_text',
             [
-                'label' => esc_html__('Rating', 'ftelements'),
-                'type' => Controls_Manager::NUMBER,
-                'min' => 1,
-                'max' => 5,
-                'step' => 1,
-                'default' => 5,
+                'label'   => esc_html__('Review Text', 'ftelements'),
+                'type'    => Controls_Manager::TEXTAREA,
+                'default' => esc_html__('We are so grateful to have found such an amazing nanny! She is kind, responsible, and truly cares about our children like family. Our kids are always happy and excited when she’s around. Her professionalism and loving nature have made our lives so much easier. We highly recommend her services to any family looking for a trustworthy nanny!', 'ftelements'),
             ]
         );
 
         $repeater->add_control(
-            'content',
+            'client_image',
             [
-                'label' => esc_html__('Content', 'ftelements'),
-                'type' => Controls_Manager::TEXTAREA,
-                'default' => esc_html__('Heartly stepped in when our family was struggling the most. Their kindness and continuous support helped us rebuild.', 'ftelements'),
-            ]
-        );
-
-        $repeater->add_control(
-            'image',
-            [
-                'label' => esc_html__('Client Image', 'ftelements'),
-                'type' => Controls_Manager::MEDIA,
-            ]
-        );
-
-        $repeater->add_control(
-            'name',
-            [
-                'label' => esc_html__('Name', 'ftelements'),
-                'type' => Controls_Manager::TEXT,
-                'default' => esc_html__('Robert Allison', 'ftelements'),
-                'label_block' => true,
-            ]
-        );
-
-        $repeater->add_control(
-            'role',
-            [
-                'label' => esc_html__('Role', 'ftelements'),
-                'type' => Controls_Manager::TEXT,
-                'default' => esc_html__('Sales manager', 'ftelements'),
-                'label_block' => true,
-            ]
-        );
-
-        $this->add_control(
-            'name_tag',
-            [
-                'label' => esc_html__('Name HTML Tag', 'ftelements'),
-                'type' => Controls_Manager::SELECT,
-                'options' => [
-                    'h1' => 'H1',
-                    'h2' => 'H2',
-                    'h3' => 'H3',
-                    'h4' => 'H4',
-                    'h5' => 'H5',
-                    'h6' => 'H6',
-                    'div' => 'div',
-                    'span' => 'span',
-                    'p' => 'p',
-                ],
-                'default' => 'span',
-            ]
-        );
-
-        $this->add_control(
-            'items',
-            [
-                'label' => esc_html__('Testimonial Items', 'ftelements'),
-                'type' => Controls_Manager::REPEATER,
-                'fields' => $repeater->get_controls(),
+                'label'   => esc_html__('Client Image', 'ftelements'),
+                'type'    => Controls_Manager::MEDIA,
                 'default' => [
+                    'url' => 'assets/img/home-3/client-1.png',
+                ],
+            ]
+        );
+
+        $repeater->add_control(
+            'client_name',
+            [
+                'label'   => esc_html__('Client Name', 'ftelements'),
+                'type'    => Controls_Manager::TEXT,
+                'default' => esc_html__('Fahima', 'ftelements'),
+            ]
+        );
+
+        $repeater->add_control(
+            'client_location',
+            [
+                'label'   => esc_html__('Client Location', 'ftelements'),
+                'type'    => Controls_Manager::TEXT,
+                'default' => esc_html__('Mirpur-29, Dhaka', 'ftelements'),
+            ]
+        );
+
+        $repeater->add_control(
+            'video_url',
+            [
+                'label'       => esc_html__('Video URL', 'ftelements'),
+                'type'        => Controls_Manager::URL,
+                'placeholder' => esc_html__('https://www.youtube.com/watch?v=Cn4G2lZ_g2I', 'ftelements'),
+                'default'     => [
+                    'url' => 'https://www.youtube.com/watch?v=Cn4G2lZ_g2I',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'testimonial_items',
+            [
+                'label'       => esc_html__('Items', 'ftelements'),
+                'type'        => Controls_Manager::REPEATER,
+                'fields'      => $repeater->get_controls(),
+                'default'     => [
                     [
-                        'name' => esc_html__('Robert Allison', 'ftelements'),
+                        'review_text' => esc_html__('We are so grateful to have found such an amazing nanny! She is kind, responsible, and truly cares about our children like family. Our kids are always happy and excited when she’s around. Her professionalism and loving nature have made our lives so much easier. We highly recommend her services to any family looking for a trustworthy nanny!', 'ftelements'),
                     ],
                     [
-                        'name' => esc_html__('Albert Flores', 'ftelements'),
+                        'review_text' => esc_html__('We are so grateful to have found such an amazing nanny! She is kind, responsible, and truly cares about our children like family. Our kids are always happy and excited when she’s around. Her professionalism and loving nature have made our lives so much easier. We highly recommend her services to any family looking for a trustworthy nanny!', 'ftelements'),
                     ],
                     [
-                        'name' => esc_html__('Brooklyn Simmons', 'ftelements'),
-                    ],
-                    [
-                        'name' => esc_html__('Devon Lane', 'ftelements'),
-                    ],
-                    [
-                        'name' => esc_html__('Jenny Wilson', 'ftelements'),
-                    ],
-                    [
-                        'name' => esc_html__('Annette Black', 'ftelements'),
+                        'review_text' => esc_html__('We are so grateful to have found such an amazing nanny! She is kind, responsible, and truly cares about our children like family. Our kids are always happy and excited when she’s around. Her professionalism and loving nature have made our lives so much easier. We highly recommend her services to any family looking for a trustworthy nanny!', 'ftelements'),
                     ],
                 ],
-                'title_field' => '{{{ name }}}',
-            ]
-        );
-
-        $this->add_control(
-            'quote_icon',
-            [
-                'label' => esc_html__('Quote Icon', 'ftelements'),
-                'type' => Controls_Manager::MEDIA,
-            ]
-        );
-
-        $this->add_control(
-            'show_pagination',
-            [
-                'label' => esc_html__('Show Pagination', 'ftelements'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Show', 'ftelements'),
-                'label_off' => esc_html__('Hide', 'ftelements'),
-                'return_value' => 'yes',
-                'default' => 'yes',
-            ]
-        );
-
-        $this->add_control(
-            'posts_per_page',
-            [
-                'label' => esc_html__('Posts Per Page', 'ftelements'),
-                'type' => Controls_Manager::NUMBER,
-                'min' => 1,
-                'max' => 50,
-                'step' => 1,
-                'default' => 6,
-                'condition' => [
-                    'show_pagination' => 'yes',
-                ],
+                'title_field' => '{{{ client_name }}}',
             ]
         );
 
         $this->end_controls_section();
 
-        // Section Style
         $this->start_controls_section(
-            'section_style_section',
+            'style_section',
             [
-                'label' => esc_html__('Section Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Section', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name'     => 'section_background',
+                'selector' => '{{WRAPPER}} .testimonial-section-inner',
             ]
         );
 
         $this->add_responsive_control(
             'section_padding',
             [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .testimonial-section' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name' => 'section_background',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .testimonial-section',
             ]
         );
 
         $this->add_responsive_control(
             'section_margin',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .testimonial-section' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'column_gap',
-            [
-                'label' => esc_html__('Column Gap', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .row' => 'column-gap: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'row_gap',
-            [
-                'label' => esc_html__('Row Gap', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .row' => 'row-gap: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'section_border',
-                'label' => esc_html__('Border', 'ftelements'),
-                'selector' => '{{WRAPPER}} .testimonial-section',
             ]
         );
 
         $this->end_controls_section();
 
-        // Header Style
         $this->start_controls_section(
-            'header_style_section',
+            'style_container',
             [
-                'label' => esc_html__('Header Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Container', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_responsive_control(
-            'header_max_width',
+            'container_max_width',
             [
-                'label' => esc_html__('Max Width', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
+                'label'      => esc_html__('Max Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
                 'size_units' => ['px', '%'],
-                'range' => [
-                    'px' => [
-                        'min' => 200,
-                        'max' => 1200,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-section-title' => 'max-width: {{SIZE}}{{UNIT}}; margin-left: auto; margin-right: auto;',
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .container' => 'max-width: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'header_margin_bottom',
+            'container_padding',
             [
-                'label' => esc_html__('Margin Bottom', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-section-title' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .container' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
-        $this->add_control(
-            'header_align',
-            [
-                'label' => esc_html__('Alignment', 'ftelements'),
-                'type' => Controls_Manager::CHOOSE,
-                'options' => [
-                    'left' => [
-                        'title' => esc_html__('Left', 'ftelements'),
-                        'icon' => 'eicon-text-align-left',
-                    ],
-                    'center' => [
-                        'title' => esc_html__('Center', 'ftelements'),
-                        'icon' => 'eicon-text-align-center',
-                    ],
-                    'right' => [
-                        'title' => esc_html__('Right', 'ftelements'),
-                        'icon' => 'eicon-text-align-right',
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-section-title' => 'text-align: {{VALUE}};',
-                ],
-            ]
-        );
+        $this->end_controls_section();
 
-        $this->add_control(
-            'subtitle_options',
+        $this->start_controls_section(
+            'style_heading',
             [
-                'label' => esc_html__('Subtitle', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
+                'label' => esc_html__('Heading', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_control(
             'subtitle_color',
             [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Subtitle Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-section-title .grt-sub-title' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .testimonial-section-inner .sec-sub' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -412,39 +329,18 @@ class FT_Testimonial_6_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name' => 'subtitle_typography',
-                'selector' => '{{WRAPPER}} .grt-section-title .grt-sub-title',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'subtitle_margin_bottom',
-            [
-                'label' => esc_html__('Margin Bottom', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-section-title .grt-sub-title' => 'margin-bottom: {{SIZE}}{{UNIT}}; display: inline-block;',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'title_options',
-            [
-                'label' => esc_html__('Title', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
+                'name'     => 'subtitle_typography',
+                'selector' => '{{WRAPPER}} .testimonial-section-inner .sec-sub',
             ]
         );
 
         $this->add_control(
             'title_color',
             [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Title Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-section-title h2' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .testimonial-section-inner .section-title h2' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -452,549 +348,358 @@ class FT_Testimonial_6_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name' => 'title_typography',
-                'selector' => '{{WRAPPER}} .grt-section-title h2',
+                'name'     => 'title_typography',
+                'selector' => '{{WRAPPER}} .testimonial-section-inner .section-title h2',
             ]
         );
 
         $this->add_responsive_control(
-            'title_margin_bottom',
+            'heading_bottom_space',
             [
-                'label' => esc_html__('Margin Bottom', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-section-title h2' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Box Style
-        $this->start_controls_section(
-            'box_style_section',
-            [
-                'label' => esc_html__('Box Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->start_controls_tabs('box_tabs');
-
-        $this->start_controls_tab(
-            'box_normal',
-            [
-                'label' => esc_html__('Normal', 'ftelements'),
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name' => 'box_background',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-testimonial-box-items-2',
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'box_border',
-                'label' => esc_html__('Border', 'ftelements'),
-                'selector' => '{{WRAPPER}} .grt-testimonial-box-items-2',
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->start_controls_tab(
-            'box_hover',
-            [
-                'label' => esc_html__('Hover', 'ftelements'),
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name' => 'box_background_hover',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-testimonial-box-items-2:hover',
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'box_border_hover',
-                'label' => esc_html__('Border', 'ftelements'),
-                'selector' => '{{WRAPPER}} .grt-testimonial-box-items-2:hover',
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
-
-        $this->add_responsive_control(
-            'box_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'box_margin',
-            [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'box_border_radius',
-            [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'box_min_height',
-            [
-                'label' => esc_html__('Min Height', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'vh'],
-                'range' => [
-                    'px' => [
-                        'min' => 100,
-                        'max' => 800,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2' => 'min-height: {{SIZE}}{{UNIT}}; display: flex; flex-direction: column; justify-content: space-between;',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'box_transition',
-            [
-                'label' => esc_html__('Transition Duration (ms)', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 3000,
-                        'step' => 100,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2' => 'transition: all {{SIZE}}ms ease;',
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Content Style
-        $this->start_controls_section(
-            'content_style_section',
-            [
-                'label' => esc_html__('Content Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'star_size',
-            [
-                'label' => esc_html__('Star Size', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em'],
-                'range' => [
-                    'px' => [
-                        'min' => 10,
-                        'max' => 50,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2 .star i' => 'font-size: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'star_color',
-            [
-                'label' => esc_html__('Star Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2 .star i' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'star_margin_bottom',
-            [
-                'label' => esc_html__('Star Margin Bottom', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2 .star' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'desc_options',
-            [
-                'label' => esc_html__('Description', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_control(
-            'desc_color',
-            [
-                'label' => esc_html__('Description Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2 p' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'desc_typography',
-                'selector' => '{{WRAPPER}} .grt-testimonial-box-items-2 p',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'desc_margin_bottom',
-            [
-                'label' => esc_html__('Description Margin Bottom', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2 p' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'client_info_options',
-            [
-                'label' => esc_html__('Client Info', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'client_info_margin_top',
-            [
-                'label' => esc_html__('Client Info Margin Top', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2 .client-info' => 'margin-top: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'name_color',
-            [
-                'label' => esc_html__('Name Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2 .client-info .name' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'name_hover_color',
-            [
-                'label' => esc_html__('Name Hover Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2:hover .client-info .name' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'name_typography',
-                'selector' => '{{WRAPPER}} .grt-testimonial-box-items-2 .client-info .name',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'name_margin_bottom',
-            [
-                'label' => esc_html__('Name Margin Bottom', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2 .client-info .name' => 'margin-bottom: {{SIZE}}{{UNIT}}; display: block;',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'role_color',
-            [
-                'label' => esc_html__('Role Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2 .client-info .text' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'role_hover_color',
-            [
-                'label' => esc_html__('Role Hover Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2:hover .client-info .text' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'role_typography',
-                'selector' => '{{WRAPPER}} .grt-testimonial-box-items-2 .client-info .text',
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Image Style
-        $this->start_controls_section(
-            'image_style_section',
-            [
-                'label' => esc_html__('Image Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'image_size',
-            [
-                'label' => esc_html__('Size', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
+                'label'      => esc_html__('Heading Block Bottom Spacing', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
                 'size_units' => ['px', '%'],
-                'range' => [
-                    'px' => [
-                        'min' => 20,
-                        'max' => 200,
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .section-title-area' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'heading_title_block_spacing',
+            [
+                'label'      => esc_html__('Spacing Between Subtitle & Title', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .section-title h2' => 'margin-top: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'style_heading_layout',
+            [
+                'label' => esc_html__('Heading Layout', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'heading_area_gap',
+            [
+                'label'      => esc_html__('Gap (Title vs Arrows)', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .section-title-area' => 'gap: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'heading_area_align',
+            [
+                'label'     => esc_html__('Vertical Align', 'ftelements'),
+                'type'      => Controls_Manager::CHOOSE,
+                'options'   => [
+                    'flex-start' => [
+                        'title' => esc_html__('Top', 'ftelements'),
+                        'icon'  => 'eicon-v-align-top',
+                    ],
+                    'center'     => [
+                        'title' => esc_html__('Middle', 'ftelements'),
+                        'icon'  => 'eicon-v-align-middle',
+                    ],
+                    'flex-end'   => [
+                        'title' => esc_html__('Bottom', 'ftelements'),
+                        'icon'  => 'eicon-v-align-bottom',
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2 .client-info .thumb' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .testimonial-section-inner .section-title-area' => 'align-items: {{VALUE}};',
                 ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'style_arrows',
+            [
+                'label' => esc_html__('Arrow Buttons', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name'     => 'arrow_background',
+                'selector' => '{{WRAPPER}} .testimonial-section-inner .array-button button',
             ]
         );
 
         $this->add_group_control(
             Group_Control_Border::get_type(),
             [
-                'name' => 'image_border',
-                'label' => esc_html__('Border', 'ftelements'),
-                'selector' => '{{WRAPPER}} .grt-testimonial-box-items-2 .client-info .thumb',
+                'name'     => 'arrow_border',
+                'selector' => '{{WRAPPER}} .testimonial-section-inner .array-button button',
             ]
         );
 
         $this->add_responsive_control(
-            'image_border_radius',
+            'arrow_border_radius',
             [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2 .client-info .thumb, {{WRAPPER}} .grt-testimonial-box-items-2 .client-info .thumb img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .array-button button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
-        $this->add_group_control(
-            Group_Control_Css_Filter::get_type(),
+        $this->add_responsive_control(
+            'arrow_size',
             [
-                'name' => 'image_filters',
-                'selector' => '{{WRAPPER}} .grt-testimonial-box-items-2 .client-info .thumb img',
+                'label'      => esc_html__('Button Size', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .array-button button' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                ],
             ]
         );
 
         $this->add_responsive_control(
-            'image_spacing',
+            'arrow_icon_width',
             [
-                'label' => esc_html__('Spacing', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2 .client-info .thumb' => 'margin-right: {{SIZE}}{{UNIT}};',
+                'label'      => esc_html__('Arrow Icon Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .array-button button img' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'arrow_icon_height',
+            [
+                'label'      => esc_html__('Arrow Icon Height', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .array-button button img' => 'height: {{SIZE}}{{UNIT}}; object-fit: contain;',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'arrow_gap',
+            [
+                'label'      => esc_html__('Gap Between Buttons', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .array-button' => 'display: flex; gap: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'arrow_padding',
+            [
+                'label'      => esc_html__('Button Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .array-button button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Quote Icon Style
         $this->start_controls_section(
-            'quote_style_section',
+            'style_wrapper_layout',
             [
-                'label' => esc_html__('Quote Icon Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Inner Wrapper', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_responsive_control(
-            'quote_size',
+            'wrapper_max_width',
             [
-                'label' => esc_html__('Size', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em'],
-                'range' => [
-                    'px' => [
-                        'min' => 10,
-                        'max' => 100,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2 .quote-icon img' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
+                'label'      => esc_html__('Max Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-wrapper-3' => 'max-width: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
 
-        $this->add_control(
-            'quote_opacity',
+        $this->add_responsive_control(
+            'wrapper_padding',
             [
-                'label' => esc_html__('Opacity', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1,
-                        'step' => 0.1,
-                    ],
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-wrapper-3' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-testimonial-box-items-2 .quote-icon img' => 'opacity: {{SIZE}};',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'wrapper_margin',
+            [
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-wrapper-3' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_group_control(
-            Group_Control_Css_Filter::get_type(),
+            Group_Control_Background::get_type(),
             [
-                'name' => 'quote_filters',
-                'selector' => '{{WRAPPER}} .grt-testimonial-box-items-2 .quote-icon img',
+                'name'     => 'wrapper_background',
+                'selector' => '{{WRAPPER}} .testimonial-section-inner .testimonial-wrapper-3',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name'     => 'wrapper_border',
+                'selector' => '{{WRAPPER}} .testimonial-section-inner .testimonial-wrapper-3',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'wrapper_border_radius',
+            [
+                'label'      => esc_html__('Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-wrapper-3' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Pagination Style
         $this->start_controls_section(
-            'pagination_style_section',
+            'style_card',
             [
-                'label' => esc_html__('Pagination Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-                'condition' => [
-                    'show_pagination' => 'yes',
+                'label' => esc_html__('Testimonial Card', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name'     => 'card_background',
+                'selector' => '{{WRAPPER}} .testimonial-section-inner .testimonial-box-items-3',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name'     => 'card_border',
+                'selector' => '{{WRAPPER}} .testimonial-section-inner .testimonial-box-items-3',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'card_border_radius',
+            [
+                'label'      => esc_html__('Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-box-items-3' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'pagination_align',
+            'card_padding',
             [
-                'label' => esc_html__('Alignment', 'ftelements'),
-                'type' => Controls_Manager::CHOOSE,
-                'options' => [
-                    'left' => [
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-box-items-3' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'card_margin',
+            [
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-box-items-3' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'card_text_align',
+            [
+                'label'     => esc_html__('Text Align', 'ftelements'),
+                'type'      => Controls_Manager::CHOOSE,
+                'options'   => [
+                    'left'   => [
                         'title' => esc_html__('Left', 'ftelements'),
-                        'icon' => 'eicon-text-align-left',
+                        'icon'  => 'eicon-text-align-left',
                     ],
                     'center' => [
                         'title' => esc_html__('Center', 'ftelements'),
-                        'icon' => 'eicon-text-align-center',
+                        'icon'  => 'eicon-text-align-center',
                     ],
-                    'right' => [
+                    'right'  => [
                         'title' => esc_html__('Right', 'ftelements'),
-                        'icon' => 'eicon-text-align-right',
+                        'icon'  => 'eicon-text-align-right',
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .page-nav-wrap' => 'text-align: {{VALUE}};',
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-box-items-3' => 'text-align: {{VALUE}};',
                 ],
             ]
         );
 
-        $this->add_responsive_control(
-            'pagination_margin',
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'style_review_text',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .page-nav-wrap' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-                'separator' => 'before',
+                'label' => esc_html__('Review Text', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
-        $this->add_responsive_control(
-            'item_size',
+        $this->add_control(
+            'review_text_color',
             [
-                'label' => esc_html__('Item Size', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em'],
+                'label'     => esc_html__('Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .page-numbers' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'item_spacing',
-            [
-                'label' => esc_html__('Item Spacing', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .page-nav-wrap ul li' => 'margin: 0 {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-box-items-3 .text' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -1002,107 +707,453 @@ class FT_Testimonial_6_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name' => 'pagination_typography',
-                'label' => esc_html__('Typography', 'ftelements'),
-                'selector' => '{{WRAPPER}} .page-numbers',
-                'separator' => 'before',
+                'name'     => 'review_text_typography',
+                'selector' => '{{WRAPPER}} .testimonial-section-inner .testimonial-box-items-3 .text',
             ]
         );
-
-        $this->start_controls_tabs('pagination_tabs');
-
-        $this->start_controls_tab(
-            'pagination_normal',
-            [
-                'label' => esc_html__('Normal', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'pagination_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .page-numbers' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'pagination_bg_color',
-            [
-                'label' => esc_html__('Background Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .page-numbers' => 'background-color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'pagination_border',
-                'label' => esc_html__('Border', 'ftelements'),
-                'selector' => '{{WRAPPER}} .page-numbers',
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->start_controls_tab(
-            'pagination_hover_active',
-            [
-                'label' => esc_html__('Hover / Active', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'pagination_active_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .page-numbers:hover, {{WRAPPER}} .page-nav-wrap ul li.active a' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'pagination_active_bg_color',
-            [
-                'label' => esc_html__('Background Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .page-numbers:hover, {{WRAPPER}} .page-nav-wrap ul li.active a' => 'background-color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'pagination_border_active',
-                'label' => esc_html__('Border', 'ftelements'),
-                'selector' => '{{WRAPPER}} .page-numbers:hover, {{WRAPPER}} .page-nav-wrap ul li.active a',
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
 
         $this->add_responsive_control(
-            'item_border_radius',
+            'review_text_margin',
             [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .page-numbers' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-box-items-3 .text' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
-                'separator' => 'before',
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'style_client_image',
+            [
+                'label' => esc_html__('Client Image', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'client_image_width',
+            [
+                'label'      => esc_html__('Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .client-img img' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'client_image_height',
+            [
+                'label'      => esc_html__('Height', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .client-img img' => 'height: {{SIZE}}{{UNIT}}; object-fit: cover;',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'client_image_border_radius',
+            [
+                'label'      => esc_html__('Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .client-img img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name'     => 'client_image_border',
+                'selector' => '{{WRAPPER}} .testimonial-section-inner .client-img img',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'client_image_margin',
+            [
+                'label'      => esc_html__('Image Wrap Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .client-img' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'style_client_info',
+            [
+                'label' => esc_html__('Client Info', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'client_info_color',
+            [
+                'label'     => esc_html__('Location Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .testimonial-section-inner .info-content p' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'client_name_color',
+            [
+                'label'     => esc_html__('Name Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .testimonial-section-inner .info-content p b' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name'     => 'client_location_typography',
+                'selector' => '{{WRAPPER}} .testimonial-section-inner .info-content p',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name'     => 'client_name_typography',
+                'selector' => '{{WRAPPER}} .testimonial-section-inner .info-content p b',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'client_info_margin',
+            [
+                'label'      => esc_html__('Paragraph Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .info-content p' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'style_video_button',
+            [
+                'label' => esc_html__('Video Button', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'video_btn_color',
+            [
+                'label'     => esc_html__('Icon Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .testimonial-section-inner .video-btn' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name'     => 'video_btn_background',
+                'selector' => '{{WRAPPER}} .testimonial-section-inner .video-btn',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name'     => 'video_btn_border',
+                'selector' => '{{WRAPPER}} .testimonial-section-inner .video-btn',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'video_btn_size',
+            [
+                'label'      => esc_html__('Button Size', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .video-btn' => 'width: {{SIZE}}{{UNIT}}; min-width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'video_btn_border_radius',
+            [
+                'label'      => esc_html__('Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .video-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'video_icon_size',
+            [
+                'label'      => esc_html__('Icon Font Size', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .video-btn i' => 'font-size: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'style_quote_icon',
+            [
+                'label' => esc_html__('Quote Icon', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'quote_icon_color',
+            [
+                'label'     => esc_html__('Icon Fill', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .testimonial-section-inner .quote-icon svg path' => 'fill: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'quote_icon_width',
+            [
+                'label'      => esc_html__('Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .quote-icon svg' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'quote_icon_height',
+            [
+                'label'      => esc_html__('Height', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .quote-icon svg' => 'height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'quote_icon_margin',
+            [
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .quote-icon' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'style_slider_area',
+            [
+                'label' => esc_html__('Slider Area', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'slider_margin_top',
+            [
+                'label'      => esc_html__('Top Spacing', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-slider-inner' => 'margin-top: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'slider_padding',
+            [
+                'label'      => esc_html__('Slider Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-slider-inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'slide_padding',
+            [
+                'label'      => esc_html__('Slide Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-slider-inner .swiper-slide' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'slide_min_height',
+            [
+                'label'      => esc_html__('Slide Min Height', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'vh'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-slider-inner .swiper-slide' => 'min-height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'style_client_row',
+            [
+                'label' => esc_html__('Client Row', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'client_row_gap',
+            [
+                'label'      => esc_html__('Image / Text Gap', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .client-info' => 'display: flex; align-items: center; gap: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'testimonial_bottom_gap',
+            [
+                'label'      => esc_html__('Bottom Row Gap', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-bottom' => 'display: flex; justify-content: space-between; align-items: center; gap: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'testimonial_bottom_margin_top',
+            [
+                'label'      => esc_html__('Bottom Row Top Spacing', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-bottom' => 'margin-top: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'style_states',
+            [
+                'label' => esc_html__('Hover & States', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'arrow_icon_hover_filter',
+            [
+                'label'     => esc_html__('Arrow Icon Hover (CSS filter)', 'ftelements'),
+                'type'      => Controls_Manager::TEXT,
+                'selectors' => [
+                    '{{WRAPPER}} .testimonial-section-inner .array-button button:hover img' => 'filter: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'video_btn_hover_color',
+            [
+                'label'     => esc_html__('Video Button Hover Icon Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .testimonial-section-inner .video-btn:hover' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name'     => 'video_btn_hover_background',
+                'selector' => '{{WRAPPER}} .testimonial-section-inner .video-btn:hover',
+            ]
+        );
+
+        $this->add_control(
+            'card_hover_border_color',
+            [
+                'label'     => esc_html__('Card Hover Border Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-box-items-3:hover' => 'border-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'card_hover_background',
+            [
+                'label'     => esc_html__('Card Hover Background Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-box-items-3:hover' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'card_hover_transform',
+            [
+                'label'     => esc_html__('Card Hover Transform', 'ftelements'),
+                'type'      => Controls_Manager::TEXT,
+                'selectors' => [
+                    '{{WRAPPER}} .testimonial-section-inner .testimonial-box-items-3:hover' => 'transform: {{VALUE}};',
+                ],
             ]
         );
 
@@ -1119,117 +1170,157 @@ class FT_Testimonial_6_Widget extends \Elementor\Widget_Base
      */
     protected function render()
     {
+
         $settings = $this->get_settings_for_display();
+        $widget_id = 'ft-testimonial6-' . $this->get_id();
+        $subtitle = isset($settings['subtitle_text']) ? $settings['subtitle_text'] : '';
+        $title_text = isset($settings['title_text']) ? $settings['title_text'] : '';
+        $items = !empty($settings['testimonial_items']) && is_array($settings['testimonial_items']) ? $settings['testimonial_items'] : [];
+        $prev_arrow = !empty($settings['prev_arrow_image']['url']) ? $settings['prev_arrow_image']['url'] : 'assets/img/home-3/arrow-left.png';
+        $next_arrow = !empty($settings['next_arrow_image']['url']) ? $settings['next_arrow_image']['url'] : 'assets/img/home-3/arrow-right.png';
+        $video_icon_class = !empty($settings['video_icon_class']) ? $settings['video_icon_class'] : 'fa-solid fa-play';
 
-        if (empty($settings['items'])) {
-            return;
-        }
-
-        $all_items = $settings['items'];
-        $total_items = count($all_items);
-        $ppp = !empty($settings['posts_per_page']) ? (int) $settings['posts_per_page'] : 6;
-        $show_pagination = $settings['show_pagination'] === 'yes';
-
-        $current_page = max(1, get_query_var('paged'), get_query_var('page'), (isset($_GET['paged']) ? (int) $_GET['paged'] : 1));
-        $total_pages = ceil($total_items / $ppp);
-
-        if ($show_pagination) {
-            $offset = ($current_page - 1) * $ppp;
-            $items = array_slice($all_items, $offset, $ppp);
-        } else {
-            $items = $all_items;
-        }
-
-        $quote_icon_url = !empty($settings['quote_icon']['url']) ? $settings['quote_icon']['url'] : Utils::get_placeholder_image_src();
         ?>
 
-        <section class="testimonial-section fix section-padding">
+        <section id="<?php echo esc_attr($widget_id); ?>" class="testimonial-section-inner section-padding">
             <div class="container">
-                <div class="grt-section-title text-center">
-                    <?php if (!empty($settings['subtitle'])): ?>
-                        <span class="grt-sub-title tz-sub-tilte tz-sub-anim tx-subTitle">
-                            <i class="fa-sharp fa-solid fa-heart"></i> <?php echo esc_html($settings['subtitle']); ?>
-                        </span>
-                    <?php endif; ?>
-                    <?php if (!empty($settings['title'])): ?>
-                        <h2 class="split-title">
-                            <?php echo wp_kses_post($settings['title']); ?>
-                        </h2>
-                    <?php endif; ?>
-                </div>
-                <div class="row">
-                    <?php foreach ($items as $index => $item):
-                        $image_url = !empty($item['image']['url']) ? $item['image']['url'] : Utils::get_placeholder_image_src();
-                        $image_alt = !empty($item['image']['id']) ? get_post_meta($item['image']['id'], '_wp_attachment_image_alt', true) : 'img';
-                        $delay = 0.3 + ($index % 3) * 0.2;
-                        ?>
-                        <div class="col-xl-4 col-lg-6 col-sm-6 wow fadeInUp" data-wow-delay="<?php echo esc_attr($delay); ?>s">
-                            <div class="grt-testimonial-box-items-2 testimonial-inner-box">
-                                <div class="star">
-                                    <?php
-                                    $rating = !empty($item['rating']) ? (int) $item['rating'] : 5;
-                                    for ($i = 1; $i <= 5; $i++) {
-                                        if ($i <= $rating) {
-                                            echo '<i class="fa-solid fa-star"></i>';
-                                        } else {
-                                            echo '<i class="fa-regular fa-star"></i>';
-                                        }
-                                    }
-                                    ?>
-                                </div>
-                                <?php if (!empty($item['content'])): ?>
-                                    <p>
-                                        <?php echo esc_html($item['content']); ?>
-                                    </p>
-                                <?php endif; ?>
-                                <div class="client-info">
-                                    <div class="thumb">
-                                        <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>">
-                                    </div>
-                                    <div class="info-content">
-                                        <?php if (!empty($item['name'])):
-                                            $name_tag = !empty($settings['name_tag']) ? $settings['name_tag'] : 'span';
-                                            ?>
-                                            <<?php echo esc_attr($name_tag); ?> class="name"><?php echo esc_html($item['name']); ?></<?php echo esc_attr($name_tag); ?>>
-                                        <?php endif; ?>
-                                        <?php if (!empty($item['role'])): ?>
-                                            <span class="text"><?php echo esc_html($item['role']); ?></span>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
-                                <div class="quote-icon">
-                                    <img src="<?php echo esc_url($quote_icon_url); ?>" alt="quote">
-                                </div>
-                            </div>
+                <div class="testimonial-wrapper-3 p-0 mb-0">
+                    <div class="section-title-area">
+                        <div class="section-title">
+                            <span class="sec-sub tz-sub-tilte tz-sub-anim tx-subTitle"><?php echo esc_html($subtitle); ?></span>
+                            <h2 class="tx-title sec_title  tz-itm-title tz-itm-anim">
+                                <?php echo wp_kses_post(nl2br($title_text)); ?>
+                            </h2>
                         </div>
-                    <?php endforeach; ?>
-                </div>
-
-                <?php if ($show_pagination && $total_items > $ppp): ?>
-                    <div class="page-nav-wrap text-center">
-                        <ul>
-                            <?php if ($current_page > 1): ?>
-                                <li><a class="page-numbers" href="<?php echo esc_url(add_query_arg('paged', $current_page - 1)); ?>"><i
-                                            class="fa-solid fa-arrow-up-left"></i></a></li>
-                            <?php endif; ?>
-
-                            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                                <li class="<?php echo ($i == $current_page) ? 'active' : ''; ?>">
-                                    <a class="page-numbers" href="<?php echo esc_url(add_query_arg('paged', $i)); ?>">
-                                        <?php echo sprintf('%02d', $i); ?>
-                                    </a>
-                                </li>
-                            <?php endfor; ?>
-
-                            <?php if ($current_page < $total_pages): ?>
-                                <li><a class="page-numbers" href="<?php echo esc_url(add_query_arg('paged', $current_page + 1)); ?>"><i
-                                            class="fa-solid fa-arrow-up-right"></i></a></li>
-                            <?php endif; ?>
-                        </ul>
+                        <div class="array-button wow fadeInUp">
+                            <button type="button" class="array-prev">
+                                <img src="<?php echo esc_url($prev_arrow); ?>" alt="<?php echo esc_attr__('Previous slide', 'ftelements'); ?>">
+                            </button>
+                            <button type="button" class="array-next">
+                                <img src="<?php echo esc_url($next_arrow); ?>" alt="<?php echo esc_attr__('Next slide', 'ftelements'); ?>">
+                            </button>
+                        </div>
                     </div>
-                <?php endif; ?>
+                    <div class="swiper testimonial-slider-inner">
+                        <div class="swiper-wrapper">
+                            <?php foreach ($items as $item) : ?>
+                                <div class="swiper-slide">
+                                    <div class="testimonial-box-items-3">
+                                        <div class="quote-icon">
+                                            <svg width="39" height="30" viewBox="0 0 39 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M8.64725 1.65902C10.0126 0.301374 11.2931 -0.225102 12.5042 0.0873093C13.7037 0.399721 14.4654 1.16148 14.7836 2.36677C15.096 3.57206 14.6236 4.85834 13.3662 6.21791C10.4311 9.36517 8.54119 12.4546 7.70809 15.4977C9.5922 15.7098 11.1099 16.4658 12.267 17.7772C13.4183 19.0885 13.9968 20.7431 13.9968 22.7333C13.9968 24.8295 13.3354 26.5613 12.0298 27.919C10.7184 29.2824 9.01173 29.9631 6.91548 29.9631C4.71896 29.9631 3.01034 29.2072 1.80697 27.6837C0.601682 26.166 0 24.1449 0 21.6283C0 17.8543 0.784887 14.2153 2.35659 10.7016C3.93407 7.18792 6.02454 4.17567 8.64725 1.65902ZM32.7107 1.65902C34.0683 0.301374 35.3565 -0.225102 36.5618 0.0873093C37.7671 0.399721 38.5289 1.16148 38.8413 2.36677C39.1537 3.57206 38.687 4.85834 37.4296 6.21791C34.4887 9.36517 32.6046 12.4546 31.7657 15.4977C33.6556 15.7098 35.1733 16.4658 36.3266 17.7772C37.4778 19.0885 38.0564 20.7431 38.0564 22.7333C38.0564 24.8295 37.4007 26.5613 36.0893 27.919C34.778 29.2824 33.0771 29.9631 30.9808 29.9631C28.7766 29.9631 27.0699 29.2072 25.8723 27.6837C24.6612 26.166 24.0596 24.1449 24.0596 21.6283C24.0596 17.8543 24.8502 14.2153 26.4219 10.7016C27.9917 7.18792 30.088 4.17567 32.7107 1.65902Z" fill="#F39F5F" />
+                                            </svg>
+                                        </div>
+                                        <p class="text">
+                                            <?php echo esc_html($item['review_text']); ?>
+                                        </p>
+                                        <div class="testimonial-bottom">
+                                            <div class="client-info">
+                                                <?php if (!empty($item['client_image']['url'])) : ?>
+                                                    <div class="client-img">
+                                                        <img src="<?php echo esc_url($item['client_image']['url']); ?>" alt="<?php echo esc_attr($item['client_name']); ?>">
+                                                    </div>
+                                                <?php endif; ?>
+                                                <div class="info-content">
+                                                    <p>
+                                                        <?php if (!empty($item['client_name'])) : ?>
+                                                            <b><?php echo esc_html($item['client_name']); ?><?php echo !empty($item['client_location']) ? ',' : ''; ?></b>
+                                                        <?php endif; ?>
+                                                        <?php if (!empty($item['client_location'])) : ?>
+                                                            <?php echo esc_html($item['client_location']); ?>
+                                                        <?php endif; ?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <?php if (!empty($item['video_url']['url'])) : ?>
+                                                <a href="<?php echo esc_url($item['video_url']['url']); ?>" class="video-btn video-popup">
+                                                    <i class="<?php echo esc_attr($video_icon_class); ?>"></i>
+                                                </a>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
-        <?php
+
+        <?php if (\Elementor\Plugin::$instance->editor->is_edit_mode()) : ?>
+            <script>
+                (function ($) {
+                    "use strict";
+
+                    const widgetSelector = "#<?php echo esc_js($widget_id); ?>";
+
+                    const initTestimonialSliderInner = function ($scope) {
+                        if (typeof Swiper === "undefined") {
+                            return;
+                        }
+
+                        const $widget = $scope && $scope.length ? $scope.find(widgetSelector) : $(widgetSelector);
+                        if (!$widget.length) {
+                            return;
+                        }
+
+                        $widget.each(function () {
+                            const sliderEl = this.querySelector(".testimonial-slider-inner");
+                            if (!sliderEl) {
+                                return;
+                            }
+
+                            if (sliderEl.swiper) {
+                                sliderEl.swiper.destroy(true, true);
+                            }
+
+                            const prevEl = this.querySelector(".array-prev");
+                            const nextEl = this.querySelector(".array-next");
+
+                            new Swiper(sliderEl, {
+                                spaceBetween: 30,
+                                speed: 1300,
+                                loop: true,
+                                autoplay: {
+                                    delay: 1500,
+                                    disableOnInteraction: false
+                                },
+                                navigation: {
+                                    prevEl: prevEl,
+                                    nextEl: nextEl
+                                },
+                                breakpoints: {
+                                    1199: {
+                                        slidesPerView: 2
+                                    },
+                                    991: {
+                                        slidesPerView: 2
+                                    },
+                                    767: {
+                                        slidesPerView: 1
+                                    },
+                                    575: {
+                                        slidesPerView: 1
+                                    },
+                                    0: {
+                                        slidesPerView: 1
+                                    }
+                                }
+                            });
+                        });
+                    };
+
+                    $(window).on("elementor/frontend/init", function () {
+                        elementorFrontend.hooks.addAction("frontend/element_ready/ft-testimonial6.default", initTestimonialSliderInner);
+                    });
+
+                    $(function () {
+                        initTestimonialSliderInner($(document));
+                    });
+                })(jQuery);
+            </script>
+        <?php endif; ?>
+
+<?php
     }
-} ?>
+}

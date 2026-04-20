@@ -3,7 +3,6 @@
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Repeater;
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
@@ -13,19 +12,19 @@ use Elementor\Utils;
 
 defined('ABSPATH') || die();
 
-class FT_CTA_1_Widget extends \Elementor\Widget_Base
+class FT_Cta1_Widget extends \Elementor\Widget_Base
 {
 
     /*
-     *
-     * @since 1.0.0
-     * @access public
-     *
-     * @return string Widget name.
-     */
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string Widget name.
+	 */
     public function get_name()
     {
-        return 'ft-cta-1';
+        return 'ft-cta1';
     }
 
     /**
@@ -81,594 +80,436 @@ class FT_CTA_1_Widget extends \Elementor\Widget_Base
      * @since 1.0.0
      * @access protected
      */
-    /**
-     * Register rsgallery widget controls.
-     *
-     * Adds different input fields to allow the user to change and customize the widget settings.
-     *
-     * @since 1.0.0
-     * @access protected
-     */
     protected function register_controls()
     {
-        // Content Tab
         $this->start_controls_section(
-            'section_content',
+            'content_section',
             [
                 'label' => esc_html__('Content', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_CONTENT,
+            ]
+        );
+
+        $this->add_control(
+            'background_image',
+            [
+                'label'   => esc_html__('Background Image', 'ftelements'),
+                'type'    => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => Utils::get_placeholder_image_src(),
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'shape_image_1',
+            [
+                'label'   => esc_html__('Shape Image 1', 'ftelements'),
+                'type'    => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => Utils::get_placeholder_image_src(),
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'shape_image_2',
+            [
+                'label'   => esc_html__('Shape Image 2', 'ftelements'),
+                'type'    => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => Utils::get_placeholder_image_src(),
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'subtitle',
+            [
+                'label'       => esc_html__('Subtitle', 'ftelements'),
+                'type'        => Controls_Manager::TEXT,
+                'default'     => esc_html__('Daily Schedule', 'ftelements'),
+                'label_block' => true,
             ]
         );
 
         $this->add_control(
             'title',
             [
-                'label' => esc_html__('Title', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::TEXTAREA,
-                'default' => esc_html__('Bringing hope to victims of the LA Fires', 'ftelements'),
+                'label'       => esc_html__('Title', 'ftelements'),
+                'type'        => Controls_Manager::TEXTAREA,
+                'default'     => esc_html__('Book Admission <br> For Your Child', 'ftelements'),
+                'label_block' => true,
             ]
         );
 
         $this->add_control(
-            'image',
+            'phone_icon',
             [
-                'label' => esc_html__('Banner Image', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::MEDIA,
+                'label'   => esc_html__('Phone Icon', 'ftelements'),
+                'type'    => Controls_Manager::MEDIA,
                 'default' => [
-                    'url' => \Elementor\Utils::get_placeholder_image_src(),
+                    'url' => Utils::get_placeholder_image_src(),
                 ],
             ]
         );
 
         $this->add_control(
-            'btn_text',
+            'phone_label',
             [
-                'label' => esc_html__('Button Text', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::TEXT,
-                'default' => esc_html__('Read more stories', 'ftelements'),
+                'label'       => esc_html__('Phone Label', 'ftelements'),
+                'type'        => Controls_Manager::TEXT,
+                'default'     => esc_html__('Call Us Now', 'ftelements'),
+                'label_block' => true,
             ]
         );
 
         $this->add_control(
-            'btn_link',
+            'phone_number',
             [
-                'label' => esc_html__('Button Link', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::URL,
-                'placeholder' => esc_html__('https://your-link.com', 'ftelements'),
+                'label'       => esc_html__('Phone Number', 'ftelements'),
+                'type'        => Controls_Manager::TEXT,
+                'default'     => esc_html__('+11 123 0654 98', 'ftelements'),
+                'label_block' => true,
+            ]
+        );
+
+        $this->add_control(
+            'vector_image_1',
+            [
+                'label'   => esc_html__('Vector Image 1', 'ftelements'),
+                'type'    => Controls_Manager::MEDIA,
                 'default' => [
-                    'url' => '#',
+                    'url' => Utils::get_placeholder_image_src(),
                 ],
             ]
         );
 
         $this->add_control(
-            'btn_icon',
+            'vector_image_2',
             [
-                'label' => esc_html__('Button Icon', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::ICONS,
+                'label'   => esc_html__('Vector Image 2', 'ftelements'),
+                'type'    => Controls_Manager::MEDIA,
                 'default' => [
-                    'value' => 'fa-regular fa-arrow-up-right',
-                    'library' => 'fa-regular',
+                    'url' => Utils::get_placeholder_image_src(),
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Style Tab
-        // Section Style
         $this->start_controls_section(
-            'section_style',
+            'style_section_wrapper',
             [
-                'label' => esc_html__('Section Style', 'ftelements'),
-                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Wrapper', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_responsive_control(
-            'section_padding',
+            'wrapper_padding',
             [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-cta-banner-section-3' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Section Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .book-admission-banner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'section_margin',
+            'content_max_width',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-cta-banner-section-3' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            \Elementor\Group_Control_Background::get_type(),
-            [
-                'name' => 'section_background',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-cta-banner-section-3',
-            ]
-        );
-
-        $this->add_group_control(
-            \Elementor\Group_Control_Border::get_type(),
-            [
-                'name' => 'section_border',
-                'label' => esc_html__('Border', 'ftelements'),
-                'selector' => '{{WRAPPER}} .grt-cta-banner-section-3',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'section_border_radius',
-            [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'label'      => esc_html__('Content Max Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
                 'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .book-admission-banner .content' => 'max-width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'content_alignment',
+            [
+                'label'     => esc_html__('Content Alignment', 'ftelements'),
+                'type'      => Controls_Manager::CHOOSE,
+                'options'   => [
+                    'left'   => [
+                        'title' => esc_html__('Left', 'ftelements'),
+                        'icon'  => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'ftelements'),
+                        'icon'  => 'eicon-text-align-center',
+                    ],
+                    'right'  => [
+                        'title' => esc_html__('Right', 'ftelements'),
+                        'icon'  => 'eicon-text-align-right',
+                    ],
+                ],
                 'selectors' => [
-                    '{{WRAPPER}} .grt-cta-banner-section-3' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .book-admission-banner .content' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name'     => 'wrapper_overlay',
+                'label'    => esc_html__('Overlay', 'ftelements'),
+                'types'    => ['classic', 'gradient'],
+                'selector' => '{{WRAPPER}} .book-admission-banner',
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'style_section_subtitle',
+            [
+                'label' => esc_html__('Subtitle', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name'     => 'subtitle_typography',
+                'selector' => '{{WRAPPER}} .book-admission-banner .section-title .sec-sub',
+            ]
+        );
+
+        $this->add_control(
+            'subtitle_color',
+            [
+                'label'     => esc_html__('Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .book-admission-banner .section-title .sec-sub' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'subtitle_margin',
+            [
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .book-admission-banner .section-title .sec-sub' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Title Style
         $this->start_controls_section(
-            'title_style',
+            'style_section_title',
             [
-                'label' => esc_html__('Title Style', 'ftelements'),
-                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Title', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name'     => 'title_typography',
+                'selector' => '{{WRAPPER}} .book-admission-banner .section-title .tx-title',
             ]
         );
 
         $this->add_control(
             'title_color',
             [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::COLOR,
+                'label'     => esc_html__('Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-section-title h2' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .book-admission-banner .section-title .tx-title' => 'color: {{VALUE}};',
                 ],
-            ]
-        );
-
-        $this->add_group_control(
-            \Elementor\Group_Control_Typography::get_type(),
-            [
-                'name' => 'title_typography',
-                'selector' => '{{WRAPPER}} .grt-section-title h2',
             ]
         );
 
         $this->add_responsive_control(
             'title_margin',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-section-title h2' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'title_align',
-            [
-                'label' => esc_html__('Alignment', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::CHOOSE,
-                'options' => [
-                    'left' => [
-                        'title' => esc_html__('Left', 'ftelements'),
-                        'icon' => 'eicon-text-align-left',
-                    ],
-                    'center' => [
-                        'title' => esc_html__('Center', 'ftelements'),
-                        'icon' => 'eicon-text-align-center',
-                    ],
-                    'right' => [
-                        'title' => esc_html__('Right', 'ftelements'),
-                        'icon' => 'eicon-text-align-right',
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-section-title h2' => 'text-align: {{VALUE}};',
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .book-admission-banner .section-title .tx-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Button Style
         $this->start_controls_section(
-            'button_style',
+            'style_section_info_box',
             [
-                'label' => esc_html__('Button Style', 'ftelements'),
-                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->start_controls_tabs('button_tabs');
-
-        $this->start_controls_tab(
-            'button_normal',
-            [
-                'label' => esc_html__('Normal', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'btn_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            \Elementor\Group_Control_Background::get_type(),
-            [
-                'name' => 'btn_background',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .theme-btn',
-            ]
-        );
-
-        $this->add_group_control(
-            \Elementor\Group_Control_Border::get_type(),
-            [
-                'name' => 'btn_border',
-                'label' => esc_html__('Border', 'ftelements'),
-                'selector' => '{{WRAPPER}} .theme-btn',
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->start_controls_tab(
-            'button_hover',
-            [
-                'label' => esc_html__('Hover', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'btn_hover_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn:hover' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            \Elementor\Group_Control_Background::get_type(),
-            [
-                'name' => 'btn_hover_background',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .theme-btn:hover, {{WRAPPER}} .theme-btn::before',
-            ]
-        );
-
-        $this->add_control(
-            'btn_hover_border_color',
-            [
-                'label' => esc_html__('Border Color', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn:hover' => 'border-color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
-
-        $this->add_group_control(
-            \Elementor\Group_Control_Typography::get_type(),
-            [
-                'name' => 'btn_typography',
-                'selector' => '{{WRAPPER}} .theme-btn',
-                'separator' => 'before',
+                'label' => esc_html__('Phone Info Box', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_responsive_control(
-            'btn_padding',
+            'info_box_margin',
             [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .book-admission-banner .info-content' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'btn_border_radius',
+            'info_box_padding',
             [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .book-admission-banner .info-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name'     => 'info_box_border',
+                'selector' => '{{WRAPPER}} .book-admission-banner .info-content',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'info_box_border_radius',
+            [
+                'label'      => esc_html__('Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'selectors'  => [
+                    '{{WRAPPER}} .book-admission-banner .info-content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
-        $this->add_control(
-            'btn_icon_heading',
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
             [
-                'label' => esc_html__('Icon Settings', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'btn_icon_size',
-            [
-                'label' => esc_html__('Icon Size', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em', 'rem'],
-                'range' => [
-                    'px' => [
-                        'min' => 1,
-                        'max' => 100,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn i' => 'font-size: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .theme-btn svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'btn_icon_spacing',
-            [
-                'label' => esc_html__('Icon Spacing', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em', 'rem'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn i, {{WRAPPER}} .theme-btn svg' => 'margin-left: {{SIZE}}{{UNIT}};',
-                ],
+                'name'     => 'info_box_background',
+                'types'    => ['classic', 'gradient'],
+                'selector' => '{{WRAPPER}} .book-admission-banner .info-content',
             ]
         );
 
         $this->end_controls_section();
 
-        // Content Area Style
         $this->start_controls_section(
-            'content_area_style',
+            'style_section_phone_icon',
             [
-                'label' => esc_html__('Content Area Style', 'ftelements'),
-                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Phone Icon', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_responsive_control(
-            'content_area_padding',
+            'phone_icon_size',
             [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-section-title-area' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            \Elementor\Group_Control_Background::get_type(),
-            [
-                'name' => 'content_area_background',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-section-title-area',
-            ]
-        );
-
-        $this->add_group_control(
-            \Elementor\Group_Control_Border::get_type(),
-            [
-                'name' => 'content_area_border',
-                'label' => esc_html__('Border', 'ftelements'),
-                'selector' => '{{WRAPPER}} .grt-section-title-area',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'content_area_border_radius',
-            [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'label'      => esc_html__('Size', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
                 'size_units' => ['px', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-section-title-area' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'selectors'  => [
+                    '{{WRAPPER}} .book-admission-banner .info-content .icon img' => 'width: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'content_gap',
+            'phone_icon_spacing',
             [
-                'label' => esc_html__('Content Gap (Title & Button)', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em', '%'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 200,
-                    ],
+                'label'      => esc_html__('Right Spacing', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .book-admission-banner .info-content .icon' => 'margin-right: {{SIZE}}{{UNIT}};',
                 ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-section-title-area' => 'gap: {{SIZE}}{{UNIT}};',
-                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Css_Filter::get_type(),
+            [
+                'name'     => 'phone_icon_css_filters',
+                'selector' => '{{WRAPPER}} .book-admission-banner .info-content .icon img',
             ]
         );
 
         $this->end_controls_section();
 
-        // Image Style
         $this->start_controls_section(
-            'image_style',
+            'style_section_phone_text',
             [
-                'label' => esc_html__('Image Style', 'ftelements'),
-                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Phone Text', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
-        $this->start_controls_tabs('image_tabs');
-
-        $this->start_controls_tab(
-            'image_normal',
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
             [
-                'label' => esc_html__('Normal', 'ftelements'),
-            ]
-        );
-
-        $this->add_responsive_control(
-            'image_border_radius',
-            [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .banner-thumb img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'image_max_width',
-            [
-                'label' => esc_html__('Max Width', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 2000,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .banner-thumb img' => 'max-width: {{SIZE}}{{UNIT}};',
-                ],
+                'name'     => 'phone_label_typography',
+                'selector' => '{{WRAPPER}} .book-admission-banner .info-content .info-cont p',
             ]
         );
 
         $this->add_control(
-            'image_overlay_color',
+            'phone_label_color',
             [
-                'label' => esc_html__('Overlay Color', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::COLOR,
+                'label'     => esc_html__('Label Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .banner-thumb::after' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .book-admission-banner .info-content .info-cont p' => 'color: {{VALUE}};',
                 ],
             ]
         );
 
         $this->add_group_control(
-            \Elementor\Group_Control_Css_Filter::get_type(),
+            Group_Control_Typography::get_type(),
             [
-                'name' => 'image_css_filters',
-                'selector' => '{{WRAPPER}} .banner-thumb img',
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->start_controls_tab(
-            'image_hover',
-            [
-                'label' => esc_html__('Hover', 'ftelements'),
+                'name'     => 'phone_number_typography',
+                'selector' => '{{WRAPPER}} .book-admission-banner .info-content .info-cont h3 a',
             ]
         );
 
         $this->add_control(
-            'image_hover_transform',
+            'phone_number_color',
             [
-                'label' => esc_html__('Hover Scale', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em', 'rem'],
-                'range' => [
-                    'px' => [
-                        'min' => 0.5,
-                        'max' => 2,
-                        'step' => 0.01,
-                    ],
-                ],
+                'label'     => esc_html__('Number Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .banner-thumb:hover img' => 'transform: scale({{SIZE}});',
+                    '{{WRAPPER}} .book-admission-banner .info-content .info-cont h3 a' => 'color: {{VALUE}};',
                 ],
             ]
         );
 
         $this->add_control(
-            'image_hover_opacity',
+            'phone_number_hover_color',
             [
-                'label' => esc_html__('Hover Opacity', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1,
-                        'step' => 0.01,
-                    ],
-                ],
+                'label'     => esc_html__('Number Hover Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .banner-thumb:hover img' => 'opacity: {{SIZE}};',
+                    '{{WRAPPER}} .book-admission-banner .info-content .info-cont h3 a:hover' => 'color: {{VALUE}};',
                 ],
             ]
         );
-
-        $this->add_group_control(
-            \Elementor\Group_Control_Css_Filter::get_type(),
-            [
-                'name' => 'image_hover_css_filters',
-                'selector' => '{{WRAPPER}} .banner-thumb:hover img',
-            ]
-        );
-
-        $this->add_control(
-            'image_hover_overlay_color',
-            [
-                'label' => esc_html__('Hover Overlay Color', 'ftelements'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .banner-thumb:hover::after' => 'background-color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
 
         $this->end_controls_section();
     }
@@ -684,40 +525,66 @@ class FT_CTA_1_Widget extends \Elementor\Widget_Base
     protected function render()
     {
         $settings = $this->get_settings_for_display();
-
-        $this->add_render_attribute('title', 'class', 'split-title text-white');
-        $this->add_inline_editing_attributes('title', 'none');
-
-        $this->add_render_attribute('btn_text', 'class', '');
-        $this->add_inline_editing_attributes('btn_text', 'none');
+        $background_image = !empty($settings['background_image']['url']) ? $settings['background_image']['url'] : '';
+        $shape_image_1 = !empty($settings['shape_image_1']['url']) ? $settings['shape_image_1']['url'] : '';
+        $shape_image_2 = !empty($settings['shape_image_2']['url']) ? $settings['shape_image_2']['url'] : '';
+        $phone_icon = !empty($settings['phone_icon']['url']) ? $settings['phone_icon']['url'] : '';
+        $vector_image_1 = !empty($settings['vector_image_1']['url']) ? $settings['vector_image_1']['url'] : '';
+        $vector_image_2 = !empty($settings['vector_image_2']['url']) ? $settings['vector_image_2']['url'] : '';
+        $phone_number = !empty($settings['phone_number']) ? $settings['phone_number'] : '';
+        $phone_url = preg_replace('/[^0-9\+]/', '', $phone_number);
 
         ?>
+        <section class="book-admission-banner  bg-cover section-padding" <?php if (!empty($background_image)) : ?>style="background-image: url('<?php echo esc_url($background_image); ?>');"<?php endif; ?>>
+            <div class="container">
+                <div class="book-admission-content">
+                    <div class="bg-shape">
+                        <?php if (!empty($shape_image_1)) : ?>
+                            <img src="<?php echo esc_url($shape_image_1); ?>" alt="img">
+                        <?php endif; ?>
+                        <div class="bg-shape2">
+                            <?php if (!empty($shape_image_2)) : ?>
+                                <img src="<?php echo esc_url($shape_image_2); ?>" alt="img">
+                            <?php endif; ?>
+                        </div>
+                    </div>
 
-                                        <section class="grt-cta-banner-section-3 fix scale-up-img">
-                                            <div class="container">
-                                                <?php if (!empty($settings['image']['url'])): ?>
-                                                                    <div class="banner-thumb">
-                                                                        <img data-speed="0.4s" class="scale-up" src="<?php echo esc_url($settings['image']['url']); ?>" alt="<?php echo esc_attr(\Elementor\Control_Media::get_image_alt($settings['image'])); ?>">
-                                                                    </div>
-                                                <?php endif; ?>
-                                                <div class="grt-section-title-area align-items-center mb-0 text-center text-sm-start justify-content-center justify-content-sm-between">
-                                                    <div class="grt-section-title">
-                                                        <h2 <?php echo $this->get_render_attribute_string('title'); ?>>
-                                                            <?php echo wp_kses_post($settings['title']); ?>
-                                                        </h2>
-                                                    </div>
-                                                    <?php if (!empty($settings['btn_link']['url'])): ?>
-                                                                        <a href="<?php echo esc_url($settings['btn_link']['url']); ?>" class="theme-btn wow fadeInUp" data-wow-delay=".5s" <?php echo $settings['btn_link']['is_external'] ? 'target="_blank"' : ''; ?>                                                 <?php echo $settings['btn_link']['nofollow'] ? 'rel="nofollow"' : ''; ?>>
-                                                                            <span <?php echo $this->get_render_attribute_string('btn_text'); ?>>
-                                                                                <?php echo esc_html($settings['btn_text']); ?>
-                                                                            </span>
-                                                                            <?php \Elementor\Icons_Manager::render_icon($settings['btn_icon'], ['aria-hidden' => 'true']); ?>
-                                                                        </a>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div>
-                                        </section>
-
-                                        <?php
+                    <div class="content">
+                        <div class="section-title mb-0">
+                            <span class="sec-sub tz-sub-tilte tz-sub-anim tx-subTitle"><?php echo esc_html($settings['subtitle']); ?></span>
+                            <h2 class="tx-title sec_title  tz-itm-title tz-itm-anim">
+                                <?php echo wp_kses_post($settings['title']); ?>
+                            </h2>
+                        </div>
+                        <div class="info-content wow fadeInUp" data-wow-delay=".3s">
+                            <div class="icon">
+                                <?php if (!empty($phone_icon)) : ?>
+                                    <img src="<?php echo esc_url($phone_icon); ?>" alt="img">
+                                <?php endif; ?>
+                            </div>
+                            <div class="info-cont">
+                                <p>
+                                    <?php echo esc_html($settings['phone_label']); ?>
+                                </p>
+                                <h3>
+                                    <a href="tel:<?php echo esc_attr($phone_url); ?>"><?php echo esc_html($phone_number); ?></a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vec-1">
+                        <?php if (!empty($vector_image_1)) : ?>
+                            <img src="<?php echo esc_url($vector_image_1); ?>" alt="">
+                        <?php endif; ?>
+                    </div>
+                    <div class="vec-2">
+                        <?php if (!empty($vector_image_2)) : ?>
+                            <img src="<?php echo esc_url($vector_image_2); ?>" alt="">
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </section>
+<?php
     }
 } ?>

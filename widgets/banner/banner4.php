@@ -3,7 +3,6 @@
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Repeater;
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
@@ -13,19 +12,19 @@ use Elementor\Utils;
 
 defined('ABSPATH') || die();
 
-class FT_Banner_4_Widget extends \Elementor\Widget_Base
+class FT_Banner4_Widget extends \Elementor\Widget_Base
 {
 
     /*
-     *
-     * @since 1.0.0
-     * @access public
-     *
-     * @return string Widget name.
-     */
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string Widget name.
+	 */
     public function get_name()
     {
-        return 'ft-banner-4';
+        return 'ft-banner4';
     }
 
     /**
@@ -84,353 +83,185 @@ class FT_Banner_4_Widget extends \Elementor\Widget_Base
     protected function register_controls()
     {
         $this->start_controls_section(
-            'content_section',
+            'banner_content_section',
             [
                 'label' => esc_html__('Content', 'ftelements'),
-                'tab' => Controls_Manager::TAB_CONTENT,
+                'tab'   => Controls_Manager::TAB_CONTENT,
             ]
         );
 
         $this->add_control(
-            'subtitle',
+            'hero_subtitle',
             [
-                'label' => esc_html__('Subtitle', 'ftelements'),
-                'type' => Controls_Manager::TEXT,
-                'default' => esc_html__('Give hope. Save lives.', 'ftelements'),
+                'label'       => esc_html__('Subtitle', 'ftelements'),
+                'type'        => Controls_Manager::TEXT,
+                'default'     => esc_html__('Kindergarten & Baby Care', 'ftelements'),
+                'label_block' => true,
             ]
         );
 
         $this->add_control(
-            'subtitle_icon',
+            'hero_title',
             [
-                'label' => esc_html__('Subtitle Icon', 'ftelements'),
-                'type' => Controls_Manager::ICONS,
-                'default' => [
-                    'value' => 'fa-sharp fa-solid fa-heart',
-                    'library' => 'solid',
+                'label'       => esc_html__('Title', 'ftelements'),
+                'type'        => Controls_Manager::TEXTAREA,
+                'default'     => esc_html__('We Prepare Your Child <br> For <span>Lifetime</span>', 'ftelements'),
+                'label_block' => true,
+            ]
+        );
+
+        $this->add_control(
+            'hero_description',
+            [
+                'label'       => esc_html__('Description', 'ftelements'),
+                'type'        => Controls_Manager::TEXTAREA,
+                'default'     => esc_html__('Suspendisse non blandit sapien Nunc eleifend, enim et porta porta <br> eros risus tincidunt diam, vel sodales', 'ftelements'),
+                'label_block' => true,
+            ]
+        );
+
+        $this->add_control(
+            'button_text',
+            [
+                'label'       => esc_html__('Button Text', 'ftelements'),
+                'type'        => Controls_Manager::TEXT,
+                'default'     => esc_html__('Apply Today', 'ftelements'),
+                'label_block' => true,
+            ]
+        );
+
+        $this->add_control(
+            'button_link',
+            [
+                'label'       => esc_html__('Button Link', 'ftelements'),
+                'type'        => Controls_Manager::URL,
+                'placeholder' => 'https://your-link.com',
+                'default'     => [
+                    'url'         => '#',
+                    'is_external' => false,
+                    'nofollow'    => false,
                 ],
             ]
         );
 
         $this->add_control(
-            'title',
+            'video_link',
             [
-                'label' => esc_html__('Title', 'ftelements'),
-                'type' => Controls_Manager::TEXTAREA,
-                'default' => esc_html__('Empowering lives through heartly.', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'description',
-            [
-                'label' => esc_html__('Description', 'ftelements'),
-                'type' => Controls_Manager::TEXTAREA,
-                'default' => esc_html__('Your generous support helps us provide vital resources, ensuring every child can thrive.', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'btn_text',
-            [
-                'label' => esc_html__('Button Text', 'ftelements'),
-                'type' => Controls_Manager::TEXT,
-                'default' => esc_html__('Donate now', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'btn_link',
-            [
-                'label' => esc_html__('Button Link', 'ftelements'),
-                'type' => Controls_Manager::URL,
-                'placeholder' => esc_html__('https://your-link.com', 'ftelements'),
-                'default' => [
-                    'url' => '#',
+                'label'       => esc_html__('Video Link', 'ftelements'),
+                'type'        => Controls_Manager::URL,
+                'placeholder' => 'https://www.youtube.com/watch?v=Cn4G2lZ_g2I',
+                'default'     => [
+                    'url'         => 'https://www.youtube.com/watch?v=Cn4G2lZ_g2I',
+                    'is_external' => true,
+                    'nofollow'    => true,
                 ],
             ]
         );
 
         $this->add_control(
-            'btn_icon',
+            'video_text',
             [
-                'label' => esc_html__('Button Icon', 'ftelements'),
-                'type' => Controls_Manager::ICONS,
-                'default' => [
-                    'value' => 'fa-sharp fa-solid fa-heart',
-                    'library' => 'solid',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'hero_image',
-            [
-                'label' => esc_html__('Hero Image', 'ftelements'),
-                'type' => Controls_Manager::MEDIA,
-                'default' => [
-                    'url' => Utils::get_placeholder_image_src(),
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'bg_image',
-            [
-                'label' => esc_html__('Background Image', 'ftelements'),
-                'type' => Controls_Manager::MEDIA,
-                'default' => [
-                    'url' => Utils::get_placeholder_image_src(),
-                ],
+                'label'       => esc_html__('Video Text', 'ftelements'),
+                'type'        => Controls_Manager::TEXT,
+                'default'     => esc_html__('Play Video', 'ftelements'),
+                'label_block' => true,
             ]
         );
 
         $this->end_controls_section();
 
-        // Section Style
         $this->start_controls_section(
-            'section_style',
+            'banner_images_section',
+            [
+                'label' => esc_html__('Images', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_CONTENT,
+            ]
+        );
+
+        $image_controls = [
+            'parasuit_image' => esc_html__('Parasuit Image', 'ftelements'),
+            'left_shape_image' => esc_html__('Left Shape Image', 'ftelements'),
+            'book_shape_image' => esc_html__('Book Shape Image', 'ftelements'),
+            'pencil_shape_image' => esc_html__('Pencil Shape Image', 'ftelements'),
+            'bee_shape_image' => esc_html__('Bee Shape Image', 'ftelements'),
+            'arrow_icon_image' => esc_html__('Arrow Icon Image', 'ftelements'),
+            'hero_main_image' => esc_html__('Hero Main Image', 'ftelements'),
+            'hero_secondary_image' => esc_html__('Hero Secondary Image', 'ftelements'),
+        ];
+
+        foreach ($image_controls as $control_id => $label) {
+            $this->add_control(
+                $control_id,
+                [
+                    'label'   => $label,
+                    'type'    => Controls_Manager::MEDIA,
+                    'default' => [
+                        'url' => Utils::get_placeholder_image_src(),
+                    ],
+                ]
+            );
+        }
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'banner_section_style',
             [
                 'label' => esc_html__('Section Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'section_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-section-4' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'section_margin',
-            [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-section-4' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'section_height',
-            [
-                'label' => esc_html__('Min Height', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'vh', 'em'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1000,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-section-4' => 'min-height: {{SIZE}}{{UNIT}}; display: flex; align-items: center;',
-                ],
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_group_control(
             Group_Control_Background::get_type(),
             [
-                'name' => 'section_background',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-hero-section-4',
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'section_border',
-                'selector' => '{{WRAPPER}} .grt-hero-section-4',
+                'name'     => 'banner_section_background',
+                'types'    => ['classic', 'gradient'],
+                'selector' => '{{WRAPPER}} .hero-section.hero-4',
             ]
         );
 
         $this->add_responsive_control(
-            'section_border_radius',
+            'banner_section_padding',
             [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-section-4' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'overlay_heading',
-            [
-                'label' => esc_html__('Background Overlay', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name' => 'section_overlay',
-                'label' => esc_html__('Overlay', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-hero-section-4::before',
-            ]
-        );
-
-        $this->add_control(
-            'overlay_opacity',
-            [
-                'label' => esc_html__('Overlay Opacity', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => [
-                        'max' => 1,
-                        'min' => 0,
-                        'step' => 0.01,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-section-4::before' => 'opacity: {{SIZE}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Hero Content Wrapper Style
-        $this->start_controls_section(
-            'content_wrapper_style_section',
-            [
-                'label' => esc_html__('Hero Content Wrapper', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'content_align',
-            [
-                'label' => esc_html__('Alignment', 'ftelements'),
-                'type' => Controls_Manager::CHOOSE,
-                'options' => [
-                    'left' => [
-                        'title' => esc_html__('Left', 'ftelements'),
-                        'icon' => 'eicon-text-align-left',
-                    ],
-                    'center' => [
-                        'title' => esc_html__('Center', 'ftelements'),
-                        'icon' => 'eicon-text-align-center',
-                    ],
-                    'right' => [
-                        'title' => esc_html__('Right', 'ftelements'),
-                        'icon' => 'eicon-text-align-right',
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-content' => 'text-align: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'content_max_width',
-            [
-                'label' => esc_html__('Max Width', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
+                'label'      => esc_html__('Section Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%', 'em', 'rem'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1200,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-content' => 'max-width: {{SIZE}}{{UNIT}};',
+                'selectors'  => [
+                    '{{WRAPPER}} .hero-section.hero-4' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'content_padding',
+            'banner_section_margin',
             [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'content_margin',
-            [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-content' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name' => 'content_bg',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-hero-content',
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'content_border',
-                'selector' => '{{WRAPPER}} .grt-hero-content',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'content_border_radius',
-            [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Section Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .hero-section.hero-4' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Subtitle Style
         $this->start_controls_section(
-            'subtitle_style_section',
+            'banner_subtitle_style',
             [
-                'label' => esc_html__('Subtitle', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Subtitle Style', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_control(
-            'subtitle_color',
+            'hero_subtitle_color',
             [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-hero-sub' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .hero-content .hero-sub' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -438,140 +269,51 @@ class FT_Banner_4_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name' => 'subtitle_typography',
-                'selector' => '{{WRAPPER}} .grt-hero-sub',
+                'name'     => 'hero_subtitle_typography',
+                'selector' => '{{WRAPPER}} .hero-content .hero-sub',
             ]
         );
 
         $this->add_responsive_control(
-            'subtitle_margin',
+            'hero_subtitle_margin',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-sub' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'subtitle_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-sub' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name' => 'subtitle_bg',
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-hero-sub',
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'subtitle_border',
-                'selector' => '{{WRAPPER}} .grt-hero-sub',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'subtitle_border_radius',
-            [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-sub' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'subtitle_icon_heading',
-            [
-                'label' => esc_html__('Subtitle Icon', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'subtitle_icon_size',
-            [
-                'label' => esc_html__('Icon Size', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em', 'rem'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-sub i' => 'font-size: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .grt-hero-sub svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'subtitle_icon_color',
-            [
-                'label' => esc_html__('Icon Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-sub i' => 'color: {{VALUE}};',
-                    '{{WRAPPER}} .grt-hero-sub svg' => 'fill: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'subtitle_icon_spacing',
-            [
-                'label' => esc_html__('Icon Spacing', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 50,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-sub i, {{WRAPPER}} .grt-hero-sub svg' => 'margin-right: {{SIZE}}{{UNIT}};',
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .hero-content .hero-sub' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Title Style
         $this->start_controls_section(
-            'title_style_section',
+            'banner_title_style',
             [
-                'label' => esc_html__('Title', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Title Style', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_control(
-            'title_color',
+            'hero_title_color',
             [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-hero-content h1' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .hero-content h1' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'hero_title_highlight_color',
+            [
+                'label'     => esc_html__('Highlight Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .hero-content h1 span' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -579,59 +321,40 @@ class FT_Banner_4_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name' => 'title_typography',
-                'selector' => '{{WRAPPER}} .grt-hero-content h1',
+                'name'     => 'hero_title_typography',
+                'selector' => '{{WRAPPER}} .hero-content h1',
             ]
         );
 
         $this->add_responsive_control(
-            'title_margin',
+            'hero_title_margin',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-content h1' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'title_max_width',
-            [
-                'label' => esc_html__('Max Width', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1000,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-content h1' => 'max-width: {{SIZE}}{{UNIT}};',
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .hero-content h1' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Description Style
         $this->start_controls_section(
-            'desc_style_section',
+            'banner_description_style',
             [
-                'label' => esc_html__('Description', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Description Style', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_control(
-            'desc_color',
+            'hero_description_color',
             [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-hero-content p' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .hero-content p' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -639,310 +362,181 @@ class FT_Banner_4_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name' => 'desc_typography',
-                'selector' => '{{WRAPPER}} .grt-hero-content p',
+                'name'     => 'hero_description_typography',
+                'selector' => '{{WRAPPER}} .hero-content p',
             ]
         );
 
         $this->add_responsive_control(
-            'desc_margin',
+            'hero_description_margin',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-content p' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'desc_max_width',
-            [
-                'label' => esc_html__('Max Width', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1000,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-hero-content p' => 'max-width: {{SIZE}}{{UNIT}};',
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .hero-content p' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Button Style
         $this->start_controls_section(
-            'button_style_section',
+            'banner_button_style',
             [
-                'label' => esc_html__('Button', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Button Style', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'button_text_color',
+            [
+                'label'     => esc_html__('Text Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .hero-content .theme-btn .theme-text, {{WRAPPER}} .hero-content .theme-btn .theme-text2' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'button_bg_shape_color',
+            [
+                'label'     => esc_html__('Shape Fill Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .hero-content .theme-btn .theme-bg path' => 'fill: {{VALUE}};',
+                ],
             ]
         );
 
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name' => 'button_typography',
-                'selector' => '{{WRAPPER}} .theme-btn',
-            ]
-        );
-
-        $this->start_controls_tabs('button_tabs');
-
-        $this->start_controls_tab(
-            'button_normal',
-            [
-                'label' => esc_html__('Normal', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'button_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'button_bg_color',
-            [
-                'label' => esc_html__('Background Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn' => 'background-color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'button_border',
-                'selector' => '{{WRAPPER}} .theme-btn',
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->start_controls_tab(
-            'button_hover',
-            [
-                'label' => esc_html__('Hover', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'button_hover_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn:hover' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'button_hover_bg_color',
-            [
-                'label' => esc_html__('Background Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn:hover' => 'background-color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'button_hover_border',
-                'selector' => '{{WRAPPER}} .theme-btn:hover',
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
-
-        $this->add_responsive_control(
-            'button_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'button_margin',
-            [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'button_border_radius',
-            [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'button_icon_heading',
-            [
-                'label' => esc_html__('Button Icon', 'ftelements'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
+                'name'     => 'button_typography',
+                'selector' => '{{WRAPPER}} .hero-content .theme-btn .theme-text, {{WRAPPER}} .hero-content .theme-btn .theme-text2',
             ]
         );
 
         $this->add_responsive_control(
             'button_icon_size',
             [
-                'label' => esc_html__('Icon Size', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em', 'rem'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn i' => 'font-size: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .theme-btn svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'button_icon_color',
-            [
-                'label' => esc_html__('Icon Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn i' => 'color: {{VALUE}};',
-                    '{{WRAPPER}} .theme-btn svg' => 'fill: {{VALUE}};',
+                'label'      => esc_html__('Arrow Icon Size', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .hero-content .theme-btn .theme-text img, {{WRAPPER}} .hero-content .theme-btn .theme-text2 img' => 'width: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'button_icon_spacing',
+            'button_wrapper_margin',
             [
-                'label' => esc_html__('Icon Spacing', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 50,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .theme-btn i, {{WRAPPER}} .theme-btn svg' => 'margin-left: {{SIZE}}{{UNIT}};',
+                'label'      => esc_html__('Button Wrapper Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .hero-content .hero-button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Image Style
         $this->start_controls_section(
-            'image_style_section',
+            'banner_video_style',
             [
-                'label' => esc_html__('Hero Image Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Video Style', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
-        $this->add_responsive_control(
-            'image_width',
+        $this->add_control(
+            'video_button_color',
             [
-                'label' => esc_html__('Width', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1200,
-                    ],
-                    '%' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                ],
+                'label'     => esc_html__('Video Button Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .hero-image img' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
+                    '{{WRAPPER}} .hero-content .button-text .video-btn' => 'color: {{VALUE}};',
                 ],
             ]
         );
 
-        $this->add_responsive_control(
-            'image_margin',
+        $this->add_control(
+            'video_text_color',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
+                'label'     => esc_html__('Video Text Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .hero-image' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'image_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .hero-image' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .hero-content .button-text .d-line' => 'color: {{VALUE}};',
                 ],
             ]
         );
 
         $this->add_group_control(
-            Group_Control_Border::get_type(),
+            Group_Control_Typography::get_type(),
             [
-                'name' => 'image_border',
-                'selector' => '{{WRAPPER}} .hero-image img',
+                'name'     => 'video_text_typography',
+                'selector' => '{{WRAPPER}} .hero-content .button-text .d-line',
             ]
         );
 
         $this->add_responsive_control(
-            'image_border_radius',
+            'video_icon_size',
             [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', 'em', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .hero-image img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Video Icon Size', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'selectors'  => [
+                    '{{WRAPPER}} .hero-content .button-text .video-btn i' => 'font-size: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'banner_images_style',
+            [
+                'label' => esc_html__('Hero Images Style', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'hero_main_image_width',
+            [
+                'label'      => esc_html__('Main Image Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .hero-image img' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'hero_secondary_image_width',
+            [
+                'label'      => esc_html__('Secondary Image Width', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .hero-image-2 img' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'shape_images_opacity',
+            [
+                'label'      => esc_html__('Shape Opacity', 'ftelements'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['%'],
+                'selectors'  => [
+                    '{{WRAPPER}} .parasuit-shape img, {{WRAPPER}} .left-shape img, {{WRAPPER}} .book-shape img, {{WRAPPER}} .pencil-shape img, {{WRAPPER}} .bee-shape img' => 'opacity: calc({{SIZE}} / 100);',
                 ],
             ]
         );
@@ -950,26 +544,8 @@ class FT_Banner_4_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Css_Filter::get_type(),
             [
-                'name' => 'image_css_filters',
-                'selector' => '{{WRAPPER}} .hero-image img',
-            ]
-        );
-
-        $this->add_control(
-            'image_opacity',
-            [
-                'label' => esc_html__('Opacity', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => [
-                        'max' => 1,
-                        'min' => 0.1,
-                        'step' => 0.01,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .hero-image img' => 'opacity: {{SIZE}};',
-                ],
+                'name'     => 'hero_images_css_filters',
+                'selector' => '{{WRAPPER}} .hero-image img, {{WRAPPER}} .hero-image-2 img, {{WRAPPER}} .parasuit-shape img, {{WRAPPER}} .left-shape img, {{WRAPPER}} .book-shape img, {{WRAPPER}} .pencil-shape img, {{WRAPPER}} .bee-shape img',
             ]
         );
 
@@ -988,113 +564,93 @@ class FT_Banner_4_Widget extends \Elementor\Widget_Base
     {
 
         $settings = $this->get_settings_for_display();
+        $allowed_title_tags = [
+            'br'   => [],
+            'span' => [],
+        ];
 
-        $bg_image = !empty($settings['bg_image']['url']) ? $settings['bg_image']['url'] : '';
+        $button_link_url = !empty($settings['button_link']['url']) ? $settings['button_link']['url'] : '#';
+        $button_target = !empty($settings['button_link']['is_external']) ? ' target="_blank"' : '';
+        $button_nofollow = !empty($settings['button_link']['nofollow']) ? ' rel="nofollow"' : '';
+
+        $video_link_url = !empty($settings['video_link']['url']) ? $settings['video_link']['url'] : '#';
+
+        $parasuit_image = !empty($settings['parasuit_image']['url']) ? $settings['parasuit_image']['url'] : Utils::get_placeholder_image_src();
+        $left_shape_image = !empty($settings['left_shape_image']['url']) ? $settings['left_shape_image']['url'] : Utils::get_placeholder_image_src();
+        $book_shape_image = !empty($settings['book_shape_image']['url']) ? $settings['book_shape_image']['url'] : Utils::get_placeholder_image_src();
+        $pencil_shape_image = !empty($settings['pencil_shape_image']['url']) ? $settings['pencil_shape_image']['url'] : Utils::get_placeholder_image_src();
+        $bee_shape_image = !empty($settings['bee_shape_image']['url']) ? $settings['bee_shape_image']['url'] : Utils::get_placeholder_image_src();
+        $arrow_icon_image = !empty($settings['arrow_icon_image']['url']) ? $settings['arrow_icon_image']['url'] : Utils::get_placeholder_image_src();
+        $hero_main_image = !empty($settings['hero_main_image']['url']) ? $settings['hero_main_image']['url'] : Utils::get_placeholder_image_src();
+        $hero_secondary_image = !empty($settings['hero_secondary_image']['url']) ? $settings['hero_secondary_image']['url'] : Utils::get_placeholder_image_src();
+
         ?>
 
-        <section class="grt-hero-section-4 grt-hero-4 bg-cover" style="background-image: url('<?php echo esc_url($bg_image); ?>');">
+
+
+        <section class="hero-section hero-4 fix">
+            <div class="parasuit-shape float-bob-y">
+                <img src="<?php echo esc_url($parasuit_image); ?>" alt="shape-img">
+            </div>
+            <div class="left-shape">
+                <img src="<?php echo esc_url($left_shape_image); ?>" alt="shape-img">
+            </div>
+            <div class="book-shape float-bob-x">
+                <img src="<?php echo esc_url($book_shape_image); ?>" alt="shape-img">
+            </div>
+            <div class="pencil-shape">
+                <img src="<?php echo esc_url($pencil_shape_image); ?>" alt="shape-img">
+            </div>
+            <div class="bee-shape float-bob-y">
+                <img src="<?php echo esc_url($bee_shape_image); ?>" alt="shape-img">
+            </div>
             <div class="container">
-                <div class="row g-4 align-items-center">
-                    <div class="col-lg-6">
-                        <div class="grt-hero-content">
-                            <?php if (!empty($settings['subtitle'])): ?>
-                                <span class="grt-hero-sub split-title">
-                                    <?php \Elementor\Icons_Manager::render_icon($settings['subtitle_icon'], [ 'aria-hidden' => 'true' ]); ?>
-                                    <?php echo esc_html($settings['subtitle']); ?>
-                                </span>
-                            <?php endif; ?>
-
-                            <?php if (!empty($settings['title'])): ?>
-                                <h1 class="split-title">
-                                    <?php echo wp_kses_post($settings['title']); ?>
-                                </h1>
-                            <?php endif; ?>
-
-                            <?php if (!empty($settings['description'])): ?>
-                                <p class="wow fadeInUp" data-wow-delay=".3s">
-                                    <?php echo wp_kses_post($settings['description']); ?>
-                                </p>
-                            <?php endif; ?>
-
-                            <?php if (!empty($settings['btn_text'])): ?>
-                                <a href="<?php echo esc_url($settings['btn_link']['url']); ?>" 
-                                   class="theme-btn wow fadeInUp" 
-                                   data-wow-delay=".5s"
-                                   <?php echo $settings['btn_link']['is_external'] ? 'target="_blank"' : ''; ?>
-                                   <?php echo $settings['btn_link']['nofollow'] ? 'rel="nofollow"' : ''; ?>>
-                                   <?php echo esc_html($settings['btn_text']); ?>
-                                   <?php \Elementor\Icons_Manager::render_icon($settings['btn_icon'], [ 'aria-hidden' => 'true' ]); ?>
+                <div class="row g-4 align-items-center justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="hero-content">
+                            <span class="hero-sub wow fadeInUp"><?php echo esc_html($settings['hero_subtitle']); ?></span>
+                            <h1 class="wow fadeInUp" data-wow-delay=".3s">
+                                <?php echo wp_kses($settings['hero_title'], $allowed_title_tags); ?>
+                            </h1>
+                            <p class="wow fadeInUp" data-wow-delay=".5s"><?php echo wp_kses($settings['hero_description'], $allowed_title_tags); ?></p>
+                            <div class="hero-button wow fadeInUp" data-wow-delay=".7s">
+                                <a href="<?php echo esc_url($button_link_url); ?>" class="theme-btn"<?php echo $button_target . $button_nofollow; ?>>
+                                    <span class="theme-bg">
+                                        <svg width="170" height="59" viewBox="0 0 170 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M0 20.0865C0 11.6149 6.60344 4.61156 15.0604 4.11409L85 0L154.94 4.11409C163.397 4.61156 170 11.6149 170 20.0865V39.7352C170 48.2794 163.287 55.3159 154.752 55.7175L85 59L15.2479 55.7175C6.71321 55.3159 0 48.2794 0 39.7352V20.0865Z" fill="#F39F5F"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="theme-text"><?php echo esc_html($settings['button_text']); ?> <img src="<?php echo esc_url($arrow_icon_image); ?>" alt="icon"></span>
+                                    <span class="theme-text2"><?php echo esc_html($settings['button_text']); ?> <img src="<?php echo esc_url($arrow_icon_image); ?>" alt="icon"></span>
                                 </a>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                    <?php if (!empty($settings['hero_image']['url'])): ?>
-                        <div class="col-lg-6 wow fadeInUp" data-wow-delay=".3s">
-                            <div class="hero-image">
-                                <img src="<?php echo esc_url($settings['hero_image']['url']); ?>" alt="<?php echo esc_attr__('img', 'ftelements'); ?>">
+                                <span class="button-text">
+                                    <a href="<?php echo esc_url($video_link_url); ?>" class="video-btn video-popup">
+                                        <i class="fa-solid fa-play"></i>
+                                    </a>
+                                    <span class="ms-4 d-line"><?php echo esc_html($settings['video_text']); ?></span>
+                                </span>
                             </div>
                         </div>
-                    <?php endif; ?>
+                    </div>
                 </div>
+            </div>
+            <div class="hero-image float-bob-y">
+                <img src="<?php echo esc_url($hero_main_image); ?>" alt="img">
+            </div>
+            <div class="hero-image-2 float-bob-x">
+                <img src="<?php echo esc_url($hero_secondary_image); ?>" alt="img">
             </div>
         </section>
 
-        <?php
+
+
+
+
+
+
+
+
+
+<?php
     }
-
-    protected function _content_template()
-    {
-        ?>
-        <#
-        var bg_image = settings.bg_image.url ? settings.bg_image.url : '';
-        #>
-        <section class="grt-hero-section-4 grt-hero-4 bg-cover" style="background-image: url('{{{ bg_image }}}');">
-            <div class="container">
-                <div class="row g-4 align-items-center">
-                    <div class="col-lg-6">
-                        <div class="grt-hero-content">
-                            <# if ( settings.subtitle ) { #>
-                                <span class="grt-hero-sub split-title">
-                                    <# if ( settings.subtitle_icon.value ) { #>
-                                        {{{ elementor.helpers.renderIcon( view, settings.subtitle_icon, { 'aria-hidden': true }, 'i' , 'object' ) }}}
-                                    <# } #>
-                                    {{{ settings.subtitle }}}
-                                </span>
-                            <# } #>
-
-                            <# if ( settings.title ) { #>
-                                <h1 class="split-title">
-                                    {{{ settings.title }}}
-                                </h1>
-                            <# } #>
-
-                            <# if ( settings.description ) { #>
-                                <p class="wow fadeInUp" data-wow-delay=".3s">
-                                    {{{ settings.description }}}
-                                </p>
-                            <# } #>
-
-                            <# if ( settings.btn_text ) { #>
-                                <a href="{{{ settings.btn_link.url }}}" class="theme-btn wow fadeInUp" data-wow-delay=".5s">
-                                   {{{ settings.btn_text }}}
-                                   <# if ( settings.btn_icon.value ) { #>
-                                       {{{ elementor.helpers.renderIcon( view, settings.btn_icon, { 'aria-hidden': true }, 'i' , 'object' ) }}}
-                                   <# } #>
-                                </a>
-                            <# } #>
-                        </div>
-                    </div>
-                    <# if ( settings.hero_image.url ) { #>
-                        <div class="col-lg-6 wow fadeInUp" data-wow-delay=".3s">
-                            <div class="hero-image">
-                                <img src="{{{ settings.hero_image.url }}}" alt="img">
-                            </div>
-                        </div>
-                    <# } #>
-                </div>
-            </div>
-        </section>
-        <?php
-    }
-
 } ?>

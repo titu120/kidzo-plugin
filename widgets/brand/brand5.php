@@ -3,29 +3,26 @@
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Repeater;
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Border;
-use Elementor\Core\Schemes\Typography;
 use Elementor\Utils;
 
 defined('ABSPATH') || die();
 
-class FT_Brand_5_Widget extends \Elementor\Widget_Base
+class FT_Brand5_Widget extends \Elementor\Widget_Base
 {
 
     /*
-     *
-     * @since 1.0.0
-     * @access public
-     *
-     * @return string Widget name.
-     */
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string Widget name.
+	 */
     public function get_name()
     {
-        return 'ft-brand-5';
+        return 'ft-brand5';
     }
 
     /**
@@ -84,29 +81,29 @@ class FT_Brand_5_Widget extends \Elementor\Widget_Base
     protected function register_controls()
     {
         $this->start_controls_section(
-            'content_section',
+            'section_content',
             [
                 'label' => esc_html__('Content', 'ftelements'),
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
 
-        $repeater = new Repeater();
-
-        $repeater->add_control(
-            'list_title',
+        $this->add_control(
+            'section_title',
             [
-                'label' => esc_html__('Title', 'ftelements'),
+                'label' => esc_html__('Section Title', 'ftelements'),
                 'type' => Controls_Manager::TEXT,
+                'default' => esc_html__('Our other\'s brand', 'ftelements'),
                 'label_block' => true,
-                'default' => esc_html__('Together Forward', 'ftelements'),
             ]
         );
 
+        $repeater = new Repeater();
+
         $repeater->add_control(
-            'list_image',
+            'brand_image',
             [
-                'label' => esc_html__('Image', 'ftelements'),
+                'label' => esc_html__('Brand Image', 'ftelements'),
                 'type' => Controls_Manager::MEDIA,
                 'default' => [
                     'url' => Utils::get_placeholder_image_src(),
@@ -114,35 +111,135 @@ class FT_Brand_5_Widget extends \Elementor\Widget_Base
             ]
         );
 
-        $this->add_control(
-            'items',
+        $repeater->add_control(
+            'brand_hover_image',
             [
-                'label' => esc_html__('Marquee Items', 'ftelements'),
+                'label' => esc_html__('Brand Hover Image', 'ftelements'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => Utils::get_placeholder_image_src(),
+                ],
+            ]
+        );
+
+        $repeater->add_control(
+            'brand_alt_text',
+            [
+                'label' => esc_html__('Alt Text', 'ftelements'),
+                'type' => Controls_Manager::TEXT,
+                'default' => esc_html__('Brand logo', 'ftelements'),
+                'label_block' => true,
+            ]
+        );
+
+        $placeholder = Utils::get_placeholder_image_src();
+        $default_items = [];
+        for ($i = 1; $i <= 7; $i++) {
+            $default_items[] = [
+                'brand_image' => ['url' => $placeholder],
+                'brand_hover_image' => ['url' => $placeholder],
+                'brand_alt_text' => sprintf(
+                    /* translators: %d: brand item number */
+                    esc_html__('Brand %d', 'ftelements'),
+                    $i
+                ),
+            ];
+        }
+
+        $this->add_control(
+            'brand_list',
+            [
+                'label' => esc_html__('Brand Items', 'ftelements'),
                 'type' => Controls_Manager::REPEATER,
                 'fields' => $repeater->get_controls(),
-                'title_field' => '{{{ list_title }}}',
-                'default' => [
-                    [
-                        'list_title' => esc_html__('Together Forward', 'ftelements'),
-                    ],
-                    [
-                        'list_title' => esc_html__('Innovate Daily', 'ftelements'),
-                    ],
-                    [
-                        'list_title' => esc_html__('Success Driven', 'ftelements'),
-                    ],
-                ],
+                'title_field' => '{{{ brand_alt_text }}}',
+                'default' => $default_items,
             ]
         );
 
         $this->end_controls_section();
 
-        // Style Section
         $this->start_controls_section(
-            'section_style',
+            'section_style_section',
             [
                 'label' => esc_html__('Section', 'ftelements'),
                 'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'section_align',
+            [
+                'label' => esc_html__('Content Alignment', 'ftelements'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => esc_html__('Left', 'ftelements'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'ftelements'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__('Right', 'ftelements'),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-section .container' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'section_width',
+            [
+                'label' => esc_html__('Width', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vw'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 2000],
+                    '%' => ['min' => 0, 'max' => 100],
+                    'vw' => ['min' => 0, 'max' => 100],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-section' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'section_max_width',
+            [
+                'label' => esc_html__('Max Width', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vw'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 2000],
+                    '%' => ['min' => 0, 'max' => 100],
+                    'vw' => ['min' => 0, 'max' => 100],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-section' => 'max-width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'section_min_height',
+            [
+                'label' => esc_html__('Min Height', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'vh', '%'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 1200],
+                    'vh' => ['min' => 0, 'max' => 100],
+                    '%' => ['min' => 0, 'max' => 100],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-section' => 'min-height: {{SIZE}}{{UNIT}};',
+                ],
             ]
         );
 
@@ -151,9 +248,9 @@ class FT_Brand_5_Widget extends \Elementor\Widget_Base
             [
                 'label' => esc_html__('Padding', 'ftelements'),
                 'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
+                'size_units' => ['px', '%', 'em', 'rem'],
                 'selectors' => [
-                    '{{WRAPPER}} .marquee-section' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .brand-section' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -163,30 +260,27 @@ class FT_Brand_5_Widget extends \Elementor\Widget_Base
             [
                 'label' => esc_html__('Margin', 'ftelements'),
                 'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
+                'size_units' => ['px', '%', 'em', 'rem'],
                 'selectors' => [
-                    '{{WRAPPER}} .marquee-section' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .brand-section' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
+        $this->add_control(
+            'section_overflow',
             [
-                'name' => 'section_border',
-                'label' => esc_html__('Border', 'ftelements'),
-                'selector' => '{{WRAPPER}} .marquee-section',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'section_border_radius',
-            [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
+                'label' => esc_html__('Overflow', 'ftelements'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'inherit' => esc_html__('Default', 'ftelements'),
+                    'visible' => esc_html__('Visible', 'ftelements'),
+                    'hidden' => esc_html__('Hidden', 'ftelements'),
+                    'auto' => esc_html__('Auto', 'ftelements'),
+                    'scroll' => esc_html__('Scroll', 'ftelements'),
+                ],
                 'selectors' => [
-                    '{{WRAPPER}} .marquee-section' => 'border-top-left-radius: {{TOP}}{{UNIT}}; border-top-right-radius: {{RIGHT}}{{UNIT}}; border-bottom-right-radius: {{BOTTOM}}{{UNIT}}; border-bottom-left-radius: {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .brand-section' => 'overflow: {{VALUE}};',
                 ],
             ]
         );
@@ -195,49 +289,352 @@ class FT_Brand_5_Widget extends \Elementor\Widget_Base
             Group_Control_Background::get_type(),
             [
                 'name' => 'section_background',
-                'label' => esc_html__('Background', 'ftelements'),
                 'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .marquee-section',
+                'selector' => '{{WRAPPER}} .brand-section',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'section_border',
+                'selector' => '{{WRAPPER}} .brand-section',
             ]
         );
 
         $this->add_responsive_control(
-            'animation_speed',
+            'section_border_radius',
             [
-                'label' => esc_html__('Animation Speed (s)', 'ftelements'),
+                'label' => esc_html__('Border Radius', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-section' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'section_style_container',
+            [
+                'label' => esc_html__('Container', 'ftelements'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'container_width',
+            [
+                'label' => esc_html__('Width', 'ftelements'),
                 'type' => Controls_Manager::SLIDER,
-                'size_units' => ['s'],
+                'size_units' => ['px', '%'],
                 'range' => [
-                    'px' => [
-                        'min' => 1,
-                        'max' => 100,
+                    'px' => ['min' => 0, 'max' => 2000],
+                    '%' => ['min' => 0, 'max' => 100],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-section .container' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'container_max_width',
+            [
+                'label' => esc_html__('Max Width', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vw'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 2000],
+                    '%' => ['min' => 0, 'max' => 100],
+                    'vw' => ['min' => 0, 'max' => 100],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-section .container' => 'max-width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'container_padding',
+            [
+                'label' => esc_html__('Padding', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-section .container' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'container_margin',
+            [
+                'label' => esc_html__('Margin', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-section .container' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name' => 'container_background',
+                'types' => ['classic', 'gradient'],
+                'selector' => '{{WRAPPER}} .brand-section .container',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'container_border',
+                'selector' => '{{WRAPPER}} .brand-section .container',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'container_border_radius',
+            [
+                'label' => esc_html__('Border Radius', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-section .container' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'section_style_title',
+            [
+                'label' => esc_html__('Title', 'ftelements'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'title_align',
+            [
+                'label' => esc_html__('Alignment', 'ftelements'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => esc_html__('Left', 'ftelements'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'ftelements'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__('Right', 'ftelements'),
+                        'icon' => 'eicon-text-align-right',
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .marquee-group' => 'animation-duration: {{SIZE}}s;',
+                    '{{WRAPPER}} .brand-title' => 'text-align: {{VALUE}};',
                 ],
             ]
         );
 
-        $this->add_control(
-            'animation_direction',
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
             [
-                'label' => esc_html__('Animation Direction', 'ftelements'),
-                'type' => Controls_Manager::SELECT,
-                'options' => [
-                    'normal' => esc_html__('Normal', 'ftelements'),
-                    'reverse' => esc_html__('Reverse', 'ftelements'),
+                'name' => 'title_typography',
+                'selector' => '{{WRAPPER}} .brand-title',
+            ]
+        );
+
+        $this->add_control(
+            'title_color',
+            [
+                'label' => esc_html__('Text Color', 'ftelements'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .brand-title' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name' => 'title_background',
+                'types' => ['classic', 'gradient'],
+                'selector' => '{{WRAPPER}} .brand-title',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'title_padding',
+            [
+                'label' => esc_html__('Padding', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'title_margin',
+            [
+                'label' => esc_html__('Margin', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'title_border',
+                'selector' => '{{WRAPPER}} .brand-title',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'title_border_radius',
+            [
+                'label' => esc_html__('Border Radius', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-title' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'section_style_slider',
+            [
+                'label' => esc_html__('Slider', 'ftelements'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'slider_margin',
+            [
+                'label' => esc_html__('Margin', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-slider' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'slider_padding',
+            [
+                'label' => esc_html__('Padding', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-slider' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'slider_min_height',
+            [
+                'label' => esc_html__('Min Height', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'vh', '%'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 800],
+                    'vh' => ['min' => 0, 'max' => 100],
+                    '%' => ['min' => 0, 'max' => 100],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .marquee-group' => 'animation-direction: {{VALUE}};',
+                    '{{WRAPPER}} .brand-slider' => 'min-height: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
 
-        $this->add_control(
-            'item_alignment',
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
             [
-                'label' => esc_html__('Vertical Alignment', 'ftelements'),
+                'name' => 'slider_background',
+                'types' => ['classic', 'gradient'],
+                'selector' => '{{WRAPPER}} .brand-slider',
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'slider_border',
+                'selector' => '{{WRAPPER}} .brand-slider',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'slider_border_radius',
+            [
+                'label' => esc_html__('Border Radius', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-slider' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'section_style_slide',
+            [
+                'label' => esc_html__('Slide', 'ftelements'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'slide_padding',
+            [
+                'label' => esc_html__('Padding', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-slider .swiper-slide' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'slide_margin',
+            [
+                'label' => esc_html__('Margin', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-slider .swiper-slide' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'slide_vertical_align',
+            [
+                'label' => esc_html__('Vertical Align', 'ftelements'),
                 'type' => Controls_Manager::CHOOSE,
                 'options' => [
                     'flex-start' => [
@@ -254,75 +651,161 @@ class FT_Brand_5_Widget extends \Elementor\Widget_Base
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .marquee-section .marquee-group .text' => 'display: inline-flex; align-items: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Marquee Text Style
-        $this->start_controls_section(
-            'text_style',
-            [
-                'label' => esc_html__('Text', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'text_typography',
-                'selector' => '{{WRAPPER}} .marquee-section .marquee-group .text',
-            ]
-        );
-
-        $this->add_control(
-            'text_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .marquee-section .marquee-group .text' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'text_hover_color',
-            [
-                'label' => esc_html__('Hover Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .marquee-section .marquee-group .text:hover' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .brand-slider .swiper-slide' => 'display: flex; align-items: {{VALUE}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'text_spacing',
+            'slide_horizontal_align',
             [
-                'label' => esc_html__('Spacing', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 200,
+                'label' => esc_html__('Horizontal Align', 'ftelements'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'flex-start' => [
+                        'title' => esc_html__('Left', 'ftelements'),
+                        'icon' => 'eicon-h-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'ftelements'),
+                        'icon' => 'eicon-h-align-center',
+                    ],
+                    'flex-end' => [
+                        'title' => esc_html__('Right', 'ftelements'),
+                        'icon' => 'eicon-h-align-right',
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .marquee-section .marquee-group .text' => 'margin-right: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .brand-slider .swiper-slide' => 'justify-content: {{VALUE}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Image Style
         $this->start_controls_section(
-            'image_style',
+            'section_style_item',
+            [
+                'label' => esc_html__('Brand Item', 'ftelements'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'item_width',
+            [
+                'label' => esc_html__('Width', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 800],
+                    '%' => ['min' => 0, 'max' => 100],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-box-1' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'item_min_height',
+            [
+                'label' => esc_html__('Min Height', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'vh', '%'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 600],
+                    'vh' => ['min' => 0, 'max' => 100],
+                    '%' => ['min' => 0, 'max' => 100],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-box-1' => 'min-height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'item_padding',
+            [
+                'label' => esc_html__('Padding', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-box-1' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'item_margin',
+            [
+                'label' => esc_html__('Margin', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-box-1' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'item_align',
+            [
+                'label' => esc_html__('Content Align', 'ftelements'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'flex-start' => [
+                        'title' => esc_html__('Start', 'ftelements'),
+                        'icon' => 'eicon-justify-start-h',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'ftelements'),
+                        'icon' => 'eicon-justify-center-h',
+                    ],
+                    'flex-end' => [
+                        'title' => esc_html__('End', 'ftelements'),
+                        'icon' => 'eicon-justify-end-h',
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-box-1' => 'display: flex; flex-wrap: wrap; justify-content: {{VALUE}}; align-items: center;',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'item_border',
+                'selector' => '{{WRAPPER}} .brand-box-1',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'item_border_radius',
+            [
+                'label' => esc_html__('Border Radius', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-box-1' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name' => 'item_background',
+                'types' => ['classic', 'gradient'],
+                'selector' => '{{WRAPPER}} .brand-box-1',
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'section_style_image',
             [
                 'label' => esc_html__('Image', 'ftelements'),
                 'tab' => Controls_Manager::TAB_STYLE,
@@ -334,15 +817,29 @@ class FT_Brand_5_Widget extends \Elementor\Widget_Base
             [
                 'label' => esc_html__('Width', 'ftelements'),
                 'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%', 'em'],
+                'size_units' => ['px', '%'],
                 'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 200,
-                    ],
+                    'px' => ['min' => 0, 'max' => 1000],
+                    '%' => ['min' => 0, 'max' => 100],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .marquee-section .marquee-group .text img' => 'width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .brand-img-1 img' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'image_max_width',
+            [
+                'label' => esc_html__('Max Width', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 1000],
+                    '%' => ['min' => 0, 'max' => 100],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-img-1 img' => 'max-width: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -352,28 +849,59 @@ class FT_Brand_5_Widget extends \Elementor\Widget_Base
             [
                 'label' => esc_html__('Height', 'ftelements'),
                 'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%', 'em'],
+                'size_units' => ['px', '%'],
                 'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 200,
-                    ],
+                    'px' => ['min' => 0, 'max' => 1000],
+                    '%' => ['min' => 0, 'max' => 100],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .marquee-section .marquee-group .text img' => 'height: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .brand-img-1 img' => 'height: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
 
-        $this->add_responsive_control(
-            'image_margin',
+        $this->add_control(
+            'image_object_fit',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .marquee-section .marquee-group .text img' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label' => esc_html__('Object Fit', 'ftelements'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'inherit' => esc_html__('Default', 'ftelements'),
+                    'cover' => esc_html__('Cover', 'ftelements'),
+                    'contain' => esc_html__('Contain', 'ftelements'),
+                    'fill' => esc_html__('Fill', 'ftelements'),
+                    'none' => esc_html__('None', 'ftelements'),
                 ],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-img-1 img' => 'object-fit: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'image_object_position',
+            [
+                'label' => esc_html__('Object Position', 'ftelements'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'inherit' => esc_html__('Default', 'ftelements'),
+                    'center center' => esc_html__('Center Center', 'ftelements'),
+                    'center top' => esc_html__('Center Top', 'ftelements'),
+                    'center bottom' => esc_html__('Center Bottom', 'ftelements'),
+                    'left center' => esc_html__('Left Center', 'ftelements'),
+                    'right center' => esc_html__('Right Center', 'ftelements'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-img-1 img' => 'object-position: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'image_border',
+                'selector' => '{{WRAPPER}} .brand-img-1 img',
             ]
         );
 
@@ -382,9 +910,32 @@ class FT_Brand_5_Widget extends \Elementor\Widget_Base
             [
                 'label' => esc_html__('Border Radius', 'ftelements'),
                 'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
+                'size_units' => ['px', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .marquee-section .marquee-group .text img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .brand-img-1 img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->start_controls_tabs('image_effect_tabs');
+
+        $this->start_controls_tab(
+            'image_effect_tab_normal',
+            [
+                'label' => esc_html__('Normal', 'ftelements'),
+            ]
+        );
+
+        $this->add_control(
+            'image_opacity',
+            [
+                'label' => esc_html__('Opacity', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 1, 'step' => 0.01],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-img-1 img' => 'opacity: {{SIZE}};',
                 ],
             ]
         );
@@ -393,10 +944,43 @@ class FT_Brand_5_Widget extends \Elementor\Widget_Base
             Group_Control_Css_Filter::get_type(),
             [
                 'name' => 'image_css_filters',
-                'selector' => '{{WRAPPER}} .marquee-section .marquee-group .text img',
+                'selector' => '{{WRAPPER}} .brand-img-1 img',
             ]
         );
 
+        $this->end_controls_tab();
+
+        $this->start_controls_tab(
+            'image_effect_tab_hover',
+            [
+                'label' => esc_html__('Hover', 'ftelements'),
+            ]
+        );
+
+        $this->add_control(
+            'image_hover_opacity',
+            [
+                'label' => esc_html__('Opacity', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 1, 'step' => 0.01],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .brand-box-1:hover .brand-img-1 img' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Css_Filter::get_type(),
+            [
+                'name' => 'image_hover_css_filters',
+                'selector' => '{{WRAPPER}} .brand-box-1:hover .brand-img-1 img',
+            ]
+        );
+
+        $this->end_controls_tab();
+        $this->end_controls_tabs();
         $this->end_controls_section();
     }
 
@@ -412,25 +996,109 @@ class FT_Brand_5_Widget extends \Elementor\Widget_Base
     {
 
         $settings = $this->get_settings_for_display();
+        $title = ! empty($settings['section_title']) ? $settings['section_title'] : '';
+        $brands = ! empty($settings['brand_list']) ? $settings['brand_list'] : [];
+        $widget_id = 'ft-brand5-' . $this->get_id();
 
         ?>
-        <div class="marquee-section theme-bg">
-            <div class="marquee">
-                <?php for ($i = 0; $i < 4; $i++) { ?>
-                    <div class="marquee-group">
-                        <?php foreach ($settings['items'] as $item) { ?>
-                            <div class="text style-font">
-                                <?php if (!empty($item['list_image']['url'])) { ?>
-                                    <img src="<?php echo esc_url($item['list_image']['url']); ?>"
-                                        alt="<?php echo esc_attr($item['list_title']); ?>">
-                                <?php } ?>
-                                <?php echo esc_html($item['list_title']); ?>
+
+
+
+
+        <div id="<?php echo esc_attr($widget_id); ?>" class="brand-section fix section-padding section-padding">
+            <div class="container">
+                <?php if (! empty($title)) : ?>
+                    <p class="brand-title text-center wow fadeInUp" data-wow-delay=".3s"><?php echo esc_html($title); ?></p>
+                <?php endif; ?>
+                <div class="swiper brand-slider wow fadeInUp" data-wow-delay=".5s">
+                    <div class="swiper-wrapper">
+                        <?php foreach ($brands as $brand) :
+                            $brand_image = ! empty($brand['brand_image']['url']) ? $brand['brand_image']['url'] : Utils::get_placeholder_image_src();
+                            $brand_hover_image = ! empty($brand['brand_hover_image']['url']) ? $brand['brand_hover_image']['url'] : $brand_image;
+                            $brand_alt_text = ! empty($brand['brand_alt_text']) ? $brand['brand_alt_text'] : esc_html__('Brand logo', 'ftelements');
+                            ?>
+                            <div class="swiper-slide">
+                                <div class="brand-box-1">
+                                    <span class="brand-img-1">
+                                        <img src="<?php echo esc_url($brand_image); ?>" alt="<?php echo esc_attr($brand_alt_text); ?>">
+                                    </span>
+                                    <span class="brand-img-1">
+                                        <img src="<?php echo esc_url($brand_hover_image); ?>" alt="<?php echo esc_attr($brand_alt_text); ?>">
+                                    </span>
+                                </div>
                             </div>
-                        <?php } ?>
+                        <?php endforeach; ?>
                     </div>
-                <?php } ?>
+                </div>
             </div>
         </div>
-        <?php
+
+        <?php if (\Elementor\Plugin::$instance->editor->is_edit_mode()) : ?>
+            <script type="text/javascript">
+                (function ($) {
+                    "use strict";
+
+                    const widgetSelector = "#<?php echo esc_js($widget_id); ?>";
+
+                    var initBrandSlider = function ($scope) {
+                        if (typeof Swiper === "undefined") {
+                            return;
+                        }
+
+                        const $widget = $scope && $scope.length ? $scope.find(widgetSelector) : $(widgetSelector);
+                        if (!$widget.length) {
+                            return;
+                        }
+
+                        $widget.each(function () {
+                            const sliderEl = this.querySelector(".brand-slider");
+                            if (!sliderEl) {
+                                return;
+                            }
+
+                            if (sliderEl.swiper) {
+                                sliderEl.swiper.destroy(true, true);
+                            }
+
+                            new Swiper(sliderEl, {
+                                spaceBetween: 50,
+                                speed: 1300,
+                                loop: true,
+                                autoplay: {
+                                    delay: 2000,
+                                    disableOnInteraction: false
+                                },
+                                breakpoints: {
+                                    1399: { slidesPerView: 7 },
+                                    1199: { slidesPerView: 5.5 },
+                                    991: { slidesPerView: 4.5 },
+                                    767: { slidesPerView: 3.3 },
+                                    575: { slidesPerView: 2 },
+                                    0: { slidesPerView: 1 }
+                                }
+                            });
+                        });
+                    };
+
+                    $(window).on("elementor/frontend/init", function () {
+                        elementorFrontend.hooks.addAction("frontend/element_ready/ft-brand5.default", initBrandSlider);
+                    });
+
+                    $(function () {
+                        initBrandSlider($(document));
+                    });
+                })(jQuery);
+            </script>
+        <?php endif; ?>
+
+
+
+
+
+
+
+
+
+<?php
     }
 } ?>

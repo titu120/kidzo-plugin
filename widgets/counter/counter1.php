@@ -3,7 +3,6 @@
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Repeater;
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
@@ -13,19 +12,19 @@ use Elementor\Utils;
 
 defined('ABSPATH') || die();
 
-class FT_Counter_1_Widget extends \Elementor\Widget_Base
+class FT_Counter1_Widget extends \Elementor\Widget_Base
 {
 
     /*
-     *
-     * @since 1.0.0
-     * @access public
-     *
-     * @return string Widget name.
-     */
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string Widget name.
+	 */
     public function get_name()
     {
-        return 'ft-counter-1';
+        return 'ft-counter1';
     }
 
     /**
@@ -87,434 +86,247 @@ class FT_Counter_1_Widget extends \Elementor\Widget_Base
             'content_section',
             [
                 'label' => esc_html__('Content', 'ftelements'),
-                'tab' => Controls_Manager::TAB_CONTENT,
-            ]
-        );
-
-        $this->add_control(
-            'title',
-            [
-                'label' => esc_html__('Title', 'ftelements'),
-                'type' => Controls_Manager::TEXTAREA,
-                'default' => esc_html__('How organization works', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'shape_image',
-            [
-                'label' => esc_html__('Shape Image', 'ftelements'),
-                'type' => Controls_Manager::MEDIA,
-                'default' => [
-                    'url' => Utils::get_placeholder_image_src(),
-                ],
+                'tab'   => Controls_Manager::TAB_CONTENT,
             ]
         );
 
         $repeater = new Repeater();
 
         $repeater->add_control(
-            'counter_number',
+            'number',
             [
-                'label' => esc_html__('Number', 'ftelements'),
-                'type' => Controls_Manager::TEXT,
-                'default' => esc_html__('22', 'ftelements'),
+                'label'   => esc_html__('Number', 'ftelements'),
+                'type'    => Controls_Manager::NUMBER,
+                'default' => 100,
             ]
         );
 
         $repeater->add_control(
-            'counter_title',
+            'suffix',
             [
-                'label' => esc_html__('Title', 'ftelements'),
-                'type' => Controls_Manager::TEXT,
-                'default' => esc_html__('Programs initiated', 'ftelements'),
+                'label'       => esc_html__('Suffix', 'ftelements'),
+                'type'        => Controls_Manager::TEXT,
+                'default'     => '%',
+                'label_block' => true,
             ]
         );
 
-        $this->add_control(
-            'counters',
+        $repeater->add_control(
+            'title',
             [
-                'label' => esc_html__('Counters', 'ftelements'),
-                'type' => Controls_Manager::REPEATER,
-                'fields' => $repeater->get_controls(),
-                'default' => [
-                    [
-                        'counter_number' => '22',
-                        'counter_title' => 'Programs initiated',
-                    ],
-                    [
-                        'counter_number' => '53',
-                        'counter_title' => 'Children supported',
-                    ],
-                    [
-                        'counter_number' => '9',
-                        'counter_title' => 'Years in operation',
-                    ],
-                    [
-                        'counter_number' => '88',
-                        'counter_title' => 'Projects accomplished',
-                    ],
-                ],
-                'title_field' => '{{{ counter_title }}}',
+                'label'       => esc_html__('Title', 'ftelements'),
+                'type'        => Controls_Manager::TEXT,
+                'default'     => esc_html__('Smart classrooms', 'ftelements'),
+                'label_block' => true,
             ]
         );
 
-        $this->end_controls_section();
-
-        // Section Style
-        $this->start_controls_section(
-            'section_style',
+        $repeater->add_control(
+            'bg_color',
             [
-                'label' => esc_html__('Section Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label'   => esc_html__('Circle Background Color', 'ftelements'),
+                'type'    => Controls_Manager::COLOR,
+                'default' => '#FEF4DE',
             ]
         );
 
-        $this->add_responsive_control(
-            'section_padding',
+        $repeater->add_control(
+            'bg_shape_class',
             [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-counter-section-2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
+                'label'       => esc_html__('Shape Class', 'ftelements'),
+                'type'        => Controls_Manager::TEXT,
+                'default'     => '',
+                'description' => esc_html__('Optional class like: bg-2, bg-3, bg-4', 'ftelements'),
+                'label_block' => true,
             ]
         );
 
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
+        $repeater->add_control(
+            'is_active',
             [
-                'name' => 'section_background',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-counter-section-2',
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'section_border',
-                'label' => esc_html__('Border', 'ftelements'),
-                'selector' => '{{WRAPPER}} .grt-counter-section-2',
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Shape Image Style
-        $this->start_controls_section(
-            'shape_image_style',
-            [
-                'label' => esc_html__('Shape Image Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_control(
-            'show_shape',
-            [
-                'label' => esc_html__('Show Shape', 'ftelements'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Show', 'ftelements'),
-                'label_off' => esc_html__('Hide', 'ftelements'),
+                'label'        => esc_html__('Active Item', 'ftelements'),
+                'type'         => Controls_Manager::SWITCHER,
+                'label_on'     => esc_html__('Yes', 'ftelements'),
+                'label_off'    => esc_html__('No', 'ftelements'),
                 'return_value' => 'yes',
-                'default' => 'yes',
+                'default'      => '',
             ]
         );
 
-        $this->add_responsive_control(
-            'shape_width',
+        $repeater->add_control(
+            'wow_delay',
             [
-                'label' => esc_html__('Width', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1000,
+                'label'       => esc_html__('Animation Delay', 'ftelements'),
+                'type'        => Controls_Manager::TEXT,
+                'default'     => '.2s',
+                'description' => esc_html__('Example: .2s, .4s', 'ftelements'),
+                'label_block' => true,
+            ]
+        );
+
+        $this->add_control(
+            'counter_items',
+            [
+                'label'       => esc_html__('Counter Items', 'ftelements'),
+                'type'        => Controls_Manager::REPEATER,
+                'fields'      => $repeater->get_controls(),
+                'title_field' => '{{{ title }}}',
+                'default'     => [
+                    [
+                        'number'         => 100,
+                        'suffix'         => '%',
+                        'title'          => esc_html__('Smart classrooms', 'ftelements'),
+                        'bg_color'       => '#FEF4DE',
+                        'bg_shape_class' => '',
+                        'wow_delay'      => '.2s',
                     ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-counter-section-2 .line-1 img' => 'width: {{SIZE}}{{UNIT}};',
+                    [
+                        'number'         => 95,
+                        'suffix'         => '%',
+                        'title'          => esc_html__('Safe playground', 'ftelements'),
+                        'bg_color'       => '#C0EEFF',
+                        'bg_shape_class' => 'bg-2',
+                        'is_active'      => 'yes',
+                        'wow_delay'      => '.4s',
+                    ],
+                    [
+                        'number'         => 100,
+                        'suffix'         => '%',
+                        'title'          => esc_html__('child security', 'ftelements'),
+                        'bg_color'       => '#E6E8FC',
+                        'bg_shape_class' => 'bg-3',
+                        'wow_delay'      => '.6s',
+                    ],
+                    [
+                        'number'         => 99,
+                        'suffix'         => '%',
+                        'title'          => esc_html__('Clean environment', 'ftelements'),
+                        'bg_color'       => '#FEDFEF',
+                        'bg_shape_class' => 'bg-4',
+                        'wow_delay'      => '.8s',
+                    ],
                 ],
             ]
         );
 
         $this->add_control(
-            'shape_opacity',
+            'background_image',
             [
-                'label' => esc_html__('Opacity', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => [
-                        'max' => 1,
-                        'min' => 0.1,
-                        'step' => 0.1,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-counter-section-2 .line-1 img' => 'opacity: {{SIZE}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'shape_top',
-            [
-                'label' => esc_html__('Top Position', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range' => [
-                    'px' => [
-                        'min' => -500,
-                        'max' => 500,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-counter-section-2 .line-1' => 'top: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'shape_left',
-            [
-                'label' => esc_html__('Left Position', 'ftelements'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range' => [
-                    'px' => [
-                        'min' => -500,
-                        'max' => 500,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-counter-section-2 .line-1' => 'left: {{SIZE}}{{UNIT}}; right: auto; bottom: auto;',
+                'label'   => esc_html__('Background Image', 'ftelements'),
+                'type'    => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => Utils::get_placeholder_image_src(),
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Title Style
         $this->start_controls_section(
-            'title_style_section',
+            'counter_item_style_section',
             [
-                'label' => esc_html__('Main Title Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_control(
-            'title_color',
-            [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .grt-counter-wrapper-2 .titles' => 'color: {{VALUE}} !important;',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'title_typography',
-                'label' => esc_html__('Typography', 'ftelements'),
-                'selector' => '{{WRAPPER}} .grt-counter-wrapper-2 .titles',
+                'label' => esc_html__('Counter Item', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_responsive_control(
-            'title_alignment',
+            'counter_item_alignment',
             [
-                'label' => esc_html__('Alignment', 'ftelements'),
-                'type' => Controls_Manager::CHOOSE,
-                'options' => [
-                    'left' => [
+                'label'     => esc_html__('Content Alignment', 'ftelements'),
+                'type'      => Controls_Manager::CHOOSE,
+                'options'   => [
+                    'left'   => [
                         'title' => esc_html__('Left', 'ftelements'),
-                        'icon' => 'eicon-text-align-left',
+                        'icon'  => 'eicon-text-align-left',
                     ],
                     'center' => [
                         'title' => esc_html__('Center', 'ftelements'),
-                        'icon' => 'eicon-text-align-center',
+                        'icon'  => 'eicon-text-align-center',
                     ],
-                    'right' => [
+                    'right'  => [
                         'title' => esc_html__('Right', 'ftelements'),
-                        'icon' => 'eicon-text-align-right',
+                        'icon'  => 'eicon-text-align-right',
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .grt-counter-wrapper-2 .titles' => 'text-align: {{VALUE}};',
+                    '{{WRAPPER}} .counter-box-items .counter-box' => 'text-align: {{VALUE}};',
                 ],
             ]
         );
 
-        $this->add_responsive_control(
-            'title_margin',
+        $this->add_control(
+            'counter_item_background',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
+                'label'     => esc_html__('Item Background', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-counter-wrapper-2 .titles' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .counter-box-items' => 'background-color: {{VALUE}};',
                 ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Counter Box Style
-        $this->start_controls_section(
-            'counter_box_style_section',
-            [
-                'label' => esc_html__('Counter Box Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->start_controls_tabs('counter_box_tabs');
-
-        $this->start_controls_tab(
-            'counter_box_normal',
-            [
-                'label' => esc_html__('Normal', 'ftelements'),
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name' => 'counter_box_background',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-counter-box-2',
             ]
         );
 
         $this->add_group_control(
             Group_Control_Border::get_type(),
             [
-                'name' => 'counter_box_border',
-                'label' => esc_html__('Border', 'ftelements'),
-                'selector' => '{{WRAPPER}} .grt-counter-box-2',
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->start_controls_tab(
-            'counter_box_hover',
-            [
-                'label' => esc_html__('Hover', 'ftelements'),
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name' => 'counter_box_background_hover',
-                'label' => esc_html__('Background', 'ftelements'),
-                'types' => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-counter-box-2:hover',
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name' => 'counter_box_border_hover',
-                'label' => esc_html__('Border', 'ftelements'),
-                'selector' => '{{WRAPPER}} .grt-counter-box-2:hover',
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
-
-        $this->add_responsive_control(
-            'counter_box_padding',
-            [
-                'label' => esc_html__('Padding', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-counter-box-2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-                'separator' => 'before',
+                'name'     => 'counter_item_border',
+                'selector' => '{{WRAPPER}} .counter-box-items',
             ]
         );
 
         $this->add_responsive_control(
-            'counter_box_margin',
+            'counter_item_border_radius',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-counter-box-2' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'counter_box_border_radius',
-            [
-                'label' => esc_html__('Border Radius', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-counter-box-2' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Border Radius', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .counter-box-items' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'counter_box_alignment',
+            'counter_item_padding',
             [
-                'label' => esc_html__('Alignment', 'ftelements'),
-                'type' => Controls_Manager::CHOOSE,
-                'options' => [
-                    'left' => [
-                        'title' => esc_html__('Left', 'ftelements'),
-                        'icon' => 'eicon-text-align-left',
-                    ],
-                    'center' => [
-                        'title' => esc_html__('Center', 'ftelements'),
-                        'icon' => 'eicon-text-align-center',
-                    ],
-                    'right' => [
-                        'title' => esc_html__('Right', 'ftelements'),
-                        'icon' => 'eicon-text-align-right',
-                    ],
+                'label'      => esc_html__('Padding', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .counter-box-items .counter-box' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-counter-box-2' => 'text-align: {{VALUE}};',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'counter_item_margin',
+            [
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .counter-box-items' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Counter Number Style
         $this->start_controls_section(
             'counter_number_style_section',
             [
-                'label' => esc_html__('Counter Number Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Number', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_control(
             'counter_number_color',
             [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-counter-box-2 .counter-title .count' => 'color: {{VALUE}} !important;',
+                    '{{WRAPPER}} .counter-box-items .counter-box h2 .count' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -522,42 +334,40 @@ class FT_Counter_1_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name' => 'counter_number_typography',
-                'label' => esc_html__('Typography', 'ftelements'),
-                'selector' => '{{WRAPPER}} .grt-counter-box-2 .counter-title .count',
+                'name'     => 'counter_number_typography',
+                'selector' => '{{WRAPPER}} .counter-box-items .counter-box h2 .count',
             ]
         );
 
         $this->add_responsive_control(
             'counter_number_margin',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-counter-box-2 .counter-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .counter-box-items .counter-box h2 .count' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Counter Title Style
         $this->start_controls_section(
-            'counter_title_style_section',
+            'counter_suffix_style_section',
             [
-                'label' => esc_html__('Counter Title Style', 'ftelements'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Suffix', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_control(
-            'counter_title_color',
+            'counter_suffix_color',
             [
-                'label' => esc_html__('Color', 'ftelements'),
-                'type' => Controls_Manager::COLOR,
+                'label'     => esc_html__('Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-counter-box-2 p' => 'color: {{VALUE}} !important;',
+                    '{{WRAPPER}} .counter-box-items .counter-box h2 .suffix' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -565,20 +375,60 @@ class FT_Counter_1_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name' => 'counter_title_typography',
-                'label' => esc_html__('Typography', 'ftelements'),
-                'selector' => '{{WRAPPER}} .grt-counter-box-2 p',
+                'name'     => 'counter_suffix_typography',
+                'selector' => '{{WRAPPER}} .counter-box-items .counter-box h2 .suffix',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'counter_suffix_margin',
+            [
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .counter-box-items .counter-box h2 .suffix' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'counter_title_style_section',
+            [
+                'label' => esc_html__('Title', 'ftelements'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'counter_title_color',
+            [
+                'label'     => esc_html__('Color', 'ftelements'),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .counter-box-items .counter-box .counter-title' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name'     => 'counter_title_typography',
+                'selector' => '{{WRAPPER}} .counter-box-items .counter-box .counter-title',
             ]
         );
 
         $this->add_responsive_control(
             'counter_title_margin',
             [
-                'label' => esc_html__('Margin', 'ftelements'),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-counter-box-2 p' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label'      => esc_html__('Margin', 'ftelements'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors'  => [
+                    '{{WRAPPER}} .counter-box-items .counter-box .counter-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -596,51 +446,55 @@ class FT_Counter_1_Widget extends \Elementor\Widget_Base
      */
     protected function render()
     {
-        $settings = $this->get_settings_for_display();
 
-        $shape_image = !empty($settings['shape_image']['url']) ? $settings['shape_image']['url'] : '';
-        $title = $settings['title'];
-        $counters = $settings['counters'];
+        $settings = $this->get_settings_for_display();
+        $counter_items = !empty($settings['counter_items']) ? $settings['counter_items'] : [];
+        $background_image = !empty($settings['background_image']['url']) ? $settings['background_image']['url'] : 'assets/img/home-1/counter-bg.png';
+
         ?>
 
-                <section class="grt-counter-section-2 fix section-bg section-padding pt-0">
-                    <?php if ('yes' === $settings['show_shape'] && !empty($shape_image)): ?>
-                            <div class="line-1">
-                                <img src="<?php echo esc_url($shape_image); ?>" alt="img">
-                            </div>
-                    <?php endif; ?>
-                    <div class="container">
-                        <div class="grt-counter-wrapper-2">
-                            <?php if (!empty($title)): ?>
-                                    <h2 class="titles split-title">
-                                        <?php echo esc_html($title); ?>
+
+
+        <section class="counter-section fix section-padding pt-0">
+            <div class="container">
+                <div class="row g-4">
+                    <?php foreach ($counter_items as $item) :
+                        $delay = !empty($item['wow_delay']) ? $item['wow_delay'] : '.2s';
+                        $fill_color = !empty($item['bg_color']) ? $item['bg_color'] : '#FEF4DE';
+                        $shape_class = !empty($item['bg_shape_class']) ? ' ' . $item['bg_shape_class'] : '';
+                        $active_class = !empty($item['is_active']) && 'yes' === $item['is_active'] ? ' active' : '';
+                        ?>
+                        <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="<?php echo esc_attr($delay); ?>">
+                            <div class="counter-box-items<?php echo esc_attr($active_class); ?>">
+                                <svg width="330" height="330" viewBox="0 0 330 330" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M330 200.106C330 297.696 240.218 330 154.752 330C69.2846 330 0 297.696 0 200.106C0 102.516 69.2846 0 154.752 0C240.218 0 330 102.516 330 200.106Z" fill="<?php echo esc_attr($fill_color); ?>" />
+                                </svg>
+                                <div class="counter-box">
+                                    <h2>
+                                        <span class="count"><?php echo esc_html((string) $item['number']); ?></span><span class="suffix"><?php echo esc_html($item['suffix']); ?></span>
                                     </h2>
-                            <?php endif; ?>
-                    
-                            <?php if (!empty($counters)): ?>
-                                    <div class="row g-4">
-                                        <?php
-                                        $delay_count = 2;
-                                        foreach ($counters as $index => $item):
-                                            $wow_delay = '.' . $delay_count . 's';
-                                            ?>
-                                                <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="<?php echo esc_attr($wow_delay); ?>">
-                                                    <div class="grt-counter-box-2">
-                                                        <h3 class="counter-title">
-                                                            <span class="count"><?php echo esc_html($item['counter_number']); ?></span>
-                                                        </h3>
-                                                        <p><?php echo esc_html($item['counter_title']); ?></p>
-                                                    </div>
-                                                </div>
-                                                <?php
-                                                $delay_count += 2;
-                                        endforeach;
-                                        ?>
-                                    </div>
-                            <?php endif; ?>
+                                    <p class="counter-title"><?php echo esc_html($item['title']); ?></p>
+                                    <div class="bg-shape<?php echo esc_attr($shape_class); ?>"></div>
+                                </div>
+                                <div class="bg-image">
+                                    <img src="<?php echo esc_url($background_image); ?>" alt="">
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </section>
-                <?php
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+
+
+
+
+<?php
     }
 } ?>

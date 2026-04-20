@@ -1,248 +1,221 @@
 <?php
 
-use Elementor\Group_Control_Css_Filter;
 use Elementor\Repeater;
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Border;
-use Elementor\Utils;
 
 defined('ABSPATH') || die();
 
-class FT_Feature_2_Widget extends \Elementor\Widget_Base
+class FT_Feature2_Widget extends \Elementor\Widget_Base
 {
+
+    /*
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string Widget name.
+	 */
     public function get_name()
     {
-        return 'ft-feature-2';
+        return 'ft-feature2';
     }
 
+    /**
+     * Get widget title.
+     *
+     * Retrieve rsgallery widget title.
+     *
+     * @since 1.0.0
+     * @access public
+     *
+     * @return string Widget title.
+     */
     public function get_title()
     {
         return esc_html__('FT Feature 2', 'ftelements');
     }
 
+    /**
+     * Get widget icon.
+     *
+     * Retrieve rsgallery widget icon.
+     *
+     * @since 1.0.0
+     * @access public
+     *
+     * @return string Widget icon.
+     */
     public function get_icon()
     {
         return 'tp-icon';
     }
 
+    /**
+     * Get widget categories.
+     *
+     * Retrieve the list of categories the rsgallery widget belongs to.
+     *
+     * @since 1.0.0
+     * @access public
+     *
+     * @return array Widget categories.
+     */
     public function get_categories()
     {
         return ['pielements_category'];
     }
 
+    /**
+     * Register rsgallery widget controls.
+     *
+     * Adds different input fields to allow the user to change and customize the widget settings.
+     *
+     * @since 1.0.0
+     * @access protected
+     */
     protected function register_controls()
     {
-        // ========================
-        // CONTENT TAB
-        // ========================
-
         $this->start_controls_section(
-            'content_section',
+            'ft_feature2_content',
             [
-                'label' => esc_html__('Section Content', 'ftelements'),
-                'tab'   => Controls_Manager::TAB_CONTENT,
+                'label' => esc_html__('Content', 'ftelements'),
+                'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
 
         $this->add_control(
-            'sub_title',
+            'section_heading',
             [
-                'label'   => esc_html__('Sub Title', 'ftelements'),
-                'type'    => Controls_Manager::TEXT,
-                'default' => esc_html__('WAYS WE HELP', 'ftelements'),
+                'label' => esc_html__('Section Heading', 'ftelements'),
+                'type' => Controls_Manager::TEXT,
+                'default' => esc_html__('our school facilities', 'ftelements'),
+                'label_block' => true,
             ]
         );
 
-        $this->add_control(
-            'sub_title_icon',
-            [
-                'label'   => esc_html__('Sub Title Icon', 'ftelements'),
-                'type'    => Controls_Manager::ICONS,
-                'default' => [
-                    'value'   => 'fa-sharp fa-solid fa-heart',
-                    'library' => 'solid',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'title',
-            [
-                'label'   => esc_html__('Title', 'ftelements'),
-                'type'    => Controls_Manager::TEXTAREA,
-                'default' => esc_html__("We're a charitable group <br> that improves lives", 'ftelements'),
-            ]
-        );
-
-        $this->add_responsive_control(
-            'title_align',
-            [
-                'label'     => esc_html__('Alignment', 'ftelements'),
-                'type'      => Controls_Manager::CHOOSE,
-                'options'   => [
-                    'left'   => ['title' => esc_html__('Left', 'ftelements'), 'icon' => 'eicon-text-align-left'],
-                    'center' => ['title' => esc_html__('Center', 'ftelements'), 'icon' => 'eicon-text-align-center'],
-                    'right'  => ['title' => esc_html__('Right', 'ftelements'), 'icon' => 'eicon-text-align-right'],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-section-title' => 'text-align: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // ========================
-        // FEATURES REPEATER
-        // ========================
-
-        $this->start_controls_section(
-            'feature_section',
-            [
-                'label' => esc_html__('Features', 'ftelements'),
-                'tab'   => Controls_Manager::TAB_CONTENT,
-            ]
-        );
+        $theme_uri = get_template_directory_uri();
 
         $repeater = new Repeater();
 
-        // FIX: Give unique control IDs and use consistent naming
         $repeater->add_control(
-            'item_hover_image',
+            'title',
             [
-                'label'   => esc_html__('Thumbnail', 'ftelements'),
-                'type'    => Controls_Manager::MEDIA,
-                'default' => [
-                    'url' => Utils::get_placeholder_image_src(),
-                ],
+                'label' => esc_html__('Title', 'ftelements'),
+                'type' => Controls_Manager::TEXT,
+                'default' => esc_html__('Feature', 'ftelements'),
             ]
         );
 
-        // FIX: Renamed from 'item_icon' to 'item_icon_image' to avoid
-        // internal Elementor key collision with icon-type controls
         $repeater->add_control(
-            'item_icon_image',
+            'thumb',
             [
-                'label'   => esc_html__('Icon Image', 'ftelements'),
-                'type'    => Controls_Manager::MEDIA,
+                'label' => esc_html__('Shape Image', 'ftelements'),
+                'type' => Controls_Manager::MEDIA,
                 'default' => [
-                    'url' => Utils::get_placeholder_image_src(),
+                    'url' => $theme_uri . '/assets/img/home-2/shape/box-1.png',
                 ],
             ]
         );
 
         $repeater->add_control(
-            'item_title',
+            'icon',
             [
-                'label'   => esc_html__('Title', 'ftelements'),
-                'type'    => Controls_Manager::TEXT,
-                'default' => esc_html__('Child assistance', 'ftelements'),
-            ]
-        );
-
-        $repeater->add_control(
-            'item_description',
-            [
-                'label'   => esc_html__('Description', 'ftelements'),
-                'type'    => Controls_Manager::TEXTAREA,
-                'default' => esc_html__('Health care are essential for a child\'s growth.', 'ftelements'),
+                'label' => esc_html__('Icon', 'ftelements'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => $theme_uri . '/assets/img/icon/icon1.svg',
+                ],
             ]
         );
 
         $repeater->add_control(
             'animation_delay',
             [
-                'label'   => esc_html__('Animation Delay (.s)', 'ftelements'),
-                'type'    => Controls_Manager::TEXT,
-                'default' => '2',
+                'label' => esc_html__('Animation Delay', 'ftelements'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'description' => esc_html__('e.g. .2s — leave empty for no delay', 'ftelements'),
             ]
         );
 
         $this->add_control(
-            'feature_list',
+            'facility_items',
             [
-                'label'       => esc_html__('Features', 'ftelements'),
-                'type'        => Controls_Manager::REPEATER,
-                'fields'      => $repeater->get_controls(),
-                'default'     => [
-                    ['item_title' => esc_html__('Child assistance', 'ftelements'), 'animation_delay' => '2'],
-                    ['item_title' => esc_html__('Disaster relief', 'ftelements'), 'animation_delay' => '4'],
-                    ['item_title' => esc_html__('Animal welfare', 'ftelements'), 'animation_delay' => '6'],
-                    ['item_title' => esc_html__('Health care', 'ftelements'), 'animation_delay' => '8'],
-                ],
-                'title_field' => '{{{ item_title }}}',
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // ========================
-        // RAISING TEXT
-        // ========================
-
-        $this->start_controls_section(
-            'raising_section',
-            [
-                'label' => esc_html__('Raising Text', 'ftelements'),
-                'tab'   => Controls_Manager::TAB_CONTENT,
-            ]
-        );
-
-        $this->add_control(
-            'raising_icon',
-            [
-                'label'   => esc_html__('Icon', 'ftelements'),
-                'type'    => Controls_Manager::MEDIA,
+                'label' => esc_html__('Facility Items', 'ftelements'),
+                'type' => Controls_Manager::REPEATER,
+                'fields' => $repeater->get_controls(),
                 'default' => [
-                    'url' => Utils::get_placeholder_image_src(),
+                    [
+                        'title' => esc_html__('online class', 'ftelements'),
+                        'thumb' => ['url' => $theme_uri . '/assets/img/home-2/shape/box-1.png'],
+                        'icon' => ['url' => $theme_uri . '/assets/img/icon/icon1.svg'],
+                        'animation_delay' => '',
+                    ],
+                    [
+                        'title' => esc_html__('healthy foods', 'ftelements'),
+                        'thumb' => ['url' => $theme_uri . '/assets/img/home-2/shape/box-2.png'],
+                        'icon' => ['url' => $theme_uri . '/assets/img/icon/icon2.svg'],
+                        'animation_delay' => '.2s',
+                    ],
+                    [
+                        'title' => esc_html__('Pickup & drop', 'ftelements'),
+                        'thumb' => ['url' => $theme_uri . '/assets/img/home-2/shape/box-3.png'],
+                        'icon' => ['url' => $theme_uri . '/assets/img/icon/icon3.svg'],
+                        'animation_delay' => '.4s',
+                    ],
+                    [
+                        'title' => esc_html__('play ground', 'ftelements'),
+                        'thumb' => ['url' => $theme_uri . '/assets/img/home-2/shape/box-4.png'],
+                        'icon' => ['url' => $theme_uri . '/assets/img/icon/icon4.svg'],
+                        'animation_delay' => '.6s',
+                    ],
+                    [
+                        'title' => esc_html__('100% safety', 'ftelements'),
+                        'thumb' => ['url' => $theme_uri . '/assets/img/home-2/shape/box-5.png'],
+                        'icon' => ['url' => $theme_uri . '/assets/img/icon/icon5.svg'],
+                        'animation_delay' => '.7s',
+                    ],
+                    [
+                        'title' => esc_html__('best quality', 'ftelements'),
+                        'thumb' => ['url' => $theme_uri . '/assets/img/home-2/shape/box-6.png'],
+                        'icon' => ['url' => $theme_uri . '/assets/img/icon/icon6.svg'],
+                        'animation_delay' => '.9s',
+                    ],
                 ],
-            ]
-        );
-
-        $this->add_control(
-            'raising_pre_text',
-            [
-                'label'   => esc_html__('Pre Text', 'ftelements'),
-                'type'    => Controls_Manager::TEXT,
-                'default' => esc_html__('Total raising money in this year > ', 'ftelements'),
-            ]
-        );
-
-        $this->add_control(
-            'raising_highlight_text',
-            [
-                'label'   => esc_html__('Highlighted Text', 'ftelements'),
-                'type'    => Controls_Manager::TEXT,
-                'default' => esc_html__('$4,50,000', 'ftelements'),
+                'title_field' => '{{{ title }}}',
             ]
         );
 
         $this->end_controls_section();
 
-        // ========================
-        // STYLE TAB
-        // ========================
-
-        // Section Style
         $this->start_controls_section(
-            'section_style',
+            'ft_feature2_style_section',
             [
-                'label' => esc_html__('Section Style', 'ftelements'),
-                'tab'   => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Section', 'ftelements'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name' => 'section_background',
+                'types' => ['classic', 'gradient'],
+                'selector' => '{{WRAPPER}} .school-facilities-section',
             ]
         );
 
         $this->add_responsive_control(
             'section_padding',
             [
-                'label'      => esc_html__('Padding', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-section-2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label' => esc_html__('Padding', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-section' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -250,375 +223,526 @@ class FT_Feature_2_Widget extends \Elementor\Widget_Base
         $this->add_responsive_control(
             'section_margin',
             [
-                'label'      => esc_html__('Margin', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-section-2' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name'     => 'section_background',
-                'label'    => esc_html__('Background', 'ftelements'),
-                'types'    => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-mission-section-2',
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Sub Title Style
-        $this->start_controls_section(
-            'subtitle_style',
-            [
-                'label' => esc_html__('Sub Title Style', 'ftelements'),
-                'tab'   => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_control(
-            'subtitle_color',
-            [
-                'label'     => esc_html__('Color', 'ftelements'),
-                'type'      => Controls_Manager::COLOR,
+                'label' => esc_html__('Margin', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em', 'rem'],
                 'selectors' => [
-                    '{{WRAPPER}} .grt-sub-title' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .school-facilities-section' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name'     => 'subtitle_typography',
-                'selector' => '{{WRAPPER}} .grt-sub-title',
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name'     => 'subtitle_background',
-                'types'    => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-sub-title',
             ]
         );
 
         $this->add_group_control(
             Group_Control_Border::get_type(),
             [
-                'name'     => 'subtitle_border',
-                'selector' => '{{WRAPPER}} .grt-sub-title',
+                'name' => 'section_border',
+                'selector' => '{{WRAPPER}} .school-facilities-section',
             ]
         );
 
         $this->add_responsive_control(
-            'subtitle_border_radius',
+            'section_border_radius',
             [
-                'label'      => esc_html__('Border Radius', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-sub-title' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'subtitle_padding',
-            [
-                'label'      => esc_html__('Padding', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-sub-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'subtitle_margin',
-            [
-                'label'      => esc_html__('Margin', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-sub-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'subtitle_icon_heading',
-            [
-                'label'     => esc_html__('Icon', 'ftelements'),
-                'type'      => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_control(
-            'subtitle_icon_color',
-            [
-                'label'     => esc_html__('Icon Color', 'ftelements'),
-                'type'      => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .grt-sub-title i'   => 'color: {{VALUE}};',
-                    '{{WRAPPER}} .grt-sub-title svg' => 'fill: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'subtitle_icon_size',
-            [
-                'label'      => esc_html__('Icon Size', 'ftelements'),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-sub-title i'   => 'font-size: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .grt-sub-title svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'subtitle_icon_spacing',
-            [
-                'label'      => esc_html__('Icon Spacing', 'ftelements'),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-sub-title i'   => 'margin-right: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .grt-sub-title svg' => 'margin-right: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Title Style
-        $this->start_controls_section(
-            'title_style',
-            [
-                'label' => esc_html__('Title Style', 'ftelements'),
-                'tab'   => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_control(
-            'title_color',
-            [
-                'label'     => esc_html__('Color', 'ftelements'),
-                'type'      => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .grt-section-title h2' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name'     => 'title_typography',
-                'selector' => '{{WRAPPER}} .grt-section-title h2',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'title_margin',
-            [
-                'label'      => esc_html__('Margin', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-section-title h2' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Item Box Style
-        $this->start_controls_section(
-            'item_box_style',
-            [
-                'label' => esc_html__('Item Box Style', 'ftelements'),
-                'tab'   => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'item_alignment',
-            [
-                'label'     => esc_html__('Alignment', 'ftelements'),
-                'type'      => Controls_Manager::CHOOSE,
-                'options'   => [
-                    'left'   => ['title' => esc_html__('Left', 'ftelements'), 'icon' => 'eicon-text-align-left'],
-                    'center' => ['title' => esc_html__('Center', 'ftelements'), 'icon' => 'eicon-text-align-center'],
-                    'right'  => ['title' => esc_html__('Right', 'ftelements'), 'icon' => 'eicon-text-align-right'],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .grt-mission-box-items-2' => 'text-align: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'item_padding',
-            [
-                'label'      => esc_html__('Padding', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'item_margin',
-            [
-                'label'      => esc_html__('Margin', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'item_border_radius',
-            [
-                'label'      => esc_html__('Border Radius', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'item_transition',
-            [
-                'label'      => esc_html__('Transition Duration (s)', 'ftelements'),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => ['s'],
-                'range'      => ['s' => ['min' => 0, 'max' => 2, 'step' => 0.1]],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2' => 'transition: all {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->start_controls_tabs('item_box_tabs');
-
-        $this->start_controls_tab('item_box_normal', ['label' => esc_html__('Normal', 'ftelements')]);
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name'     => 'item_background',
-                'types'    => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-mission-box-items-2',
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name'     => 'item_border',
-                'selector' => '{{WRAPPER}} .grt-mission-box-items-2',
-            ]
-        );
-
-        $this->add_control(
-            'item_opacity',
-            [
-                'label'      => esc_html__('Opacity', 'ftelements'),
-                'type'       => Controls_Manager::SLIDER,
-                'range'      => ['px' => ['min' => 0, 'max' => 1, 'step' => 0.01]],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2' => 'opacity: {{SIZE}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->start_controls_tab('item_box_hover', ['label' => esc_html__('Hover', 'ftelements')]);
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name'     => 'item_hover_background',
-                'types'    => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-mission-box-items-2:hover',
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name'     => 'item_hover_border',
-                'selector' => '{{WRAPPER}} .grt-mission-box-items-2:hover',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'item_hover_transform',
-            [
-                'label'      => esc_html__('Translate Y on Hover', 'ftelements'),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => ['px'],
-                'range'      => ['px' => ['min' => -50, 'max' => 50]],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2:hover' => 'transform: translateY({{SIZE}}{{UNIT}});',
-                ],
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
-
-        $this->end_controls_section();
-
-        // Thumbnail Style
-        $this->start_controls_section(
-            'thumb_style',
-            [
-                'label' => esc_html__('Thumbnail Style', 'ftelements'),
-                'tab'   => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'thumb_width',
-            [
-                'label'      => esc_html__('Width', 'ftelements'),
-                'type'       => Controls_Manager::SLIDER,
+                'label' => esc_html__('Border Radius', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2 .thumb img.hover-image' => 'width: {{SIZE}}{{UNIT}};',
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-section' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'thumb_height',
+            'section_min_height',
             [
-                'label'      => esc_html__('Height', 'ftelements'),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'vh'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2 .thumb img.hover-image' => 'height: {{SIZE}}{{UNIT}}; object-fit: cover;',
+                'label' => esc_html__('Min Height', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'vh', '%'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 1200],
+                    'vh' => ['min' => 0, 'max' => 100],
+                    '%' => ['min' => 0, 'max' => 100],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-section' => 'min-height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'ft_feature2_style_heading_row',
+            [
+                'label' => esc_html__('Heading Row', 'ftelements'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'heading_row_align',
+            [
+                'label' => esc_html__('Alignment', 'ftelements'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'flex-start' => [
+                        'title' => esc_html__('Left', 'ftelements'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'ftelements'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'flex-end' => [
+                        'title' => esc_html__('Right', 'ftelements'),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-section .facilities-text' => 'justify-content: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'heading_row_gap',
+            [
+                'label' => esc_html__('Gap Between Lines & Text', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em', 'rem'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 100],
+                    'em' => ['min' => 0, 'max' => 5],
+                    'rem' => ['min' => 0, 'max' => 5],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-section .facilities-text' => 'gap: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'heading_row_margin',
+            [
+                'label' => esc_html__('Margin', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-section .facilities-text' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'heading_row_padding',
+            [
+                'label' => esc_html__('Padding', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-section .facilities-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'ft_feature2_style_heading_lines',
+            [
+                'label' => esc_html__('Heading Lines', 'ftelements'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'heading_line_width',
+            [
+                'label' => esc_html__('Width', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 600],
+                    '%' => ['min' => 0, 'max' => 100],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-section .facilities-text .line' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'heading_line_height',
+            [
+                'label' => esc_html__('Height', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 20],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-section .facilities-text .line' => 'height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'heading_line_color',
+            [
+                'label' => esc_html__('Color', 'ftelements'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-section .facilities-text .line' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'heading_line_radius',
+            [
+                'label' => esc_html__('Border Radius', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-section .facilities-text .line' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'ft_feature2_style_heading_text',
+            [
+                'label' => esc_html__('Heading Text', 'ftelements'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'heading_text_color',
+            [
+                'label' => esc_html__('Color', 'ftelements'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-section .facilities-text p' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'heading_text_typography',
+                'selector' => '{{WRAPPER}} .school-facilities-section .facilities-text p',
+            ]
+        );
+
+        $this->add_control(
+            'heading_text_transform',
+            [
+                'label' => esc_html__('Transform', 'ftelements'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'inherit' => esc_html__('Default', 'ftelements'),
+                    'none' => esc_html__('None', 'ftelements'),
+                    'uppercase' => esc_html__('Uppercase', 'ftelements'),
+                    'lowercase' => esc_html__('Lowercase', 'ftelements'),
+                    'capitalize' => esc_html__('Capitalize', 'ftelements'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-section .facilities-text p' => 'text-transform: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'heading_text_align',
+            [
+                'label' => esc_html__('Text Align', 'ftelements'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => esc_html__('Left', 'ftelements'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'ftelements'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__('Right', 'ftelements'),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-section .facilities-text p' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'heading_text_margin',
+            [
+                'label' => esc_html__('Margin', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-section .facilities-text p' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'heading_text_max_width',
+            [
+                'label' => esc_html__('Max Width', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 1200],
+                    '%' => ['min' => 0, 'max' => 100],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-section .facilities-text p' => 'max-width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'ft_feature2_style_grid',
+            [
+                'label' => esc_html__('Grid', 'ftelements'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'grid_columns',
+            [
+                'label' => esc_html__('Columns', 'ftelements'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    '1' => '1',
+                    '2' => '2',
+                    '3' => '3',
+                    '4' => '4',
+                    '5' => '5',
+                    '6' => '6',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-wrapper' => 'grid-template-columns: repeat({{VALUE}}, 1fr);',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'grid_gap',
+            [
+                'label' => esc_html__('Gap', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em', 'rem'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 100],
+                    'em' => ['min' => 0, 'max' => 5],
+                    'rem' => ['min' => 0, 'max' => 5],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'grid_align_items',
+            [
+                'label' => esc_html__('Align Items', 'ftelements'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'inherit' => esc_html__('Default', 'ftelements'),
+                    'start' => esc_html__('Start', 'ftelements'),
+                    'center' => esc_html__('Center', 'ftelements'),
+                    'end' => esc_html__('End', 'ftelements'),
+                    'stretch' => esc_html__('Stretch', 'ftelements'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-wrapper' => 'align-items: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'grid_justify_items',
+            [
+                'label' => esc_html__('Justify Items', 'ftelements'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'inherit' => esc_html__('Default', 'ftelements'),
+                    'start' => esc_html__('Start', 'ftelements'),
+                    'center' => esc_html__('Center', 'ftelements'),
+                    'end' => esc_html__('End', 'ftelements'),
+                    'stretch' => esc_html__('Stretch', 'ftelements'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-wrapper' => 'justify-items: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'grid_margin',
+            [
+                'label' => esc_html__('Margin', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-wrapper' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'grid_padding',
+            [
+                'label' => esc_html__('Padding', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-wrapper' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'ft_feature2_style_box',
+            [
+                'label' => esc_html__('Facility Box', 'ftelements'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Background::get_type(),
+            [
+                'name' => 'box_background',
+                'types' => ['classic', 'gradient'],
+                'selector' => '{{WRAPPER}} .school-facilities-box-items',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'box_padding',
+            [
+                'label' => esc_html__('Padding', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-box-items' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'box_margin',
+            [
+                'label' => esc_html__('Margin', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-box-items' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'box_border',
+                'selector' => '{{WRAPPER}} .school-facilities-box-items',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'box_border_radius',
+            [
+                'label' => esc_html__('Border Radius', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-box-items' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'box_text_align',
+            [
+                'label' => esc_html__('Text Align', 'ftelements'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => esc_html__('Left', 'ftelements'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'ftelements'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__('Right', 'ftelements'),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-box-items' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'box_opacity',
+            [
+                'label' => esc_html__('Opacity', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 100,
+                        'step' => 1,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-box-items' => 'opacity: calc({{SIZE}} / 100);',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'ft_feature2_style_thumb',
+            [
+                'label' => esc_html__('Shape Image', 'ftelements'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'thumb_max_width',
+            [
+                'label' => esc_html__('Max Width', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 500],
+                    '%' => ['min' => 0, 'max' => 100],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-box-items .thumb' => 'max-width: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -626,23 +750,41 @@ class FT_Feature_2_Widget extends \Elementor\Widget_Base
         $this->add_responsive_control(
             'thumb_margin',
             [
-                'label'      => esc_html__('Margin', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
+                'label' => esc_html__('Margin', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2 .thumb' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-box-items .thumb' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'thumb_border_radius',
+            'thumb_img_border_radius',
             [
-                'label'      => esc_html__('Border Radius', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2 .thumb, {{WRAPPER}} .grt-mission-box-items-2 .thumb img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label' => esc_html__('Image Border Radius', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-box-items .thumb > img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'thumb_img_opacity',
+            [
+                'label' => esc_html__('Image Opacity', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 100,
+                        'step' => 1,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-box-items .thumb > img' => 'opacity: calc({{SIZE}} / 100);',
                 ],
             ]
         );
@@ -650,111 +792,66 @@ class FT_Feature_2_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Border::get_type(),
             [
-                'name'     => 'thumb_border',
-                'selector' => '{{WRAPPER}} .grt-mission-box-items-2 .thumb',
-            ]
-        );
-
-        $this->start_controls_tabs('thumb_filter_tabs');
-
-        $this->start_controls_tab('thumb_filter_normal', ['label' => esc_html__('Normal', 'ftelements')]);
-
-        $this->add_group_control(
-            Group_Control_Css_Filter::get_type(),
-            [
-                'name'     => 'thumb_css_filter',
-                'selector' => '{{WRAPPER}} .grt-mission-box-items-2 .thumb img.hover-image',
-            ]
-        );
-
-        $this->add_control(
-            'thumb_opacity',
-            [
-                'label'      => esc_html__('Opacity', 'ftelements'),
-                'type'       => Controls_Manager::SLIDER,
-                'range'      => ['px' => ['min' => 0, 'max' => 1, 'step' => 0.01]],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2 .thumb img.hover-image' => 'opacity: {{SIZE}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->start_controls_tab('thumb_filter_hover', ['label' => esc_html__('Hover', 'ftelements')]);
-
-        $this->add_group_control(
-            Group_Control_Css_Filter::get_type(),
-            [
-                'name'     => 'thumb_css_filter_hover',
-                'selector' => '{{WRAPPER}} .grt-mission-box-items-2:hover .thumb img.hover-image',
-            ]
-        );
-
-        $this->add_control(
-            'thumb_hover_scale',
-            [
-                'label'      => esc_html__('Scale', 'ftelements'),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => ['px'],
-                'range'      => ['px' => ['min' => 0.5, 'max' => 2, 'step' => 0.01]],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2:hover .thumb img.hover-image' => 'transform: scale({{SIZE}});',
-                ],
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
-
-        $this->add_control(
-            'thumb_transition',
-            [
-                'label'      => esc_html__('Transition Duration (s)', 'ftelements'),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => ['s'],
-                'range'      => ['s' => ['min' => 0, 'max' => 2, 'step' => 0.1]],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2 .thumb img' => 'transition: all {{SIZE}}{{UNIT}};',
-                ],
-                'separator'  => 'before',
+                'name' => 'thumb_img_border',
+                'selector' => '{{WRAPPER}} .school-facilities-box-items .thumb > img',
             ]
         );
 
         $this->end_controls_section();
 
-        // Icon Style
         $this->start_controls_section(
-            'item_icon_style',
+            'ft_feature2_style_icon',
             [
-                'label' => esc_html__('Icon Style', 'ftelements'),
-                'tab'   => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Icon', 'ftelements'),
+                'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_responsive_control(
             'icon_width',
             [
-                'label'      => esc_html__('Width', 'ftelements'),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range'      => ['px' => ['min' => 0, 'max' => 200]],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2 .thumb .icon img' => 'width: {{SIZE}}{{UNIT}};',
+                'label' => esc_html__('Width', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vw'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 200],
+                    '%' => ['min' => 0, 'max' => 100],
+                    'vw' => ['min' => 0, 'max' => 50],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-box-items .thumb .icon img' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'icon_height',
+            'icon_position_top',
             [
-                'label'      => esc_html__('Height', 'ftelements'),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range'      => ['px' => ['min' => 0, 'max' => 200]],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2 .thumb .icon img' => 'height: {{SIZE}}{{UNIT}};',
+                'label' => esc_html__('Vertical Position', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['%', 'px'],
+                'range' => [
+                    '%' => ['min' => 0, 'max' => 100],
+                    'px' => ['min' => -200, 'max' => 200],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-box-items .thumb .icon' => 'top: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'icon_position_left',
+            [
+                'label' => esc_html__('Horizontal Position', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['%', 'px'],
+                'range' => [
+                    '%' => ['min' => 0, 'max' => 100],
+                    'px' => ['min' => -200, 'max' => 200],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-box-items .thumb .icon' => 'left: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -762,23 +859,11 @@ class FT_Feature_2_Widget extends \Elementor\Widget_Base
         $this->add_responsive_control(
             'icon_padding',
             [
-                'label'      => esc_html__('Padding', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2 .thumb .icon' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'icon_margin',
-            [
-                'label'      => esc_html__('Margin', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2 .thumb .icon' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label' => esc_html__('Padding', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', 'em'],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-box-items .thumb .icon' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -786,123 +871,91 @@ class FT_Feature_2_Widget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Background::get_type(),
             [
-                'name'     => 'icon_background',
-                'types'    => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .grt-mission-box-items-2 .thumb .icon',
+                'name' => 'icon_background',
+                'types' => ['classic', 'gradient'],
+                'selector' => '{{WRAPPER}} .school-facilities-box-items .thumb .icon',
             ]
         );
 
         $this->add_group_control(
             Group_Control_Border::get_type(),
             [
-                'name'     => 'icon_border',
-                'selector' => '{{WRAPPER}} .grt-mission-box-items-2 .thumb .icon',
+                'name' => 'icon_border',
+                'selector' => '{{WRAPPER}} .school-facilities-box-items .thumb .icon',
             ]
         );
 
         $this->add_responsive_control(
             'icon_border_radius',
             [
-                'label'      => esc_html__('Border Radius', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2 .thumb .icon' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'label' => esc_html__('Border Radius', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-box-items .thumb .icon' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'icon_z_index',
+            [
+                'label' => esc_html__('Z-Index', 'ftelements'),
+                'type' => Controls_Manager::NUMBER,
+                'min' => -10,
+                'max' => 100,
+                'selectors' => [
+                    '{{WRAPPER}} .school-facilities-box-items .thumb .icon' => 'z-index: {{VALUE}};',
                 ],
             ]
         );
 
         $this->end_controls_section();
 
-        // Item Content Style
         $this->start_controls_section(
-            'item_content_style',
+            'ft_feature2_style_title',
             [
-                'label' => esc_html__('Item Content Style', 'ftelements'),
-                'tab'   => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Title', 'ftelements'),
+                'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
-        $this->add_responsive_control(
-            'content_padding',
+        $this->start_controls_tabs('ft_feature2_title_style_tabs');
+
+        $this->start_controls_tab(
+            'ft_feature2_title_normal',
             [
-                'label'      => esc_html__('Padding', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2 .content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
+                'label' => esc_html__('Normal', 'ftelements'),
             ]
         );
-
-        $this->add_responsive_control(
-            'content_margin',
-            [
-                'label'      => esc_html__('Margin', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2 .content' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        // Item Title
-        $this->add_control(
-            'item_title_heading',
-            [
-                'label'     => esc_html__('Title', 'ftelements'),
-                'type'      => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name'     => 'item_title_typography',
-                'selector' => '{{WRAPPER}} .grt-mission-box-items-2 .content .title',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'item_title_margin',
-            [
-                'label'      => esc_html__('Margin', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2 .content .title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->start_controls_tabs('item_title_tabs');
-
-        $this->start_controls_tab('item_title_normal', ['label' => esc_html__('Normal', 'ftelements')]);
 
         $this->add_control(
-            'item_title_color',
+            'title_color',
             [
-                'label'     => esc_html__('Color', 'ftelements'),
-                'type'      => Controls_Manager::COLOR,
+                'label' => esc_html__('Color', 'ftelements'),
+                'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-mission-box-items-2 .content .title' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .school-facilities-box-items .title' => 'color: {{VALUE}};',
                 ],
             ]
         );
 
         $this->end_controls_tab();
 
-        $this->start_controls_tab('item_title_hover', ['label' => esc_html__('Hover', 'ftelements')]);
+        $this->start_controls_tab(
+            'ft_feature2_title_hover',
+            [
+                'label' => esc_html__('Hover', 'ftelements'),
+            ]
+        );
 
         $this->add_control(
-            'item_title_hover_color',
+            'title_color_hover',
             [
-                'label'     => esc_html__('Color', 'ftelements'),
-                'type'      => Controls_Manager::COLOR,
+                'label' => esc_html__('Color', 'ftelements'),
+                'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .grt-mission-box-items-2:hover .content .title' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .school-facilities-box-items:hover .title' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -911,235 +964,73 @@ class FT_Feature_2_Widget extends \Elementor\Widget_Base
 
         $this->end_controls_tabs();
 
-        // Item Description
-        $this->add_control(
-            'item_description_heading',
-            [
-                'label'     => esc_html__('Description', 'ftelements'),
-                'type'      => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name'     => 'item_description_typography',
-                'selector' => '{{WRAPPER}} .grt-mission-box-items-2 .content p',
+                'name' => 'title_typography',
+                'selector' => '{{WRAPPER}} .school-facilities-box-items .title',
             ]
         );
 
         $this->add_responsive_control(
-            'item_description_margin',
+            'title_margin',
             [
-                'label'      => esc_html__('Margin', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .grt-mission-box-items-2 .content p' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->start_controls_tabs('item_desc_tabs');
-
-        $this->start_controls_tab('item_desc_normal', ['label' => esc_html__('Normal', 'ftelements')]);
-
-        $this->add_control(
-            'item_description_color',
-            [
-                'label'     => esc_html__('Color', 'ftelements'),
-                'type'      => Controls_Manager::COLOR,
+                'label' => esc_html__('Margin', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', 'em'],
                 'selectors' => [
-                    '{{WRAPPER}} .grt-mission-box-items-2 .content p' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .school-facilities-box-items .title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
-        $this->end_controls_tab();
-
-        $this->start_controls_tab('item_desc_hover', ['label' => esc_html__('Hover', 'ftelements')]);
-
-        $this->add_control(
-            'item_description_hover_color',
+        $this->add_responsive_control(
+            'title_padding',
             [
-                'label'     => esc_html__('Color', 'ftelements'),
-                'type'      => Controls_Manager::COLOR,
+                'label' => esc_html__('Padding', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', 'em'],
                 'selectors' => [
-                    '{{WRAPPER}} .grt-mission-box-items-2:hover .content p' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .school-facilities-box-items .title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
 
         $this->end_controls_section();
 
-        // Raising Text Style
         $this->start_controls_section(
-            'raising_style',
+            'ft_feature2_style_container',
             [
-                'label' => esc_html__('Raising Text Style', 'ftelements'),
-                'tab'   => Controls_Manager::TAB_STYLE,
+                'label' => esc_html__('Inner Container', 'ftelements'),
+                'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_responsive_control(
-            'raising_alignment',
+            'inner_container_max_width',
             [
-                'label'     => esc_html__('Alignment', 'ftelements'),
-                'type'      => Controls_Manager::CHOOSE,
-                'options'   => [
-                    'left'   => ['title' => esc_html__('Left', 'ftelements'), 'icon' => 'eicon-text-align-left'],
-                    'center' => ['title' => esc_html__('Center', 'ftelements'), 'icon' => 'eicon-text-align-center'],
-                    'right'  => ['title' => esc_html__('Right', 'ftelements'), 'icon' => 'eicon-text-align-right'],
+                'label' => esc_html__('Content Width', 'ftelements'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'range' => [
+                    'px' => ['min' => 0, 'max' => 1920],
+                    '%' => ['min' => 0, 'max' => 100],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .raising-text' => 'text-align: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Background::get_type(),
-            [
-                'name'     => 'raising_background',
-                'types'    => ['classic', 'gradient'],
-                'selector' => '{{WRAPPER}} .raising-text',
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Border::get_type(),
-            [
-                'name'     => 'raising_border',
-                'selector' => '{{WRAPPER}} .raising-text',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'raising_border_radius',
-            [
-                'label'      => esc_html__('Border Radius', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .raising-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .school-facilities-section .container' => 'max-width: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'raising_padding',
+            'inner_container_padding',
             [
-                'label'      => esc_html__('Padding', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
+                'label' => esc_html__('Horizontal Padding', 'ftelements'),
+                'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .raising-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'raising_margin',
-            [
-                'label'      => esc_html__('Margin', 'ftelements'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .raising-text' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'raising_text_heading',
-            [
-                'label'     => esc_html__('Pre Text', 'ftelements'),
-                'type'      => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_control(
-            'raising_text_color',
-            [
-                'label'     => esc_html__('Color', 'ftelements'),
-                'type'      => Controls_Manager::COLOR,
+                'allowed_dimensions' => ['left', 'right'],
                 'selectors' => [
-                    '{{WRAPPER}} .raising-text' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name'     => 'raising_text_typography',
-                'selector' => '{{WRAPPER}} .raising-text',
-            ]
-        );
-
-        $this->add_control(
-            'raising_highlight_heading',
-            [
-                'label'     => esc_html__('Highlighted Text', 'ftelements'),
-                'type'      => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_control(
-            'raising_highlight_color',
-            [
-                'label'     => esc_html__('Color', 'ftelements'),
-                'type'      => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .raising-text b' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name'     => 'raising_highlight_typography',
-                'selector' => '{{WRAPPER}} .raising-text b',
-            ]
-        );
-
-        $this->add_control(
-            'raising_icon_heading',
-            [
-                'label'     => esc_html__('Icon', 'ftelements'),
-                'type'      => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'raising_icon_width',
-            [
-                'label'      => esc_html__('Icon Width', 'ftelements'),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .raising-text img' => 'width: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'raising_icon_spacing',
-            [
-                'label'      => esc_html__('Icon Spacing', 'ftelements'),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'em'],
-                'selectors'  => [
-                    '{{WRAPPER}} .raising-text img' => 'margin-right: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .school-facilities-section .container' => 'padding-left: {{LEFT}}{{UNIT}}; padding-right: {{RIGHT}}{{UNIT}};',
                 ],
             ]
         );
@@ -1147,84 +1038,71 @@ class FT_Feature_2_Widget extends \Elementor\Widget_Base
         $this->end_controls_section();
     }
 
+    /**
+     * Render rsgallery widget output on the frontend.
+     *
+     * Written in PHP and used to generate the final HTML.
+     *
+     * @since 1.0.0
+     * @access protected
+     */
     protected function render()
     {
+
         $settings = $this->get_settings_for_display();
+        $heading = isset($settings['section_heading']) ? $settings['section_heading'] : '';
+        $items = !empty($settings['facility_items']) && is_array($settings['facility_items']) ? $settings['facility_items'] : [];
+
         ?>
-        <section class="grt-mission-section-2 fix section-padding">
+
+
+
+        <section class="school-facilities-section fix section-padding pt-0">
             <div class="container">
-                <div class="grt-section-title text-center">
-                    <?php if (!empty($settings['sub_title'])): ?>
-                        <span class="grt-sub-title tz-sub-tilte tz-sub-anim tx-subTitle">
-                            <?php \Elementor\Icons_Manager::render_icon($settings['sub_title_icon'], ['aria-hidden' => 'true']); ?>
-                            <?php echo esc_html($settings['sub_title']); ?>
-                        </span>
-                    <?php endif; ?>
-                    <?php if (!empty($settings['title'])): ?>
-                        <h2 class="split-title">
-                            <?php echo wp_kses_post($settings['title']); ?>
-                        </h2>
-                    <?php endif; ?>
-                </div>
-
-                <div class="row">
-                    <?php if (!empty($settings['feature_list'])): ?>
-                        <?php foreach ($settings['feature_list'] as $item): ?>
-                            <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-                                data-wow-delay=".<?php echo esc_attr($item['animation_delay'] ?? '2'); ?>s">
-                                <div class="grt-mission-box-items-2">
-
-                                    <div class="thumb">
-                                        <?php
-                                        // FIX: Safe check using null coalescing for image url
-                                        $hover_img_url = $item['item_hover_image']['url'] ?? '';
-                                        $icon_img_url  = $item['item_icon_image']['url'] ?? '';
-                                        ?>
-                                        <?php if (!empty($hover_img_url)): ?>
-                                            <img class="hover-image"
-                                                src="<?php echo esc_url($hover_img_url); ?>"
-                                                alt="<?php echo esc_attr($item['item_title'] ?? ''); ?>">
-                                        <?php endif; ?>
-                                        <?php if (!empty($icon_img_url)): ?>
-                                            <div class="icon">
-                                                <img src="<?php echo esc_url($icon_img_url); ?>"
-                                                    alt="<?php echo esc_attr($item['item_title'] ?? ''); ?>">
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-
-                                    <div class="content">
-                                        <?php if (!empty($item['item_title'])): ?>
-                                            <h3 class="title"><?php echo esc_html($item['item_title']); ?></h3>
-                                        <?php endif; ?>
-                                        <?php if (!empty($item['item_description'])): ?>
-                                            <p><?php echo wp_kses_post($item['item_description']); ?></p>
-                                        <?php endif; ?>
-                                    </div>
-
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </div>
-
-                <?php if (!empty($settings['raising_pre_text']) || !empty($settings['raising_highlight_text'])): ?>
-                    <p class="raising-text wow fadeInUp" data-wow-delay=".3s">
-                        <?php
-                        $raising_icon_url = $settings['raising_icon']['url'] ?? '';
-                        if (!empty($raising_icon_url)):
-                        ?>
-                            <img src="<?php echo esc_url($raising_icon_url); ?>" alt="">
-                        <?php endif; ?>
-                        <?php echo esc_html($settings['raising_pre_text'] ?? ''); ?>
-                        <?php if (!empty($settings['raising_highlight_text'])): ?>
-                            <b><?php echo esc_html($settings['raising_highlight_text']); ?></b>
-                        <?php endif; ?>
+                <?php if ($heading !== '') : ?>
+                <div class="facilities-text wow fadeInUp">
+                    <div class="line"></div>
+                    <p>
+                        <?php echo esc_html($heading); ?>
                     </p>
+                    <div class="line"></div>
+                </div>
                 <?php endif; ?>
-
+                <div class="school-facilities-wrapper">
+                    <?php foreach ($items as $item) : ?>
+                        <?php
+                        $title = isset($item['title']) ? $item['title'] : '';
+                        $thumb_url = !empty($item['thumb']['url']) ? $item['thumb']['url'] : '';
+                        $icon_url = !empty($item['icon']['url']) ? $item['icon']['url'] : '';
+                        $delay = isset($item['animation_delay']) ? trim((string) $item['animation_delay']) : '';
+                        ?>
+                    <div class="school-facilities-box-items wow fadeInUp"<?php echo $delay !== '' ? ' data-wow-delay="' . esc_attr($delay) . '"' : ''; ?>>
+                        <div class="thumb">
+                            <?php if ($thumb_url !== '') : ?>
+                            <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php echo esc_attr($title); ?>">
+                            <?php endif; ?>
+                            <div class="icon">
+                                <?php if ($icon_url !== '') : ?>
+                                <img src="<?php echo esc_url($icon_url); ?>" alt="<?php echo esc_attr($title); ?>">
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <?php if ($title !== '') : ?>
+                        <h2 class="title"><?php echo esc_html($title); ?></h2>
+                        <?php endif; ?>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </section>
-        <?php
+
+
+
+
+
+
+
+
+<?php
     }
 }
