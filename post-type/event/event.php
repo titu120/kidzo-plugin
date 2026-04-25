@@ -16,7 +16,7 @@ function tp_event_register_post_type() {
 		'not_found'          => esc_html__( 'No Events found', 'tp-elements' ),
 		'not_found_in_trash' => esc_html__( 'No Events found in Trash', 'tp-elements' ),
 		'parent_item_colon'  => esc_html__( 'Parent Event:', 'tp-elements' ),
-		'menu_name'          => esc_html__( 'TP Event', 'tp-elements' ),
+		'menu_name'          => esc_html__( 'Event', 'tp-elements' ),
 	);
 	global $event_option;
 	$event_slug = (!empty($event_option['event_slug']))? $event_option['event_slug'] :'event';

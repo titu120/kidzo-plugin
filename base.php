@@ -548,10 +548,51 @@ final class TPelements_Elementor_Extension {
 		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Contact6_Widget() );
 
 		require_once( __DIR__ . '/widgets/blog/blog6.php' );
-		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Blog6_Widget() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \Blog6_Widget() );
 
-		
+		require_once( __DIR__ . '/widgets/programe/programe1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Program1_Widget() );
 
+		require_once( __DIR__ . '/widgets/activity/activity1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Activity1_Widget() );
+
+		require_once( __DIR__ . '/widgets/programe/programe2.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Program2_Widget() );
+
+		require_once( __DIR__ . '/widgets/team/team1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Team1_Widget() );
+
+		require_once( __DIR__ . '/widgets/programe/programe3.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Program3_Widget() );
+
+		require_once( __DIR__ . '/widgets/team/team2.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Team2_Widget() );
+
+
+
+		require_once( __DIR__ . '/widgets/programe/programe4.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Program4_Widget() );
+
+		require_once( __DIR__ . '/widgets/team/team3.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Team3_Widget() );
+
+		require_once( __DIR__ . '/widgets/programe/programe5.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Program5_Widget() );
+
+		require_once( __DIR__ . '/widgets/programe/programe6.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Program6_Widget() );
+
+		require_once( __DIR__ . '/widgets/programe/programe7.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Program7_Widget() );
+
+		require_once( __DIR__ . '/widgets/event/event1.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Event1_Widget() );
+
+		require_once( __DIR__ . '/widgets/team/team4.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Team4_Widget() );
+
+		require_once( __DIR__ . '/widgets/team/team5.php' );
+		\Elementor\Plugin::instance()->widgets_manager->register( new \FT_Team5_Widget() );
 
 
 		

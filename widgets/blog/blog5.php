@@ -1100,8 +1100,8 @@ class FT_Blog5_Widget extends \Elementor\Widget_Base
                                 <div class="news-card-items5">
                                     <?php if ('yes' === $settings['show_image']) : ?>
                                         <div class="news-image">
-                                            <?php if (has_post_thumbnail($post_id)) : ?>
-                                                <?php echo Group_Control_Image_Size::get_attachment_image_html($settings, 'thumbnail', $thumb_id); ?>
+                                            <?php if ($thumb_id && wp_attachment_is_image($thumb_id)) : ?>
+                                                <?php echo wp_get_attachment_image($thumb_id, ! empty($settings['thumbnail_size']) ? $settings['thumbnail_size'] : 'large', false, ['alt' => get_the_title($post_id)]); ?>
                                             <?php else : ?>
                                                 <img src="<?php echo esc_url($placeholder_src); ?>" alt="<?php the_title_attribute(); ?>">
                                             <?php endif; ?>

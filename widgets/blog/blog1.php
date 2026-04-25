@@ -531,9 +531,16 @@ class FT_Blog1_Widget extends \Elementor\Widget_Base
                             <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="<?php echo esc_attr(number_format($wow_delay, 1)); ?>s">
                                 <div class="news-box-items">
                                     <div class="thumb">
-                                        <?php if (has_post_thumbnail()) : ?>
-                                            <?php echo Group_Control_Image_Size::get_attachment_image_html($settings, 'thumbnail', get_post_thumbnail_id()); ?>
-                                            <?php echo Group_Control_Image_Size::get_attachment_image_html($settings, 'thumbnail', get_post_thumbnail_id()); ?>
+                                        <?php
+                                        $thumb_id = get_post_thumbnail_id();
+                                        if ($thumb_id && wp_attachment_is_image($thumb_id)) :
+                                            ?>
+                                            <?php echo wp_get_attachment_image($thumb_id, ! empty($settings['thumbnail_size']) ? $settings['thumbnail_size'] : 'large', false, ['alt' => get_the_title()]); ?>
+                                            <?php echo wp_get_attachment_image($thumb_id, ! empty($settings['thumbnail_size']) ? $settings['thumbnail_size'] : 'large', false, ['alt' => get_the_title()]); ?>
+                                        <?php else : ?>
+                                            <?php $placeholder = Utils::get_placeholder_image_src(); ?>
+                                            <img src="<?php echo esc_url($placeholder); ?>" alt="<?php the_title_attribute(); ?>">
+                                            <img src="<?php echo esc_url($placeholder); ?>" alt="<?php the_title_attribute(); ?>">
                                         <?php endif; ?>
                                     </div>
                                     <div class="content">

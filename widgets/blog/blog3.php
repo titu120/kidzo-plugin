@@ -768,9 +768,9 @@ class FT_Blog3_Widget extends \Elementor\Widget_Base
                                 <div class="<?php echo esc_attr($item_classes); ?>">
                                     <?php if ('yes' === $settings['show_featured_image']) : ?>
                                         <div class="thumb">
-                                            <?php if ($thumb_id) : ?>
-                                                <?php echo Group_Control_Image_Size::get_attachment_image_html($settings, 'thumbnail', $thumb_id); ?>
-                                                <?php echo Group_Control_Image_Size::get_attachment_image_html($settings, 'thumbnail', $thumb_id); ?>
+                                            <?php if ($thumb_id && wp_attachment_is_image($thumb_id)) : ?>
+                                                <?php echo wp_get_attachment_image($thumb_id, ! empty($settings['thumbnail_size']) ? $settings['thumbnail_size'] : 'large', false, ['alt' => get_the_title($post_id)]); ?>
+                                                <?php echo wp_get_attachment_image($thumb_id, ! empty($settings['thumbnail_size']) ? $settings['thumbnail_size'] : 'large', false, ['alt' => get_the_title($post_id)]); ?>
                                             <?php else : ?>
                                                 <?php $placeholder = Utils::get_placeholder_image_src(); ?>
                                                 <img src="<?php echo esc_url($placeholder); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
